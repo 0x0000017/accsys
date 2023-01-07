@@ -1,0 +1,22 @@
+{% extends 'Main/layout.html' %}
+
+{% block section-1 %}
+    <h1>REGISTRATION</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <label>Username:</label>
+        <input type="text" name="username">
+
+        <label>Password:</label>
+        <input type="password" name="password">
+
+        <label>Confirm Password:</label>
+        <input type="password" name="confirm">
+
+        <label>Email:</label>
+        <input type="email" name="email">
+
+        <input type="submit" value="Register">
+    </form>
+{% endblock %}
