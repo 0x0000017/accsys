@@ -1,22 +1,33 @@
 {% extends 'Main/layout.html' %}
 
 {% block section-1 %}
-    <h1>REGISTRATION</h1>
 
-    <form method="post">
-        {% csrf_token %}
-        <label>Username:</label>
-        <input type="text" name="username">
+<div class="row">
+        <p class="text-center fs-1">Register</p>
+        <form method="post">
+            {% csrf_token %}
+            <div class="my-1">
+                <label class="form-label">Username:</label>
+                <input type="text" class="form-control" name="username">
+            </div>
 
-        <label>Password:</label>
-        <input type="password" name="password">
+            <div class="my-1">
+                            <label class="form-label">Password:</label>
+                            <input type="password" class="form-control" name="password">
+            </div>
 
-        <label>Confirm Password:</label>
-        <input type="password" name="confirm">
+            <div class="my-1">
+                <label class="form-label">Confirm Password:</label>
+                <input type="password" class="form-control" name="confirm">
+            </div>
 
-        <label>Email:</label>
-        <input type="email" name="email">
+            <div class="my-1">
+                <label class="form-label">Email:</label>
+                <input type="email" class="form-control" name="email">
+            </div>
 
-        <input type="submit" value="Register">
-    </form>
+            <!-- <input type="submit" value="Register"> -->
+            <button type="button" class="btn btn-primary my-2">Register</button>
+        </form>
+</div>
 {% endblock %}

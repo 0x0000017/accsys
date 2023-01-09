@@ -2,20 +2,36 @@
 {% load static %}
 
 {% block section-1 %}
-    <div id="container">
-        <h1>LOGIN</h1>
+    <div class="row">
+        <div class="col-sm-12 mb-3 mb-sm-0">
 
-        <form method="post">
-            {% csrf_token %}
-            <label>Username:</label>
-            <input type="text" placeholder="Enter your username..." name="username">
+            <p class="text-center fs-1">Login</p>
+    
+            <form method="post" class="">
+                {% csrf_token %}
+                <div class="my-1">
+                    <label class="form-label">Username:</label>
+                    <input type="text" class="form-control" placeholder="Enter your username..." name="username">
+                </div>
 
-            <label>Password:</label>
-            <input type="password" placeholder="Enter your password..." name="password">
+                <div class="my-1">
+                    <label class="form-label">Password:</label>
+                    <input type="password" class="form-control" placeholder="Enter your password..." name="password">
+                </div>
 
-            <input type="submit" value="Login">
-        </form>
+                <div class="container my-2">
 
-        <a href="{% url 'register' %}">REGISTER HERE</a>
+                    <button type="button" class="btn btn-primary" >Login</button>
+                </div>
+
+            </form>
+
+            <a href="{% url 'register' %}">
+                <button type="button" class="btn btn-danger" >
+                    REGISTER HERE
+                </button>
+            </a>
+
+        </div>
     </div>
 {% endblock %}
