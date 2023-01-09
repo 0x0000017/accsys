@@ -2,24 +2,24 @@
 
 {% block section-1 %}
 
-<div class="row">
+<div class="row justify-content-center">
         <p class="text-center fs-1">Register</p>
         <hr class ="divider">
         <form method="post">
             {% csrf_token %}
             <div class ="d-flex p-2">
-                <h4> Personal Information </h4>
+                <h5> Personal Information </h5>
             </div>
-            <div class ="container-sm">
-                <div class="mb-3">
-                    <label for="fullName" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="fullName" placeholder="Your Full Name">
+            <div class ="form-group">
+                <div class="mb-1">
+                    <label for="fullName" class="form-label h6">Full Name</label>
+                    <input type="text" class="form-control input-sm" id="fullName" placeholder="Your Full Name">
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                     <label for="storeName" class="form-label">Store Name</label>
                     <input type="text" class="form-control" id="storeName" placeholder="Your Store Name">
                 </div>
-                <div class="mb-3">
+                <div class="mb-1">
                     <label for="cusAddr" class="form-label">Address</label>
                     <input type="text" class="form-control" id="cusAddr" placeholder="Address">
                 </div>
