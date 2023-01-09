@@ -4,30 +4,46 @@
 
 <div class="row">
         <p class="text-center fs-1">Register</p>
+        <hr class ="divider">
         <form method="post">
             {% csrf_token %}
-            <div class="my-1">
-                <label class="form-label">Username:</label>
-                <input type="text" class="form-control" name="username">
+            <div class ="d-flex p-2">
+                <h4> Personal Information </h4>
             </div>
-
-            <div class="my-1">
-                            <label class="form-label">Password:</label>
-                            <input type="password" class="form-control" name="password">
+            <div class ="container-sm">
+                <div class="mb-3">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" placeholder="Your Full Name">
+                </div>
+                <div class="mb-3">
+                    <label for="storeName" class="form-label">Store Name</label>
+                    <input type="text" class="form-control" id="storeName" placeholder="Your Store Name">
+                </div>
+                <div class="mb-3">
+                    <label for="cusAddr" class="form-label">Address</label>
+                    <input type="text" class="form-control" id="cusAddr" placeholder="Address">
+                </div>
+                <hr class ="divider">
+                <div class ="d-flex p-2">
+                    <h4> Login Information</h4>
+                </div>
+                <div class="mb-3">
+                    <label for="emailAddr" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="emailAddr" placeholder="youremailaddress@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Minimum of 6 characters">
+                </div>
+                <div class="mb-3">
+                    <label for="confirmPass" class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmPass" placeholder="Confirm your password">
+                </div>
+                <br>
+                <button type="button" class="btn btn-success">Submit</button>
+                <button type="button" class="btn btn-danger">Reset Fields</button>
+                <br>
             </div>
-
-            <div class="my-1">
-                <label class="form-label">Confirm Password:</label>
-                <input type="password" class="form-control" name="confirm">
-            </div>
-
-            <div class="my-1">
-                <label class="form-label">Email:</label>
-                <input type="email" class="form-control" name="email">
-            </div>
-
-            <!-- <input type="submit" value="Register"> -->
-            <button type="button" class="btn btn-primary my-2">Register</button>
         </form>
 </div>
 {% endblock %}
