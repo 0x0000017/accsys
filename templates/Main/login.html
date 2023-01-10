@@ -2,42 +2,57 @@
 {% load static %}
 
 {% block section-1 %}
-    <div class = "row">
-        <div class = "col">
-
-        </div>
-    </div>
+<br>
+<br>
+<br>
     <div class="row justify-content-center">
-        <div class="col-6">
-            <p class="text-center fs-1">Login</p>
+        <div class="col-4 bg-light p-2 border-opacity-50 rounded-2 px-5 py-5 shadow p-3 mb-5 bg-body-tertiary rounded" 
+             style="border-style: solid;
+                    border-color: #02BB7D;
+                    border-width: 1pt;">
+            <h3 class="my-4 text-center fs-3 fw-bold">Login</h3>
+            <br>
+            <br>
             <form method="post" class="">
                 {% csrf_token %}
-                <div class="my-1">
-                    <label class="form-label">Username:</label>
-                    <input type="text" class="form-control" placeholder="Enter your username..." name="username">
+                <div class="my-3">
+                    <!-- <label class="form-label h6">Username</label> -->
+                    <input type="text" class="form-control py-3 text-center" placeholder="Enter your username..." name="username">
                 </div>
 
-                <div class="my-1">
-                    <label class="form-label">Password:</label>
-                    <input type="password" class="form-control" placeholder="Enter your password..." name="password">
+                <div class="my-3">
+                    <!-- <label class="form-label h6">Password</label> -->
+                    <input type="password" class="form-control py-3 text-center" placeholder="Enter your password..." name="password">
                 </div>
 
-                <div class="container my-2">
+                <br><br><br>
+
+                <div class="row justify-content-center px-2">
+                    <button type="button" class="btn btn-success my-3 py-3" style="background-color: #02BB7D; border: none;">Login</button>
+                </div>
+                <br><br>
+
+                <hr class ="divider">
+
+                <div class="row justify-content-center px-2">
+                    <p class="text-center">Don't have an account? <a href="{% url 'register' %}" class="text-center">Register Here</a> </p>
+                    
+                </div>
+
+            </form>
+
+            <!-- <div class="row my-2 ms-auto">
+                <div class="col">
                     <button type="button" class="btn btn-primary" >Login</button>
                 </div>
-            </form>
-            <div class="container my-2">
-                <a href="{% url 'register' %}">
-                    <button type="button" class="btn btn-danger" >
-                        REGISTER HERE
-                    </button>
-                </a>
-            </div>
-
-        </div>
-    </div>
-    <div class = "row">
-        <div class ="col">
+                <div class="col">
+                    <a href="{% url 'register' %}">
+                        <button type="button" class="btn btn-danger" >
+                            REGISTER HERE
+                        </button>
+                    </a>
+                </div>
+            </div> -->
 
         </div>
     </div>
