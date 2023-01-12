@@ -8,8 +8,14 @@ from django.urls import reverse
 # Create your views here.
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+
+        # Check if authentication successful
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse('dashboard'))
     else:
         return render(request, 'Main/login.html')
 
@@ -17,9 +23,12 @@ def login_view(request):
 def register(request):
     if request.method == 'POST':
         username = request.POST['username']
+        firstName = request.POST['firstName']
+        lastName = request.POST['lastName']
         password = request.POST['password']
-        confirm = request.POST['confirm']
+        confirm = request.POST['confirmPass']
         email = request.POST['email']
+        address = request.POST['address']
 
         if password != confirm:
             return render(request, 'Main/register.html', {
@@ -27,7 +36,8 @@ def register(request):
             })
 
         try:
-            newUser = User(username=username, password=password, email=email)
+            newUser = User(username=username, first_name=firstName, last_name=lastName,
+                           password=password, email=email, address=address)
             newUser.save()
         except IntegrityError:
             return render(request, 'Main/register.html', {
