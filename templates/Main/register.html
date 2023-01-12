@@ -30,16 +30,25 @@
                     <input type="text" class="form-control input-sm" id="lastName" placeholder="Your Last Name" name="lastName">
                 </div>
                 <div class="mb-1">
-                    <label for="storeName" class="form-label">Store Name</label>
-                    <input type="text" class="form-control" id="storeName" placeholder="Your Store Name" name="storeName">
-                </div>
-                <div class="mb-1">
                     <label for="cusAddr" class="form-label">Address</label>
                     <input type="text" class="form-control" id="cusAddr" placeholder="Address" name="address">
                 </div>
 
                 <hr class ="divider">
+                <div class ="d-flex pb-2">
+                    <h4 class="fw-bold"> Store Information</h4>
+                </div>
 
+                <div class="mb-1">
+                    <label for="storeName" class="form-label">Store Name</label>
+                    <input type="text" class="form-control" id="storeName" placeholder="Your Store Name" name="storeName">
+                </div>
+                <div class="mb-1">
+                    <label for="storeAddress" class="form-label">Store Address</label>
+                    <input type="text" class="form-control" id="storeAddress" placeholder="Your Store Address" name="storeAddress">
+                </div>
+
+                <hr class ="divider">
                 <div class ="d-flex pb-2">
                     <h4 class="fw-bold"> Login Information</h4>
                 </div>
@@ -56,7 +65,7 @@
                     <label for="confirmPass" class="form-label">Confirm Password</label>
                     <input type="password" class="form-control" id="confirmPass" placeholder="Confirm your password" name="confirmPass">
                 </div>
-                <button type="button" class="btn btn-success" style="background-color: #02BB7D; border: none;">Submit</button>
+                <input type="submit" class="btn btn-success" style="background-color: #02BB7D; border: none;" value="Submit">
                 <button type="button" class="btn btn-danger"  style="background-color: #e24a6b; border: none;">Reset Fields</button>
             </div>
         </form>
