@@ -57,4 +57,6 @@ def register(request):
 
 def dashboard(request):
     user = request.user
-    return HttpResponse(f'Hello, {user.username}!')
+    return render(request, 'Main/dashboard.html', {
+        'user': user
+    })
