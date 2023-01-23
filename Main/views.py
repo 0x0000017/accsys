@@ -17,7 +17,7 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse('dashboard'))
     else:
-        return render(request, 'Main/login.html')
+        return render(request, 'Main/Login/login.html')
 
 
 def register(request):
@@ -36,7 +36,7 @@ def register(request):
         storeAddress = request.POST['storeAddress']
 
         if password != confirm:
-            return render(request, 'Main/register.html', {
+            return render(request, 'Main/Login/register.html', {
                 'error_message': 'Passwords do not match.'
             })
 
@@ -45,18 +45,18 @@ def register(request):
                            password=password, email=email)
             newUser.save()
         except IntegrityError:
-            return render(request, 'Main/register.html', {
+            return render(request, 'Main/Login/register.html', {
                 'error_message': 'User already exists.'
             })
 
         login(request, newUser)
         return HttpResponseRedirect(reverse('dashboard'))
     else:
-        return render(request, 'Main/register.html')
+        return render(request, 'Main/Login/register.html')
 
 
 def dashboard(request):
     user = request.user
-    return render(request, 'Main/dashboard.html', {
+    return render(request, 'Main/Landing/dashboard.html', {
         'user': user
     })
