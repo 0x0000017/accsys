@@ -1,5 +1,206 @@
 {% extends 'Main/Landing/mainLayout.html' %}
-
+{% load static %}
 {% block content %}
+
+<div class="cardBox">
+    <!-- <div class="card">
+        <div>
+            <div class="numbers">1,504</div>
+            <div class="cardName">Inventory</div>
+        </div>
+        <div class="iconBx">
+            <ion-icon name="server-outline"></ion-icon>
+        </div>
+    </div> -->
+    <div class="Scard">
+        <div>
+            <div class="numbers">80</div>
+            <div class="cardName">Sales</div>
+        </div>
+        <div class="iconBx">
+            <ion-icon name="cart-outline"></ion-icon>
+        </div>
+    </div>
+
+    <div class="Scard">
+        <div>
+            <div class="numbers">$1,504</div>
+            <div class="cardName">Revenue</div>
+        </div>
+        <div class="iconBx">
+            <ion-icon name="card-outline"></ion-icon>
+        </div>
+    </div>
+
+    <div class="Scard">
+        <div>
+            <div class="numbers">80</div>
+            <div class="cardName">Expenses</div>
+        </div>
+        <div class="iconBx">
+            <ion-icon name="cash-outline"></ion-icon>
+        </div>
+    </div>
+
+    <div class="Scard">
+        <div>
+            <div class="numbers">1,504</div>
+            <div class="cardName">Net Income</div>
+        </div>
+        <div class="iconBx">
+            <ion-icon name="stats-chart-outline"></ion-icon>
+        </div>
+    </div>
+</div>
+
+<!-- charts -->
+<div class="graphBox">
+    <!-- <h2>TEXT</h2> -->
+    <div class="box">
+        <canvas id="SalesByItem"></canvas>
+    </div>
+    <div class="box">
+        <canvas id="SalesByMonth"></canvas>
+    </div>
+
+</div>
+
+<!-- details lists -->
+<div class="details">
+    <div class="recentOrders table-responsive">
+            <div class="cardHeader">
+                <h2>Recent Orders</h2>
+                <!-- <a href="#" class="btn">View All</a> -->
+                <button class="btn btn-primary">View All</button>
+            </div>
+            <table class="table table-striped table-hover" style="height: 90%;">
+                <thead>
+                    <tr>
+                        <td >Item Name</td>
+                        <td class="text-center">Item Price</td>
+                        <td class="text-center">Item Category</td>
+                        <td class="text-center">Date Ordered</td>
+                        <td class="text-end">Store</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td >Window Coolers</td>
+                        <td class="text-center">$110</td>
+                        <td class="text-center">Appliances</td>
+                        <td class="text-center">1/20/22</td>
+                        <td class="text-end"><span class="status pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Speakers</td>
+                        <td class="text-center">$620</td>
+                        <td class="text-center">Appliances</td>
+                        <td class="text-center">1/20/22</td>
+                        <td class="text-end"><span class="status return">Return</span></td>
+                    </tr>
+                    <tr>
+                        <td>Laptop</td>
+                        <td class="text-center">$110</td>
+                        <td class="text-center">Gadget</td>
+                        <td class="text-center">1/20/22</td>
+                        <td class="text-end"><span class="status inProgress">In Progress</span></td>
+                    </tr>
+                    <tr>
+                        <td>Apple Watch</td>
+                        <td class="text-center">$1200</td>
+                        <td class="text-center">Gadget</td>
+                        <td class="text-center">1/20/22</td>
+                        <td class="text-end"><span class="status delivered">Delivered</span></td>
+                    </tr>
+                    <tr>
+                        <td>Wall Fan</td>
+                        <td class="text-center">$110</td>
+                        <td class="text-center">Appliances</td>
+                        <td class="text-center">1/20/22</td>
+                        <td class="text-end"><span class="status pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Shoes</td>
+                        <td class="text-center">$620</td>
+                        <td class="text-center">Clothes</td>
+                        <td class="text-center">1/20/22</td>
+                        <td class="text-end"><span class="status return">Return</span></td>
+                    </tr>
+                    <tr>
+                        <td>Denim Shirts</td>
+                        <td class="text-center">$110</td>
+                        <td class="text-center">Clothes</td>
+                        <td class="text-center">1/20/22</td>
+                        <td class="text-end"><span class="status inProgress">In Progress</span></td>
+                    </tr>
+                    <tr>
+                        <td>Casual Shoes</td>
+                        <td class="text-center">$510</td>
+                        <td class="text-center">Clothes</td>
+                        <td class="text-center">1/20/22</td>
+                        <td class="text-end"><span class="status pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>Denim Shirts</td>
+                        <td class="text-center">$110</td>
+                        <td class="text-center">Clothes</td>
+                        <td class="text-center">1/20/22</td>
+                        <td class="text-end"><span class="status inProgress">In Progress</span></td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+
+    
+    <!-- New Customers -->
+    <div class="container">
+        <div class="recentCustomers">
+            
+            <div class="cardHeaderCustomer">
+                <h2>Recent Sales/Stocks or what</h2>
+            </div>
+
+            <table>
+                <tr>
+                    <td width="60px"><div class="imgBx"><img src="{% static 'main/assets/images/img1.jpg' %}" alt=""></div></td>
+                    <td><h4>David<br><span>Italy</span></h4></td>
+                </tr>
+                <tr>
+                    <td width="60px"><div class="imgBx"><img src="{% static 'main/assets/images/dudoy.jpg' %}" alt=""></div></td>
+                    <td><h4>Dudoy<br><span>San Jose</span></h4></td>
+                </tr>
+                <tr>
+                    <td width="60px"><div class="imgBx"><img src="{% static 'main/assets/images/Joma.jpg' %}" alt=""></div></td>
+                    <td><h4>Joma<br><span>IBA</span></h4></td>
+                </tr>
+                <tr>
+                    <td width="60px"><div class="imgBx"><img src="{% static 'main/assets/images/greta.jpg' %}" alt=""></div></td>
+                    <td><h4>Greta<br><span>Botolan</span></h4></td>
+                </tr>
+                <tr>
+                    <td width="60px"><div class="imgBx"><img src="{% static 'main/assets/images/img5.jpg' %}" alt=""></div></td>
+                    <td><h4>Amit<br><span>Japan</span></h4></td>
+                </tr>
+                <tr>
+                    <td width="60px"><div class="imgBx"><img src="{% static 'main/assets/images/img6.jpg' %}" alt=""></div></td>
+                    <td><h4>Ashraf<br><span>India</span></h4></td>
+                </tr>
+                <tr>
+                    <td width="60px"><div class="imgBx"><img src="{% static 'main/assets/images/img7.jpg' %}" alt=""></div></td>
+                    <td><h4>Diana<br><span>Malaysia</span></h4></td>
+                </tr>
+                <tr>
+                    <td width="60px"><div class="imgBx"><img src="{% static 'main/assets/images/img8.jpg' %}" alt=""></div></td>
+                    <td><h4>Amit<br><span>India</span></h4></td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.0/dist/chart.umd.min.js"></script>
+<script src="{% static 'main/scripts/dashboard/charts.js' %}"></script>
+
 
 {% endblock %}

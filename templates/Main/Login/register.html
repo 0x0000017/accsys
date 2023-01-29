@@ -11,63 +11,75 @@
         <hr class ="divider">
         <form method="post">
             {% csrf_token %}
+                 <div class ="d-flex pb-2">
+                    <h4 class="fw-bold"> Personal Information </h4>
+                </div>
 
-            <div class ="d-flex pb-2">
-                <h4 class="fw-bold"> Personal Information </h4>
+                <div class ="form-group">
+                    <div class="row"> </div>
+                    <div class="mb-1">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control input-sm" id="userName" placeholder="Your Username" name="username">
+                    </div>
+                    
+                    <div class="mb-1">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control input-sm" id="firstName" placeholder="Your First Name" name="firstName">
+                    </div>
+
+                    <div class="mb-1">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control input-sm" id="lastName" placeholder="Your Last Name" name="lastName">
+                    </div>
+
+                    <div class="mb-1">
+                        <label for="cusAddr" class="form-label">Address</label>
+                        <input type="text" class="form-control" id="cusAddr" placeholder="Address" name="address">
+                    </div>
+    
+                    <hr class ="divider">
+
+                    <div class ="d-flex pb-2">
+                        <h4 class="fw-bold"> Store Information</h4>
+                    </div>
+    
+                    <div class="mb-1">
+                        <label for="storeName" class="form-label">Store Name</label>
+                        <input type="text" class="form-control" id="storeName" placeholder="Your Store Name" name="storeName">
+                    </div>
+
+                    <div class="mb-1">
+                        <label for="storeAddress" class="form-label">Store Address</label>
+                        <input type="text" class="form-control" id="storeAddress" placeholder="Your Store Address" name="storeAddress">
+                    </div>
+    
+                    <hr class ="divider">
+
+                    <div class ="d-flex pb-2">
+                        <h4 class="fw-bold"> Login Information</h4>
+                    </div>
+    
+                    <div class="mb-3">
+                        <label for="emailAddr" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="emailAddr" placeholder="youremailaddress@example.com" name="email">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" placeholder="Minimum of 6 characters" name="password" min="6">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirmPass" class="form-label">Confirm Password</label>
+                        <input type="password" class="form-control" id="confirmPass" placeholder="Confirm your password" name="confirmPass">
+                    </div>
+
+                    <input type="submit" class="btn btn-success" style="background-color: #02BB7D; border: none;" value="Submit">
+                    <button type="button" class="btn btn-danger"  style="background-color: #e24a6b; border: none;">Reset Fields</button>
+
+                </div>
             </div>
 
-            <div class ="form-group">
-                <div class="mb-1">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control input-sm" id="userName" placeholder="Your Username" name="username">
-                </div>
-                <div class="mb-1">
-                    <label for="firstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control input-sm" id="firstName" placeholder="Your First Name" name="firstName">
-                </div>
-                <div class="mb-1">
-                    <label for="lastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control input-sm" id="lastName" placeholder="Your Last Name" name="lastName">
-                </div>
-                <div class="mb-1">
-                    <label for="cusAddr" class="form-label">Address</label>
-                    <input type="text" class="form-control" id="cusAddr" placeholder="Address" name="address">
-                </div>
-
-                <hr class ="divider">
-                <div class ="d-flex pb-2">
-                    <h4 class="fw-bold"> Store Information</h4>
-                </div>
-
-                <div class="mb-1">
-                    <label for="storeName" class="form-label">Store Name</label>
-                    <input type="text" class="form-control" id="storeName" placeholder="Your Store Name" name="storeName">
-                </div>
-                <div class="mb-1">
-                    <label for="storeAddress" class="form-label">Store Address</label>
-                    <input type="text" class="form-control" id="storeAddress" placeholder="Your Store Address" name="storeAddress">
-                </div>
-
-                <hr class ="divider">
-                <div class ="d-flex pb-2">
-                    <h4 class="fw-bold"> Login Information</h4>
-                </div>
-
-                <div class="mb-3">
-                    <label for="emailAddr" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="emailAddr" placeholder="youremailaddress@example.com" name="email">
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Minimum of 6 characters" name="password" min="6">
-                </div>
-                <div class="mb-3">
-                    <label for="confirmPass" class="form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="confirmPass" placeholder="Confirm your password" name="confirmPass">
-                </div>
-                <input type="submit" class="btn btn-success" style="background-color: #02BB7D; border: none;" value="Submit">
-                <button type="button" class="btn btn-danger"  style="background-color: #e24a6b; border: none;">Reset Fields</button>
-            </div>
         </form>
     </div>
 </div>
