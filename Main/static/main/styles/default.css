@@ -200,10 +200,10 @@ body
 }
 .topbar
 {
-    position: absolute;
+    position: fixed;
     top: 0%;
-    /* width: calc(100% - 300px); */
-    width: 100%;
+    width: calc(100% - 300px);
+    /* width: 100%; */
     height: 60px;
     display: flex;
     justify-content: space-between;
@@ -213,7 +213,7 @@ body
     box-shadow: 0 4px 2px -2px rgba(0,0,0,0.08);
     background: var(--white);
 }
-/* .topbar.active
+.topbar.active
 {
     position: fixed;
     top: 0%;
@@ -227,7 +227,7 @@ body
     box-shadow: 0 4px 2px -2px rgba(0,0,0,0.08);
     background: var(--white);
     z-index: 100;
-} */
+}
 .toggle
 {
     position: relative;
@@ -544,6 +544,14 @@ body
     {
         overflow-x: hidden;
     }
+    .topbar 
+    {
+        width: 100%;
+    }
+    .topbar.active
+    {
+        width: 100%;
+    }
 
 }
 @media (max-width:790px)
@@ -604,6 +612,14 @@ body
     {
         width: 100%;
         left: 0;
+    }
+    .topbar.active
+    {
+        box-shadow: none;
+    }
+    .topbar.active .search
+    {
+        opacity: 0;
     }
     .toggle
     {
