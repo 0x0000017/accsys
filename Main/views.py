@@ -60,3 +60,10 @@ def dashboard(request):
     return render(request, 'Main/Landing/dashboard.html', {
         'user': user
     })
+
+def inventory(request):
+    user = request.user
+
+    return render(request, 'Main/Landing/inventory.html', {
+        'user': user
+    })
