@@ -67,3 +67,24 @@ def inventory(request):
     return render(request, 'Main/Landing/inventory.html', {
         'user': user
     })
+
+def accounting(request):
+    user = request.user
+
+    return render(request, 'Main/Landing/accounting.html', {
+        'user': user
+    })
+
+def profile(request):
+    user = request.user
+
+    return render(request, 'Main/Landing/profile.html', {
+        'user': user
+    })
+
+def help(request):
+    user = request.user
+
+    return render(request, 'Main/Landing/help.html', {
+        'user': user
+    })

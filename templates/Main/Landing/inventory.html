@@ -2,110 +2,272 @@
 {% load static %}
 {% block content %}
 
-<div class = "row">
-  <div class="container d-flex justify-content-center  mb-4">
-      <div class="search">
-          <label>
-              <input type="text" placeholder="Search Inventory">
-              <ion-icon name="search-outline"></ion-icon>
-          </label>
-      </div>
-  </div>
+    <div class = "row">
+    <div class="container d-flex justify-content-center  mb-4">
 
-  <div class ="col-12">
-    <div class= "inventoryCardBox">
-      
-      <h2 style="font-weight: 600;
-          font-family: Metropolis;
-          color: var(--blue);">
-          Item Lists
-      </h2>
-
-      <!-- <div class="col-md-12 bg-light">
-          <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Date</button>
-          <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Name</button>
-          <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Price</button>
-          <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Category</button>
-          <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Quantity</button>
-      </div> -->
-
-      <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle my-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-family: Metropolis;">
-          Sort by:
-        </button>
-
-        <ul class="dropdown-menu" style="font-family: Metropolis;">
-          <li><a class="dropdown-item" href="#">Name</a></li>
-          <li><a class="dropdown-item" href="#">Price</a></li>
-          <li><a class="dropdown-item" href="#">Category</a></li>
-          <li><a class="dropdown-item" href="#">Date</a></li>
-          <li><a class="dropdown-item" href="#">Quantity</a></li>
-        </ul>
-
-      </div>
-
-      <table class="table table-striped table-hover">
-        <thead class="thead-dark">
-        <tr>
-          <th class="text-center" scope="col">ITEM NAME</th>
-          <th class="text-center" scope="col">ITEM PRICE</th>
-          <th class="text-center" scope="col">CATEGORY</th>
-          <th class="text-center" scope="col">DATE ORDERED</th>
-          <th class="text-center" scope="col">QUANTITY</th>
-          <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr class="text-center" >
-          <td>Direct</td>
-          <td>45759</td>
-          <td>32.1%</td>
-          <td>3.5%</td>
-          <td>1765</td>
-          <td>
-              <button type="button" class="btn btn-primary"> <ion-icon name="create-outline" style="font-size: 1.13em;"></ion-icon></button>
-              <button type="button" class="btn btn-danger"> <ion-icon name="trash-outline" style="font-size: 1.13em;"></ion-icon></button>
-          </td>
-        </tr>
-        <tr class="text-center" >
-          <td>Call In</td>
-          <td>89,298</td>
-          <td>49.2%</td>
-          <td>1.5%</td>
-          <td>15425</td>
-          <td>
-              <button type="button" class="btn btn-primary"><ion-icon name="create-outline" style="font-size: 1.13em;"></ion-icon></button>
-              <button type="button" class="btn btn-danger"> <ion-icon name="trash-outline" style="font-size: 1.13em;"></ion-icon></button>
-          </td>
-        </tr>
-        <tr class="text-center" >
-          <td>Paid Search</td>
-          <td>62.767</td>
-          <td>9.3%</td>
-          <td>6.0%</td>
-          <td>1449</td>
-          <td>
-              <button type="button" class="btn btn-primary"> <ion-icon name="create-outline" style="font-size: 1.13em;"></ion-icon></button>
-              <button type="button" class="btn btn-danger"> <ion-icon name="trash-outline" style="font-size: 1.13em;"></ion-icon></button>
-          </td>
-        </tr>
-            
-        </tbody>
-      </table>
-
-      <div class="col-md-12 bg-light text-right">
-        <button type="button" class="btn btn-primary ml-2 pl-2" style="float: right; font-family: Metropolis;" >
-            <span style="font-size: 1.13em;">
-                <ion-icon name="add-circle-outline"></ion-icon> 
-            </span>
-            Add Items
-                
-        </button>
-        <br>
-      </div>
-
+        <div class="search">
+            <label>
+                <input type="text" placeholder="Search Inventory">
+                <ion-icon name="search-outline"></ion-icon>
+            </label>
+        </div>
     </div>
-  </div>
-</div>
+
+    <div class ="col-12">
+        <div class ="inventoryCardBox">
+            <h2>Item Lists</h2>
+
+            <!-- <div class="col-md-12 bg-light">
+                <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Date</button>
+                <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Name</button>
+                <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Price</button>
+                <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Category</button>
+                <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Quantity</button>
+            </div> -->
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle my-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-family: Metropolis;">
+                    Sort by:
+                </button>
+
+                <ul class="dropdown-menu" style="font-family: Metropolis;">
+                    <li><a class="dropdown-item" href="#">Name</a></li>
+                    <li><a class="dropdown-item" href="#">Price</a></li>
+                    <li><a class="dropdown-item" href="#">Category</a></li>
+                    <li><a class="dropdown-item" href="#">Date</a></li>
+                    <li><a class="dropdown-item" href="#">Quantity</a></li>
+                </ul>
+
+            </div>
+
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th class="text-center" scope="col">ITEM NAME</th>
+                    <th class="text-center" scope="col">ITEM PRICE</th>
+                    <th class="text-center" scope="col">CATEGORY</th>
+                    <th class="text-center" scope="col">DATE ORDERED</th>
+                    <th class="text-center" scope="col">QUANTITY</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="text-center" >
+                    <td>Direct</td>
+                    <td>45759</td>
+                    <td>32.1%</td>
+                    <td>3.5%</td>
+                    <td>1765</td>
+                    <td>
+                        <button type="button" 
+                                class="btn btn-primary"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#editItemsModal"
+                        > 
+                            <ion-icon name="create-outline" style="font-size: 1.13em;"></ion-icon>
+                        </button>
+                        <button type="button" 
+                                class="btn btn-danger"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deleteItemModal"
+                        > 
+                            <ion-icon name="trash-outline" style="font-size: 1.13em;">
+                        </ion-icon></button>
+                    </td>
+                </tr>
+                <tr class="text-center" >
+                    <td>Call In</td>
+                    <td>89,298</td>
+                    <td>49.2%</td>
+                    <td>1.5%</td>
+                    <td>15425</td>
+                    <td>
+                        <button type="button" 
+                                class="btn btn-primary"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#editItemsModal"
+                        > 
+                            <ion-icon name="create-outline" style="font-size: 1.13em;"></ion-icon>
+                        </button>
+                        <button type="button" 
+                                class="btn btn-danger"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deleteItemModal"
+                        > 
+                            <ion-icon name="trash-outline" style="font-size: 1.13em;">
+                        </ion-icon></button>
+                    </td>
+                </tr>
+                <tr class="text-center" >
+                    <td>Paid Search</td>
+                    <td>62.767</td>
+                    <td>9.3%</td>
+                    <td>6.0%</td>
+                    <td>1449</td>
+                    <td>
+                        <button type="button" 
+                                class="btn btn-primary"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#editItemsModal"
+                        > 
+                            <ion-icon name="create-outline" style="font-size: 1.13em;"></ion-icon>
+                        </button>
+                        <button type="button" 
+                                class="btn btn-danger"
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deleteItemModal"
+                        > 
+                            <ion-icon name="trash-outline" style="font-size: 1.13em;">
+                        </ion-icon></button>
+                    </td>
+                </tr>
+                    
+                </tbody>
+            </table>
+
+            <div class="col-md-12 bg-light text-right">
+                <button type="button" 
+                        class="btn btn-primary ml-2 pl-2" 
+                        style="float: right; font-family: Metropolis;"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#addItemsModal" 
+                >
+                    <span style="font-size: 1.13em;">
+                        <ion-icon name="add-circle-outline"></ion-icon> 
+                    </span>
+                    Add Items
+                </button>
+                <br>
+            </div>
+
+        </div>
+    </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal fade" id="editItemsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel"> Edit </h1>
+            <button type="button" class="btn-close" 
+            data-bs-dismiss="modal" aria-label="Close"
+            (click)="closeClick()"></button>
+        </div>
+
+        <div class="modal-body">
+            <div class ="form-group">
+                <div class="row"> </div>
+                <div class="mb-1">
+                    <label for="itemName" class="form-label">Item name:</label>
+                    <input type="text" class="form-control input-sm" id="itemName" name="itemName">
+                </div>
+                
+                <div class="mb-1">
+                    <label for="itemPrice" class="form-label">Item Price:</label>
+                    <input type="text" class="form-control input-sm" id="itemPrice" name="firstName">
+                </div>
+
+                <div class="mb-1">
+                    <label for="category" class="form-label">Category:</label>
+                    <input type="text" class="form-control input-sm" id="category" name="category">
+                </div>
+
+                <div class="mb-1">
+                    <label for="dateOrdered" class="form-label">Date Ordered:</label>
+                    <input type="text" class="form-control" id="dateOrdered" name="date">
+                </div>
+
+                <div class="mb-1">
+                    <label for="quantity" class="form-label">Quantity:</label>
+                    <input type="text" class="form-control" id="quantity" name="quantity">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        
+        </div>
+    </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteItemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel"> Delete </h1>
+            <button type="button" class="btn-close" 
+            data-bs-dismiss="modal" aria-label="Close"
+            (click)="closeClick()"></button>
+        </div>
+
+        <div class="modal-body">
+            <p>Are you sure to delete?</p>
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary">Yes</button>
+        </div>
+        
+        </div>
+    </div>
+    </div>
+
+    <!-- Add modal -->
+    <div class="modal fade" id="addItemsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel"> Add </h1>
+            <button type="button" class="btn-close" 
+            data-bs-dismiss="modal" aria-label="Close"
+            (click)="closeClick()"></button>
+        </div>
+
+        <div class="modal-body">
+            <div class ="form-group">
+                <div class="row"> </div>
+                <div class="mb-1">
+                    <label for="itemName" class="form-label">Item name:</label>
+                    <input type="text" class="form-control input-sm" id="itemName" name="itemName">
+                </div>
+                
+                <div class="mb-1">
+                    <label for="itemPrice" class="form-label">Item Price:</label>
+                    <input type="text" class="form-control input-sm" id="itemPrice" name="firstName">
+                </div>
+
+                <div class="mb-1">
+                    <label for="category" class="form-label">Category:</label>
+                    <input type="text" class="form-control input-sm" id="category" name="category">
+                </div>
+
+                <div class="mb-1">
+                    <label for="dateOrdered" class="form-label">Date Ordered:</label>
+                    <input type="text" class="form-control" id="dateOrdered" name="date">
+                </div>
+
+                <div class="mb-1">
+                    <label for="quantity" class="form-label">Quantity:</label>
+                    <input type="text" class="form-control" id="quantity" name="quantity">
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Add</button>
+        </div>
+        
+        </div>
+    </div>
+    </div>
 
 {% endblock %}
