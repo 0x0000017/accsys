@@ -1,0 +1,13 @@
+.profileCardBox
+{
+    background: var(--white);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 7px 25px 0px rgba(0, 0, 0, 0.08);
+}
+.profileCardBox h2
+{
+    font-weight: 600;
+    font-family: Metropolis;
+    color: var(--blue);
+}

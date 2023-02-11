@@ -14,7 +14,7 @@
     </div> -->
     <div class="Scard">
         <div>
-            <div class="numbers">80</div>
+            <div  class="numbers" data-val="80">000</div>
             <div class="cardName">Sales</div>
         </div>
         <div class="iconBx">
@@ -24,7 +24,7 @@
 
     <div class="Scard">
         <div>
-            <div class="numbers">$1,504</div>
+            <div class="numbers" data-val="1504">000</div>
             <div class="cardName">Revenue</div>
         </div>
         <div class="iconBx">
@@ -34,7 +34,7 @@
 
     <div class="Scard">
         <div>
-            <div class="numbers">80</div>
+            <div class="numbers" data-val="908">000</div>
             <div class="cardName">Expenses</div>
         </div>
         <div class="iconBx">
@@ -44,7 +44,7 @@
 
     <div class="Scard">
         <div>
-            <div class="numbers">1,504</div>
+            <div class="numbers" data-val="1504">000</div>
             <div class="cardName">Net Income</div>
         </div>
         <div class="iconBx">
@@ -201,6 +201,24 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.0/dist/chart.umd.min.js"></script>
 <script src="{% static 'main/scripts/dashboard/charts.js' %}"></script>
+
+<script type="text/javascript">
+    let valueDisplays = document.querySelectorAll(".numbers");
+    let interval = 50;
+    valueDisplays.forEach((valueDisplay) => {
+    let startValue = 0;
+    let endValue = parseInt(valueDisplay.getAttribute("data-val"));
+    let duration = Math.floor(interval / endValue);
+    let counter = setInterval(function () {
+    startValue += 1;
+    valueDisplay.textContent = startValue;
+    if (startValue == endValue) {
+      clearInterval(counter);
+    }
+  }, duration);
+});
+
+</script>
 
 
 {% endblock %}
