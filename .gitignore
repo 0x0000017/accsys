@@ -1,6 +1,8 @@
 __pycache__
 *.pyc
 
+/AccSys/__pycache__
+/AccSys/__pycache__/
 /Main/__pycache__
 /Main/__pycache__/
 /Main/migrations/__pycache__
