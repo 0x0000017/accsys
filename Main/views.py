@@ -6,6 +6,9 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 
 # Create your views here.
+def home(request):
+    return render(request, 'Main/Login/home.html')
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST["username"]
@@ -88,3 +91,4 @@ def help(request):
     return render(request, 'Main/Landing/help.html', {
         'user': user
     })
+
