@@ -1,13 +1,16 @@
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 
+
 # Create your views here.
 def home(request):
     return render(request, 'Main/Login/home.html')
+
 
 def login_view(request):
     if request.method == 'POST':
@@ -58,11 +61,14 @@ def register(request):
         return render(request, 'Main/Login/register.html')
 
 
+## VIEWS FOR LOGGED IN USERS
+
 def dashboard(request):
     user = request.user
     return render(request, 'Main/Landing/dashboard.html', {
         'user': user
     })
+
 
 def inventory(request):
     user = request.user
@@ -71,6 +77,7 @@ def inventory(request):
         'user': user
     })
 
+
 def accounting(request):
     user = request.user
 
@@ -78,12 +85,14 @@ def accounting(request):
         'user': user
     })
 
+
 def profile(request):
     user = request.user
 
     return render(request, 'Main/Landing/profile.html', {
         'user': user
     })
+
 
 def help(request):
     user = request.user
