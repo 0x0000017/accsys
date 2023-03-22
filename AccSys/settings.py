@@ -40,11 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-# DJANGO_LIVESYNC = {
-#     'HOST': '127.0.0.1',
-#     'PORT': 8000 # this is optional and is default set to 9001.
-# }
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
