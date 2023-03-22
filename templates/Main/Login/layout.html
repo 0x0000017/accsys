@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ACCSYS</title>
     <link rel="stylesheet" type="text/css" href="{%static 'main/styles/login.css'%}">
+    <link rel="stylesheet" type="text/css" href="{%static 'main/styles/home.css'%}">
 
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" 
@@ -34,11 +35,12 @@
 
     <nav class="navbar navbar-expand-md px-5">
         
-            <a href="#" class="navbar-brand fs-2 fw-bold ms-5 text-primary" >AccSys</a>
+            <!-- <a href="#" class="navbar-brand fs-2 fw-bold ms-5 text-primary" ><img src="/Main/static/main/assets/images/logo.png"/></a-->
+            <a href="#!"><img src="{% static 'main/assets/images/logov2.png' %}" height="140" width="120"/></a>
 
         <button class="navbar-toggler" 
         type="button" 
-        data-bs-toggle="collaps" 
+        data-bs-toggle="collapse" 
         data-bs-target="#btn">
             <i class="bx bx-menu"></i>
         </button>

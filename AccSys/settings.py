@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'Main',
+    'livesync',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,8 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+DJANGO_LIVESYNC = {
+    'HOST': '127.0.0.1',
+    'PORT': 8000 # this is optional and is default set to 9001.
+}
 
 MIDDLEWARE = [
+    'livesync.core.middleware.DjangoLiveSyncMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

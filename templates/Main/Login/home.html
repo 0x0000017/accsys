@@ -2,7 +2,31 @@
 {% load static %}
 
 {% block section-1 %}
-
-<h1>HOME</h1>
+<br><br><br>
+<div class ="row">
+    <div class="col">
+    </div>
+    <div class="col-4">
+        <h1> Your data with real-<br>time analytics</h1>
+        <span>Harness the potential of Big Data Analytics & Cloud Services and <br> become a data-driven organization. </span>
+        <div class ="home-btns">
+            <div class ="row">
+                <div class ="col">
+                    <button type="button" class="btn btn-success shadow-sm rounded">Login</button>
+                </div>
+                <div class ="col">
+                    <button type="button" class="btn btn-light shadow-sm rounded">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class ="col-4 logo-cont">
+        <center>
+        <img src ="{% static 'main/assets/images/logov2.png' %}" class ="home-logo center-block">
+        </center>
+    </div>
+    <div class ="col">
+    </div>
+</div>
 
 {% endblock %}
