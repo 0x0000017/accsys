@@ -33,3 +33,7 @@ html, body
 input[type=text], input[type=email], input[type=password] {
     margin-bottom: 9px;
 }
+hr {
+    margin: auto!important;
+    max-width: 50%;
+}
