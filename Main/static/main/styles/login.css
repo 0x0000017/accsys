@@ -30,3 +30,6 @@ html, body
 {
     width: 100%;
 }
+input[type=text], input[type=email], input[type=password] {
+    margin-bottom: 9px;
+}
