@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
+from .models import Store, Address
 
 
 # Create your views here.
@@ -28,18 +29,21 @@ def login_view(request):
 
 def register(request):
     if request.method == 'POST':
-        # USER INFO
-        username = request.POST['username']
-        firstName = request.POST['firstName']
-        lastName = request.POST['lastName']
-        password = request.POST['password']
-        confirm = request.POST['confirmPass']
-        email = request.POST['email']
-        address = request.POST['address']
+        # PERSONAL USER INFO
+        username = request.POST['userName']
+        first_name = request.POST['firstName']
+        last_name = request.POST['lastName']
+        customer_address = request.POST['cusAddr']
 
         # STORE INFO
-        storeName = request.POST['storeName']
-        storeAddress = request.POST['storeAddress']
+        store_name = request.POST['storeName']
+        store_address = request.POST['storeAddress']
+        email = request.POST['emailAddr']
+
+        # LOGIN INFO
+        password = request.POST['password']
+        confirm = request.POST['confirmPass']
+        image = request.POST['formFile']
 
         if password != confirm:
             return render(request, 'Main/Login/register.html', {
@@ -47,9 +51,16 @@ def register(request):
             })
 
         try:
-            newUser = User(username=username, first_name=firstName, last_name=lastName,
+            newUser = User(username=username, first_name=first_name, last_name=last_name,
                            password=password, email=email)
+
+            new_address = Address(address_name=customer_address, user=newUser)
+            new_store = Store(storeName=store_name, storeOwner=newUser, storeAddress=store_address)
+
             newUser.save()
+            new_address.save()
+            new_store.save()
+
         except IntegrityError:
             return render(request, 'Main/Login/register.html', {
                 'error_message': 'User already exists.'

@@ -28,4 +28,9 @@ class Sale(models.Model):
     date = models.DateTimeField(auto_now=True)
 
 
+class Address(models.Model):
+    address_name = models.CharField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_address')
+
+
 
