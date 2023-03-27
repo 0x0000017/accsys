@@ -25,13 +25,15 @@ body
 
 .home-btns {
     padding-top: 10vh;
+    overflow: hidden;
+    border-collapse: collapse;
 }
 .home-btns button {
     padding-left: 50px;
     padding-right: 50px;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-radius: 25px;
+    border-radius: 50px;
 }
 .logo-cont {
     align-items: center!important;
@@ -41,4 +43,7 @@ body
     height: 20vw;
     padding-top: 0;
     align-items: start;
+}
+.btn-success {
+    color: #02BB7D;
 }

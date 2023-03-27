@@ -1,12 +1,44 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
 @import url('https://fonts.cdnfonts.com/css/metropolis');
 @import url('https://fonts.cdnfonts.com/css/take-me-out');
-*
-{
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+
+@font-face {
+	font-family: 'Take Me Out';
+	src: url('../assets/fonts/take_me_out.otf'); 
+	src: 
+		local('Take Me Out'),
+		local('Take Me Out'),
+		url('../assets/fonts/take_me_out.otf') 
+		format('opentype');
+}
+@font-face {
+	font-family: 'Metropolis';
+	src: url('../assets/fonts/metropolis-regular.otf'); 
+	src: 
+		local('Metropolis'),
+		local('Metropolis'),
+		url('../assets/fonts/metropolis-regular.otf') 
+		format('opentype');
+}
+@font-face {
+	font-family: 'Metropolis';
+	src: url('../assets/fonts/metropolis-semibold.otf'); 
+	src: 
+		local('Metropolis SemiBold'),
+		local('Metropolis-SemiBold'),
+		url('../assets/fonts/metropolis-semibold.otf') 
+		format('opentype');
+}
+
+
+
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Ubuntu', sans-serif;
 }
 :root
 {

@@ -11,7 +11,6 @@
     <link rel="stylesheet" type="text/css" href="{%static 'main/styles/dashboard.css'%}">
     <link rel="stylesheet" type="text/css" href="{%static 'main/styles/profile.css'%}">
 
-    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" 
     rel="stylesheet" 
@@ -31,13 +30,12 @@
 </head>
 <body>
     <div class="wContainer">
-        <!-- side navbar -->
         <div class="sideNavigation">
             <ul>
                 <li>
                     <a href="#">
                         <span class="icon"><div class="logo"><img src="{% static 'main/assets/images/App Logo only.png' %}" alt=""></div></span>
-                        <span class="title" style=" font-family: 'Take Me Out Regular';
+                        <span class="title" style=" font-family: 'Take Me Out';
                         letter-spacing: 5px; font-size: xx-large; left: 10px; top: 10px;">AccSys</span>
                     </a>
                 </li>
@@ -45,42 +43,42 @@
                 <li>
                     <a href="{% url 'dashboard' %}">
                         <span class="icon"><ion-icon name="grid-outline"></ion-icon></span>
-                        <span class="title" style="font-family: Ubuntu;">Dashboard</span>
+                        <span class="title" style="font-family: Metropolis;">Dashboard</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{% url 'inventory' %}">
                         <span class="icon"><ion-icon name="server-outline"></ion-icon></span>
-                        <span class="title" style="font-family: Ubuntu;">Inventory</span>
+                        <span class="title" style="font-family: Metropolis;">Inventory</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{% url 'accounting' %}">
                         <span class="icon"><ion-icon name="card-outline"></ion-icon></span>
-                        <span class="title" style="font-family: Ubuntu;">Accounting</span>
+                        <span class="title" style="font-family: Metropolis;">Accounting</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{% url 'help' %}">
                         <span class="icon"><ion-icon name="help-circle-outline"></ion-icon></span>
-                        <span class="title" style="font-family: Ubuntu;">Help</span>
+                        <span class="title" style="font-family: Metropolis;">Help</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{% url 'profile' %}">
                         <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-                        <span class="title" style="font-family: Ubuntu;">Profile</span>
+                        <span class="title" style="font-family: Metropolis;">Profile</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{% url 'logout' %}">
                         <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
-                        <span class="title" style="font-family: Ubuntu;">Sign out</span>
+                        <span class="title" style="font-family: Metropolis;">Sign out</span>
                     </a>
                 </li>
             </ul>

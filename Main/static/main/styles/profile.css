@@ -1,3 +1,4 @@
+
 .profileCardBox
 {
     background: var(--white);
@@ -10,4 +11,9 @@
     font-weight: 600;
     font-family: Metropolis;
     color: var(--blue);
+}
+.top-buffer { margin-top:30px; }
+
+* {
+    font-family: 'Inter';
 }
