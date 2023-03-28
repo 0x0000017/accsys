@@ -33,7 +33,7 @@
         <div class="sideNavigation">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="{% url 'home' %}">
                         <span class="icon"><div class="logo"><img src="{% static 'main/assets/images/App Logo only.png' %}" alt=""></div></span>
                         <span class="title" style=" font-family: 'Take Me Out';
                         letter-spacing: 5px; font-size: xx-large; left: 10px; top: 10px;">AccSys</span>
@@ -102,7 +102,7 @@
 
                 <!-- userImg -->
                 <div class="user">
-                    <img src="{% static 'main/assets/images/user.jpg' %}" alt="User">
+                    <a href ="{% url 'profile' %}"><img src="{% static 'main/assets/images/user.jpg' %}" alt="User"></a>
                 </div>
             </div>
             <!-- navbar top -->
