@@ -1,3 +1,7 @@
+import sys
+import pandas as pd
+sys.path.append('..')
+
 from django.db import IntegrityError
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
@@ -5,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
-from .models import Store, Address
+from .models import Store, Address, Item, Category
 
 
 # Create your views here.
@@ -30,20 +34,19 @@ def login_view(request):
 def register(request):
     if request.method == 'POST':
         # PERSONAL USER INFO
-        username = request.POST['userName']
+        username = request.POST['username']
         first_name = request.POST['firstName']
         last_name = request.POST['lastName']
-        customer_address = request.POST['cusAddr']
+        customer_address = request.POST['address']
 
         # STORE INFO
         store_name = request.POST['storeName']
         store_address = request.POST['storeAddress']
-        email = request.POST['emailAddr']
+        email = request.POST['email']
 
         # LOGIN INFO
         password = request.POST['password']
         confirm = request.POST['confirmPass']
-        image = request.POST['formFile']
 
         if password != confirm:
             return render(request, 'Main/Login/register.html', {
@@ -55,10 +58,13 @@ def register(request):
                            password=password, email=email)
 
             new_address = Address(address_name=customer_address, user=newUser)
-            new_store = Store(storeName=store_name, storeOwner=newUser, storeAddress=store_address)
 
+            new_store = Store(storeName=store_name, storeAddress=store_address)
             newUser.save()
             new_address.save()
+            new_store.save()
+
+            new_store.storeOwner.add(newUser)
             new_store.save()
 
         except IntegrityError:
@@ -72,8 +78,7 @@ def register(request):
         return render(request, 'Main/Login/register.html')
 
 
-## VIEWS FOR LOGGED IN USERS
-
+# VIEWS FOR LOGGED IN USERS
 def dashboard(request):
     user = request.user
     return render(request, 'Main/Landing/dashboard.html', {
@@ -112,3 +117,21 @@ def help(request):
         'user': user
     })
 
+
+def generate_data(request):
+    df = pd.read_csv('Main/datasets/january_clean.csv')
+
+    category = Category.objects.get(category_name='Technology')
+    store = Store.objects.get(storeName='Sample Store Name')
+
+    for i in range(2, len(df.index)):
+        price = int(df['Price Each'][i])
+
+        new_item = Item(item_name=df['Product'][i],
+                        item_price=int(price),
+                        item_category=category,
+                        store=store
+                        )
+        new_item.save()
+
+    return HttpResponse('Generation Complete')
