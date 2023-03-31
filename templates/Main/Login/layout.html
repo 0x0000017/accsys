@@ -7,6 +7,7 @@
     <title>ACCSYS</title>
     <link rel="stylesheet" type="text/css" href="{%static 'main/styles/login.css'%}">
     <link rel="stylesheet" type="text/css" href="{%static 'main/styles/home.css'%}">
+    <link rel="icon" href="{%static 'main/assets/images/site-logo.png'%}">
 
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" 
@@ -27,6 +28,7 @@
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="{%static 'main/scripts/emptyFields.js'%}"></script>
 
 </head>
 <body>
@@ -34,9 +36,8 @@
     <!-- <header id="header" class="fixed-top"> -->
 
     <nav class="navbar navbar-expand-md px-5 mt-2">
-        
             <!-- <a href="#" class="navbar-brand fs-2 fw-bold ms-5 text-primary" ><img src="/Main/static/main/assets/images/logo.png"/></a-->
-            <a href="#!"><img src="{% static 'main/assets/images/logov2.png' %}" width="55"/></a>
+            <a href="{% url 'home' %}"><img src="{% static 'main/assets/images/logov2.png' %}" width="55"/></a>
 
         <button class="navbar-toggler" 
         type="button" 
@@ -48,7 +49,7 @@
         <div class="collaps navbar-collapse" id="btn">
             <ul class="navbar-nav ms-auto me-5">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Home</a>
+                    <a href="{% url 'home' %}" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">About</a>
