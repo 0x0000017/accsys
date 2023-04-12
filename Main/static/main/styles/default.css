@@ -229,7 +229,7 @@ body
     transition: 0.5s;
 }
 .main.active{
-    width: calc(100% - 80px);
+    width: calc(100vw - 80px);
     left: 80px;
 }
 .topbar
@@ -331,7 +331,7 @@ body
 
 
 /* responsive */
-@media (max-width: 1520px)
+/* @media (max-width: 1520px)
 {
     .graphBox
     {
@@ -381,7 +381,8 @@ body
         width: 100%;
     }
 
-}
+} */
+
 @media (max-width:790px)
 {
     body 
