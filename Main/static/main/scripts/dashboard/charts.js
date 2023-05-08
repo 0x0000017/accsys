@@ -1,5 +1,6 @@
 const ctx = document.getElementById('SalesByMonth');
 const ctxPie = document.getElementById('SalesByItem');
+const prdBreak = document.getElementById('prodBreakdown');
 
       
 new Chart(ctx, {
@@ -83,3 +84,34 @@ new Chart(ctxPie, {
         }
     }
   });
+
+new Chart(prdBreak, {
+  type: 'doughnut',
+  data: {
+    labels: [
+      'Electronics',
+      'Furniture',
+      'Bags and Packages',
+      'Accessories'
+    ],
+    datasets: [{
+      label: 'Sales Breakdown by Product',
+      data: [300, 100, 60, 30, 10],
+      backgroundColor: [
+        'rgb(255, 99, 132)',
+        'rgb(54, 162, 235)',
+        'rgb(255, 205, 86)',
+        'rgb(0,88,255)'
+      ],
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Sales Breakdown by Product',
+      }
+    }
+  }
+});
