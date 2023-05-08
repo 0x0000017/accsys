@@ -227,7 +227,7 @@ html {
 
 
 /* responsive */
-@media (max-width: 1520px)
+/* @media (max-width: 1520px)
 {
     .graphBox
     {
@@ -241,7 +241,7 @@ html {
         height: auto;
     }
 
-}
+} */
 @media (max-width:790px)
 {
     .recentOrders
