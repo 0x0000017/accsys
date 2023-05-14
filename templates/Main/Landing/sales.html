@@ -3,18 +3,29 @@
 
 {% block content %}
 
-
+<h1>Accounting</h1>
+<br>
 <div class="row mb-5">
     <div class="col">
         <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Sales Panel
-            <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-              <li><a href="#">Profit</a></li>
-              <li><a href="#">Sales</a></li>
-              <li><a href="#">Expenses</a></li>
-            </ul>
-          </div>
+            <a href="#" class="dd-select dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Sales Panel
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="{% url 'profit' %}">
+                    <span class ="icon"><ion-icon name="grid-outline"></ion-icon></span>
+                    Profit
+                </a>
+                <a class="dropdown-item disabled" href="{% url 'sales' %}">
+                    <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                    Sales
+                </a>
+                <a class="dropdown-item" href="{% url 'expenses' %}">
+                    <span class="logo"><ion-icon name="wallet-outline"></ion-icon></span>
+                    Expenses
+                </a>
+            </div>
+        </div>
     </div>
     <div class="col"></div>
     <div class="col nprofit">
@@ -203,8 +214,6 @@
     </div>
 </div>
 
-
-<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.0/dist/chart.umd.min.js"></script>
 <script src="{% static 'main/scripts/accounting/charts.js' %}"></script>
 
