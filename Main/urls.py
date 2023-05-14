@@ -14,5 +14,8 @@ urlpatterns = [
     path('accounting', views.accounting, name='accounting'),
     path('profile', views.profile, name='profile'),
     path('help', views.help, name='help'),
+    path('profit', views.profit, name='profit'),
+    path('sales', views.sales, name='sales'),
+    path('expenses', views.expenses, name='expenses'),
     path('generate_data', views.generate_data, name='generate')
 ]

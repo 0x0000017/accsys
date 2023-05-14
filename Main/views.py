@@ -117,6 +117,27 @@ def help(request):
         'user': user
     })
 
+def profit(request):
+    user = request.user
+
+    return render(request, 'Main/Landing/profit.html', {
+        'user': user
+    })
+
+def sales(request):
+    user = request.user
+
+    return render(request, 'Main/Landing/sales.html', {
+        'user': user
+    })
+
+def expenses(request):
+    user = request.user
+
+    return render(request, 'Main/Landing/expenses.html', {
+        'user': user
+    })
+
 
 def generate_data(request):
     df = pd.read_csv('Main/datasets/january_clean.csv')
