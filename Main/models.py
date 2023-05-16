@@ -3,10 +3,6 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
-class Category(models.Model):
-    category_name = models.CharField(max_length=200)
-
-
 class Store(models.Model):
     storeName = models.CharField(max_length=200)
     storeOwner = models.ManyToManyField(User, related_name='store_owner')
@@ -17,7 +13,7 @@ class Store(models.Model):
 class Item(models.Model):
     item_name = models.CharField(max_length=200)
     item_price = models.IntegerField()
-    item_category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='cat')
+    category = models.CharField(max_length=64)
     date_ordered = models.DateTimeField(auto_now=True)
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='location')
 

@@ -51,76 +51,31 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr class="text-center" >
-                    <td>Direct</td>
-                    <td>45759</td>
-                    <td>32.1%</td>
-                    <td>3.5%</td>
-                    <td>1765</td>
+                {% for item in items %}
+                    <tr class="text-center" >
+                    <td>{{ item.item_name }}</td>
+                    <td>{{ item.item_price }}</td>
+                    <td>{{ item.category }}</td>
+                    <td>{{ item.date_ordered }}</td>
+                    <td>Test</td>
                     <td>
-                        <button type="button" 
+                        <button type="button"
                                 class="btn btn-primary"
-                                data-bs-toggle="modal" 
+                                data-bs-toggle="modal"
                                 data-bs-target="#editItemsModal"
-                        > 
+                        >
                             <ion-icon name="create-outline" style="font-size: 1.13em;"></ion-icon>
                         </button>
-                        <button type="button" 
+                        <button type="button"
                                 class="btn btn-danger"
-                                data-bs-toggle="modal" 
+                                data-bs-toggle="modal"
                                 data-bs-target="#deleteItemModal"
-                        > 
+                        >
                             <ion-icon name="trash-outline" style="font-size: 1.13em;">
                         </ion-icon></button>
                     </td>
                 </tr>
-                <tr class="text-center" >
-                    <td>Call In</td>
-                    <td>89,298</td>
-                    <td>49.2%</td>
-                    <td>1.5%</td>
-                    <td>15425</td>
-                    <td>
-                        <button type="button" 
-                                class="btn btn-primary"
-                                data-bs-toggle="modal" 
-                                data-bs-target="#editItemsModal"
-                        > 
-                            <ion-icon name="create-outline" style="font-size: 1.13em;"></ion-icon>
-                        </button>
-                        <button type="button" 
-                                class="btn btn-danger"
-                                data-bs-toggle="modal" 
-                                data-bs-target="#deleteItemModal"
-                        > 
-                            <ion-icon name="trash-outline" style="font-size: 1.13em;">
-                        </ion-icon></button>
-                    </td>
-                </tr>
-                <tr class="text-center" >
-                    <td>Paid Search</td>
-                    <td>62.767</td>
-                    <td>9.3%</td>
-                    <td>6.0%</td>
-                    <td>1449</td>
-                    <td>
-                        <button type="button" 
-                                class="btn btn-primary"
-                                data-bs-toggle="modal" 
-                                data-bs-target="#editItemsModal"
-                        > 
-                            <ion-icon name="create-outline" style="font-size: 1.13em;"></ion-icon>
-                        </button>
-                        <button type="button" 
-                                class="btn btn-danger"
-                                data-bs-toggle="modal" 
-                                data-bs-target="#deleteItemModal"
-                        > 
-                            <ion-icon name="trash-outline" style="font-size: 1.13em;">
-                        </ion-icon></button>
-                    </td>
-                </tr>
-                    
+                {% endfor %}
                 </tbody>
             </table>
 

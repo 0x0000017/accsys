@@ -17,5 +17,6 @@ urlpatterns = [
     path('profit', views.profit, name='profit'),
     path('sales', views.sales, name='sales'),
     path('expenses', views.expenses, name='expenses'),
-    path('generate_data', views.generate_data, name='generate')
+    path('generate_data', views.generate_data, name='generate'),
+    path('delete', views.delete_data, name='delete')
 ]

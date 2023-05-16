@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
-from .models import Store, Address, Item, Category
+from .models import Store, Address, Item
 
 
 # Create your views here.
@@ -90,7 +90,8 @@ def inventory(request):
     user = request.user
 
     return render(request, 'Main/Landing/inventory.html', {
-        'user': user
+        'user': user,
+        'items': Item.objects.all()
     })
 
 
@@ -140,19 +141,36 @@ def expenses(request):
 
 
 def generate_data(request):
-    df = pd.read_csv('Main/datasets/january_clean.csv')
-
-    category = Category.objects.get(category_name='Technology')
-    store = Store.objects.get(storeName='Sample Store Name')
+    df = pd.read_csv('Main/datasets/Processed Superstore Data.csv')
+    store = Store.objects.get(id=1)
 
     for i in range(2, len(df.index)):
-        price = int(df['Price Each'][i])
-
-        new_item = Item(item_name=df['Product'][i],
-                        item_price=int(price),
-                        item_category=category,
-                        store=store
-                        )
+        new_item = Item(item_name=df['Sub-Category'][i],
+                        item_price=df['Price per Item'][i],
+                        category=df['Category'][i],
+                        store=store)
         new_item.save()
 
     return HttpResponse('Generation Complete')
+
+
+def generate_sale_data(request):
+    df = pd.read_csv('Main/datasets/Processed Superstore Data.csv')
+    items = Item.objects.all()
+    store = Store.objects.get(id=1)
+
+    for i in range(2, len(df.index)):
+        new_sale = Sale(item_name=df['Sub-Category'][i],
+                        item_price=df['Price per Item'][i],
+                        category=df['Category'][i],
+                        store=store)
+        new_sale.save()
+
+    return HttpResponse('Generation Complete')
+
+
+def delete_data(request):
+    items = Item.objects.all()
+    items.delete()
+
+    return HttpResponse('Items Deleted')
