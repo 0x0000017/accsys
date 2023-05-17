@@ -7,9 +7,9 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
-from .models import Store, Address, Item
+from .models import Store, Address, Item, Sale
 
 
 # Create your views here.
@@ -86,12 +86,26 @@ def dashboard(request):
     })
 
 
-def inventory(request):
+def inventory(request, item_filter):
     user = request.user
+    item_set = item_filter.lower()
+
+    if item_set == 'all':
+        items = Item.objects.all()[:201]
+    elif item_set == 'name':
+        items = Item.objects.order_by('item_name').all()[:201]
+    elif item_set == 'price':
+        items = Item.objects.order_by('item_price').all()[:201]
+    elif item_set == 'category':
+        items = Item.objects.order_by('category').all()[:201]
+    elif item_set == 'date':
+        items = Item.objects.order_by('date_ordered').all()[:201]
+    elif item_set == 'quantity':
+        items = Item.objects.all()[:201]
 
     return render(request, 'Main/Landing/inventory.html', {
         'user': user,
-        'items': Item.objects.all()
+        'items': items
     })
 
 
@@ -118,6 +132,7 @@ def help(request):
         'user': user
     })
 
+
 def profit(request):
     user = request.user
 
@@ -125,12 +140,14 @@ def profit(request):
         'user': user
     })
 
+
 def sales(request):
     user = request.user
 
     return render(request, 'Main/Landing/sales.html', {
         'user': user
     })
+
 
 def expenses(request):
     user = request.user

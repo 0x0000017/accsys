@@ -30,11 +30,11 @@
                 </button>
 
                 <ul class="dropdown-menu" style="font-family: Metropolis;">
-                    <li><a class="dropdown-item" href="#">Name</a></li>
-                    <li><a class="dropdown-item" href="#">Price</a></li>
-                    <li><a class="dropdown-item" href="#">Category</a></li>
-                    <li><a class="dropdown-item" href="#">Date</a></li>
-                    <li><a class="dropdown-item" href="#">Quantity</a></li>
+                    <li><a class="dropdown-item" href="{% url 'inventory' 'name' %}">Name</a></li>
+                    <li><a class="dropdown-item" href="{% url 'inventory' 'price' %}">Price</a></li>
+                    <li><a class="dropdown-item" href="{% url 'inventory' 'category' %}">Category</a></li>
+                    <li><a class="dropdown-item" href="{% url 'inventory' 'date' %}">Date</a></li>
+                    <li><a class="dropdown-item" href="{% url 'inventory' 'all' %}">Quantity</a></li>
                 </ul>
 
             </div>

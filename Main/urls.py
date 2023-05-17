@@ -10,7 +10,7 @@ urlpatterns = [
     path('logout', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
     path('register', views.register, name='register'),
     path('dashboard', views.dashboard, name='dashboard'),
-    path('inventory', views.inventory, name='inventory'),
+    path('inventory/<str:item_filter>', views.inventory, name='inventory'),
     path('accounting', views.accounting, name='accounting'),
     path('profile', views.profile, name='profile'),
     path('help', views.help, name='help'),
