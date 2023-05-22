@@ -30,10 +30,10 @@
                 </button>
 
                 <ul class="dropdown-menu" style="font-family: Metropolis;">
-                    <li><a class="dropdown-item" href="{% url 'inventory' 'name' %}">Name</a></li>
-                    <li><a class="dropdown-item" href="{% url 'inventory' 'price' %}">Price</a></li>
+                    <li><a class="dropdown-item" href="{% url 'inventory' 'item_name' %}">Name</a></li>
+                    <li><a class="dropdown-item" href="{% url 'inventory' 'item_price' %}">Price</a></li>
                     <li><a class="dropdown-item" href="{% url 'inventory' 'category' %}">Category</a></li>
-                    <li><a class="dropdown-item" href="{% url 'inventory' 'date' %}">Date</a></li>
+                    <li><a class="dropdown-item" href="{% url 'inventory' 'date_ordered' %}">Date</a></li>
                     <li><a class="dropdown-item" href="{% url 'inventory' 'all' %}">Quantity</a></li>
                 </ul>
 
@@ -54,7 +54,7 @@
                 {% for item in items %}
                     <tr class="text-center" >
                     <td>{{ item.item_name }}</td>
-                    <td>{{ item.item_price }}</td>
+                    <td>PHP {{ item.item_price }}</td>
                     <td>{{ item.category }}</td>
                     <td>{{ item.date_ordered }}</td>
                     <td>Test</td>

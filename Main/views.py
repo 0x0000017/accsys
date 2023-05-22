@@ -90,18 +90,10 @@ def inventory(request, item_filter):
     user = request.user
     item_set = item_filter.lower()
 
-    if item_set == 'all':
+    if item_set == 'all' or item_set == 'quantity':
         items = Item.objects.all()[:201]
-    elif item_set == 'name':
-        items = Item.objects.order_by('item_name').all()[:201]
-    elif item_set == 'price':
-        items = Item.objects.order_by('item_price').all()[:201]
-    elif item_set == 'category':
-        items = Item.objects.order_by('category').all()[:201]
-    elif item_set == 'date':
-        items = Item.objects.order_by('date_ordered').all()[:201]
-    elif item_set == 'quantity':
-        items = Item.objects.all()[:201]
+    else:
+        items = Item.objects.order_by(f'{item_set}').all()[:201]
 
     return render(request, 'Main/Landing/inventory.html', {
         'user': user,
