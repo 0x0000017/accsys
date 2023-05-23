@@ -84,13 +84,19 @@ def dashboard(request):
     store = Store.objects.filter(storeOwner=user)
     items = Item.objects.filter(store__in=store).all()
     total_expenses = 0
+    total_sales = 1
+    revenue = 1
+    net_income = 1
 
     for item in items:
         total_expenses += item.expense
 
     return render(request, 'Main/Landing/dashboard.html', {
         'user': user,
-        'expense': total_expenses
+        'sales': total_sales,
+        'revenue': revenue,
+        'expense': total_expenses,
+        'net_income': net_income
     })
 
 
