@@ -127,10 +127,14 @@ def inventory(request, item_filter):
 
 def accounting(request, filter_data):
     user = request.user
+    store = Store.objects.filter(storeOwner=user)
+    items = Item.objects.filter(store__in=store).all()[:20]
 
     return render(request, 'Main/Landing/accounting.html', {
         'user': user,
-        'panel': filter_data.capitalize()
+        'panel': filter_data.capitalize(),
+        'items': items,
+        'item_tail': Item.objects.filter(store__in=store).all()[:5:-1]
     })
 
 

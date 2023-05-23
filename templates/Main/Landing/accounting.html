@@ -71,61 +71,21 @@
 
 <h5>Recently Updated</h5>
 <div class="carddiv my-5">
-    <div class="card" style="width: 18rem;">
-        <p style="color: #696969;font-size: 0.8rem;margin-left: 1vw; margin-top: 1vw;">0000016</p>
+    {% for item in item_tail %}
+        <div class="card" style="width: 18rem;">
+        <p style="color: #696969;font-size: 0.8rem;margin-left: 1vw; margin-top: 1vw;">{{ item.id }}</p>
         <div class="card-body">
-            <h5 class="card-title">Product 1</h5>
-            <p class="card-text">04/04/2023.</p>
+            <h5 class="card-title">{{ item.item_name }}</h5>
+            <p class="card-text">{{ item.date_ordered }}</p>
             <br>
             <hr>
-            <p class ="card-price">$339</p>
+            <p class ="card-price">PHP {{ item.item_price }}</p>
         </div>
         <div class="card-footer">
             <span>PAID</span>
         </div>
     </div>
-
-    <div class="card" style="width: 18rem;">
-        <p style="color: #696969;font-size: 0.8rem;margin-left: 1vw; margin-top: 1vw;">0000016</p>
-        <div class="card-body">
-            <h5 class="card-title">Product 1</h5>
-            <p class="card-text">04/04/2023.</p>
-            <br>
-            <hr>
-            <p class ="card-price">$339</p>
-        </div>
-        <div class="card-footer">
-            <span>PAID</span>
-        </div>
-    </div>
-
-    <div class="card" style="width: 18rem;">
-        <p style="color: #696969;font-size: 0.8rem;margin-left: 1vw; margin-top: 1vw;">0000016</p>
-        <div class="card-body">
-            <h5 class="card-title">Product 1</h5>
-            <p class="card-text">04/04/2023.</p>
-            <br>
-            <hr>
-            <p class ="card-price">$339</p>
-        </div>
-        <div class="card-footer">
-            <span>PAID</span>
-        </div>
-    </div>
-
-    <div class="card" style="width: 18rem;">
-        <p style="color: #696969;font-size: 0.8rem;margin-left: 1vw; margin-top: 1vw;">0000016</p>
-        <div class="card-body">
-            <h5 class="card-title">Product 1</h5>
-            <p class="card-text">04/04/2023.</p>
-            <br>
-            <hr>
-            <p class ="card-price">$339</p>
-        </div>
-        <div class="card-footer">
-            <span>PAID</span>
-        </div>
-    </div>
+    {% endfor %}
 </div>
 
 
@@ -169,90 +129,22 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    </div>
-                </th>
-                <td>Sample Product 1</td>
-                <td>5/24/2023</td>
-                <td>2 months ago</td>
-                <td>
-                    <p class ="amountVal">$300.00</p>
-                    <span class ="amountStat">cleared</span>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    </div>
-                </th>
-                <td>Sample Product 2</td>
-                <td>5/24/2023</td>
-                <td> -- </td>
-                <td>
-                    <p class ="amountVal">$300.00</p>
-                    <span class ="amountStatNeg">not cleared</span>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    </div>
-                </th>
-                <td>Sample Product 3</td>
-                <td>5/24/2023</td>
-                <td>5 months ago</td>
-                <td>
-                    <p class ="amountVal">$300.00</p>
-                    <span class ="amountStat">cleared</span>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    </div>
-                </th>
-                <td>Sample Product 4</td>
-                <td>5/24/2023</td>
-                <td>4 months ago</td>
-                <td>
-                    <p class ="amountVal">$300.00</p>
-                    <span class ="amountStat">cleared</span>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    </div>
-                </th>
-                <td>Sample Product 5</td>
-                <td>5/24/2023</td>
-                <td>2 months ago</td>
-                <td>
-                    <p class ="amountVal">$300.00</p>
-                    <span class ="amountStat">cleared</span>
-                </td>
-              </tr>
-              <tr>
-                <th scope="row">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    </div>
-                </th>
-                <td>Sample Product 6</td>
-                <td>5/24/2023</td>
-                <td>1 months ago</td>
-                <td>
-                    <p class ="amountVal">$300.00</p>
-                    <span class ="amountStat">cleared</span>
-                </td>
-              </tr>
+                {% for item in items %}
+                    <tr>
+                    <th scope="row">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck1">
+                        </div>
+                    </th>
+                    <td>{{ item.item_name }}</td>
+                    <td>{{ item.date_ordered }}</td>
+                    <td>2 months ago</td>
+                    <td>
+                        <p class ="amountVal">PHP {{ item.item_price }}</p>
+                        <span class ="amountStat">cleared</span>
+                    </td>
+                  </tr>
+                {% endfor %}
             </tbody>
           </table>
     </div>
