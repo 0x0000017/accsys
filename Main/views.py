@@ -125,11 +125,12 @@ def inventory(request, item_filter):
     })
 
 
-def accounting(request):
+def accounting(request, filter_data):
     user = request.user
 
     return render(request, 'Main/Landing/accounting.html', {
-        'user': user
+        'user': user,
+        'panel': filter_data.capitalize()
     })
 
 
@@ -145,30 +146,6 @@ def help(request):
     user = request.user
 
     return render(request, 'Main/Landing/help.html', {
-        'user': user
-    })
-
-
-def profit(request):
-    user = request.user
-
-    return render(request, 'Main/Landing/profit.html', {
-        'user': user
-    })
-
-
-def sales(request):
-    user = request.user
-
-    return render(request, 'Main/Landing/sales.html', {
-        'user': user
-    })
-
-
-def expenses(request):
-    user = request.user
-
-    return render(request, 'Main/Landing/expenses.html', {
         'user': user
     })
 
