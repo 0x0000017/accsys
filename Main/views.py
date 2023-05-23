@@ -83,20 +83,28 @@ def dashboard(request):
     user = request.user
     store = Store.objects.filter(storeOwner=user)
     items = Item.objects.filter(store__in=store).all()
-    total_expenses = 0
+    total_expenses = 1
     total_sales = 1
     revenue = 1
     net_income = 1
+    office_sales = check_top_sales(items)[0]
+    furniture_sales = check_top_sales(items)[1]
+    tech_sales = check_top_sales(items)[2]
 
-    for item in items:
-        total_expenses += item.expense
+    # for item in items:
+    #     total_expenses += item.expense
 
     return render(request, 'Main/Landing/dashboard.html', {
         'user': user,
         'sales': total_sales,
         'revenue': revenue,
         'expense': total_expenses,
-        'net_income': net_income
+        'net_income': net_income,
+        'all_items': items,
+        'recent_sales': Item.objects.filter(store__in=store).all()[:10:-1],
+        'office_sales': office_sales,
+        'furniture_sales': furniture_sales,
+        'tech_sales': tech_sales,
     })
 
 
@@ -200,3 +208,17 @@ def delete_data(request):
     items.delete()
 
     return HttpResponse('Items Deleted')
+
+
+def check_top_sales(items):
+    categs = [0, 0, 0]
+
+    for item in items:
+        if item.category == 'Office Supplies':
+            categs[0] += 1
+        elif item.category == 'Furniture':
+            categs[1] += 1
+        elif item.category == 'Technology':
+            categs[2] += 1
+
+    return categs

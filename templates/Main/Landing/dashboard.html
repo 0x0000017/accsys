@@ -34,7 +34,7 @@
 
     <div class="Scard">
         <div>
-            <div class="numbers" data-val="{{ total_expenses }}">{{ total_expenses }}</div>
+            <div class="numbers" data-val="{{ expense }}">{{ expense }}</div>
             <div class="cardName">Expenses</div>
         </div>
         <div class="iconBx">
@@ -69,8 +69,7 @@
     <div class="recentOrders table-responsive">
             <div class="cardHeader">
                 <h2>Recent Orders</h2>
-                <!-- <a href="#" class="btn">View All</a> -->
-                <button class="btn btn-primary">View All</button>
+                <a href="{% url 'inventory' 'all' %}"><button class="btn btn-primary">View All</button></a>
             </div>
             <table class="table table-striped table-hover" style="height: 90%;">
                 <thead>
@@ -83,69 +82,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td >Window Coolers</td>
-                        <td class="text-center">$110</td>
-                        <td class="text-center">Appliances</td>
-                        <td class="text-center">1/20/22</td>
-                        <td class="text-center">50</td>
-                    </tr>
-                    <tr>
-                        <td>Speakers</td>
-                        <td class="text-center">$620</td>
-                        <td class="text-center">Appliances</td>
-                        <td class="text-center">1/20/22</td>
-                        <td class="text-center">50</td>
-                    </tr>
-                    <tr>
-                        <td>Laptop</td>
-                        <td class="text-center">$110</td>
-                        <td class="text-center">Gadget</td>
-                        <td class="text-center">1/20/22</td>
-                        <td class="text-center">50</td>
-                    </tr>
-                    <tr>
-                        <td>Apple Watch</td>
-                        <td class="text-center">$1200</td>
-                        <td class="text-center">Gadget</td>
-                        <td class="text-center">1/20/22</td>
-                        <td class="text-center">50</td>
-                    </tr>
-                    <tr>
-                        <td>Wall Fan</td>
-                        <td class="text-center">$110</td>
-                        <td class="text-center">Appliances</td>
-                        <td class="text-center">1/20/22</td>
-                        <td class="text-center">50</td>
-                    </tr>
-                    <tr>
-                        <td>Shoes</td>
-                        <td class="text-center">$620</td>
-                        <td class="text-center">Clothes</td>
-                        <td class="text-center">1/20/22</td>
-                        <td class="text-center">50</td>
-                    </tr>
-                    <tr>
-                        <td>Denim Shirts</td>
-                        <td class="text-center">$110</td>
-                        <td class="text-center">Clothes</td>
-                        <td class="text-center">1/20/22</td>
-                        <td class="text-center">50</td>
-                    </tr>
-                    <tr>
-                        <td>Casual Shoes</td>
-                        <td class="text-center">$510</td>
-                        <td class="text-center">Clothes</td>
-                        <td class="text-center">1/20/22</td>
-                        <td class="text-center">50</td>
-                    </tr>
-                    <tr>
-                        <td>Denim Shirts</td>
-                        <td class="text-center">$110</td>
-                        <td class="text-center">Clothes</td>
-                        <td class="text-center">1/20/22</td>
-                        <td class="text-center">50</td>
-                    </tr>
+                    {% for item in recent_sales %}
+                        <tr>
+                            <td >{{ item.item_name }}</td>
+                            <td class="text-center">{{ item.item_price }}</td>
+                            <td class="text-center">{{ item.category }}</td>
+                            <td class="text-center">{{ item.date_ordered }}</td>
+                            <td class="text-center">{{ 'hello' }}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
     </div>
@@ -199,7 +144,126 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.0/dist/chart.umd.min.js"></script>
-<script src="{% static 'main/scripts/dashboard/charts.js' %}"></script>
+
+<script type="text/javascript">
+    const ctx = document.getElementById('SalesByMonth');
+    const ctxPie = document.getElementById('SalesByItem');
+    const prdBreak = document.getElementById('prodBreakdown');
+
+
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June','July','August', 'September','October','November', 'December'],
+        datasets: [{
+          label: 'Earnings in ₱',
+          data: [1065, 2259, 480, 1081, 1856, 1855, 2340,1232,2322,1123,2344,1122],
+          backgroundColor: [
+            'rgba(255, 99, 132, 0.9)',
+            'rgba(54, 162, 235, 0.9)',
+            'rgba(255, 205, 86, 0.9)',
+            'rgba(75, 192, 192, 0.9)',
+            'rgba(153, 102, 255, 0.9)',
+            'rgba(255, 159, 64, 0.9)',
+            'rgba(201, 203, 207, 0.9)',
+            'rgba(255, 99, 132, 0.9)',
+            'rgba(54, 162, 235, 0.9)',
+            'rgba(255, 205, 86, 0.9)',
+            'rgba(75, 192, 192, 0.9)',
+            'rgba(153, 102, 255, 0.9)',
+            ],
+            borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 205, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)',
+            'rgb(201, 203, 207)',
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 205, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            ],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            responsive: true,
+          }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Sales by Month',
+            }
+        }
+      }
+    });
+
+    new Chart(ctxPie, {
+        type: 'pie',
+        data: {
+            labels: [
+                'Office Supplies',
+                'Furniture',
+                'Technology'
+            ],
+            datasets: [{
+                label: 'Top Sales',
+                data: ['{{ office_sales }}', '{{ furniture_sales }}', '{{ tech_sales }}'],
+                backgroundColor: [
+                  'rgb(255, 99, 132)',
+                  'rgb(54, 162, 235)',
+                  'rgb(255, 205, 86)'
+                ],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Top Sales',
+                }
+            }
+        }
+      });
+
+    new Chart(prdBreak, {
+      type: 'doughnut',
+      data: {
+        labels: [
+          'Electronics',
+          'Furniture',
+          'Bags and Packages',
+          'Accessories'
+        ],
+        datasets: [{
+          label: 'Sales Breakdown by Product',
+          data: [300, 100, 60, 30, 10],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+            'rgb(0,88,255)'
+          ],
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Sales Breakdown by Product',
+          }
+        }
+      }
+    });
+</script>
 
 <script type="text/javascript">
     let valueDisplays = document.querySelectorAll(".numbers");
