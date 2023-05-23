@@ -81,23 +81,33 @@ def register(request):
 # VIEWS FOR LOGGED IN USERS
 def dashboard(request):
     user = request.user
+    store = Store.objects.filter(storeOwner=user)
+    items = Item.objects.filter(store__in=store).all()
+    total_expenses = 0
+
+    for item in items:
+        total_expenses += item.expense
+
     return render(request, 'Main/Landing/dashboard.html', {
-        'user': user
+        'user': user,
+        'expense': total_expenses
     })
 
 
 def inventory(request, item_filter):
     user = request.user
+    store = Store.objects.filter(storeOwner=user)
     item_set = item_filter.lower()
 
-    if item_set == 'all' or item_set == 'quantity':
-        items = Item.objects.all()[:201]
+    if item_set == 'all':
+        items = Item.objects.filter(store__in=store).all()
     else:
-        items = Item.objects.order_by(f'{item_set}').all()[:201]
+        items = Item.objects.filter(store__in=store).order_by(f'{item_set}').all()
 
     return render(request, 'Main/Landing/inventory.html', {
         'user': user,
-        'items': items
+        'all_items': items,
+        'items': items[:round(len(items) * .2)]
     })
 
 
@@ -156,6 +166,7 @@ def generate_data(request):
     for i in range(2, len(df.index)):
         new_item = Item(item_name=df['Sub-Category'][i],
                         item_price=df['Price per Item'][i],
+                        expense=df['Production Cost'][i],
                         category=df['Category'][i],
                         store=store)
         new_item.save()
