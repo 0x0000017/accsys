@@ -62,19 +62,98 @@
                         <button type="button"
                                 class="btn btn-primary"
                                 data-bs-toggle="modal"
-                                data-bs-target="#editItemsModal"
+                                data-bs-target="#editItemsModal-{{ item.id }}"
                         >
                             <ion-icon name="create-outline" style="font-size: 1.13em;"></ion-icon>
                         </button>
                         <button type="button"
                                 class="btn btn-danger"
                                 data-bs-toggle="modal"
-                                data-bs-target="#deleteItemModal"
+                                data-bs-target="#deleteItemModal-{{ item.id }}"
                         >
                             <ion-icon name="trash-outline" style="font-size: 1.13em;">
                         </ion-icon></button>
                     </td>
                 </tr>
+
+                <!-- MODALS -->
+                <div class="modal fade" id="editItemsModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <form action="/update_item/{{ item.id }}" method="post">
+                        {% csrf_token %}
+                        <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"> Edit </h1>
+                            <button type="button" class="btn-close"
+                            data-bs-dismiss="modal" aria-label="Close"
+                            (click)="closeClick()"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class ="form-group">
+                                <div class="row"> </div>
+                                <div class="mb-1">
+                                    <label for="itemName" class="form-label">Item name:</label>
+                                    <input type="text" class="form-control input-sm" id="itemName" name="item_name">
+                                </div>
+
+                                <div class="mb-1">
+                                    <label for="itemPrice" class="form-label">Item Price:</label>
+                                    <input type="text" class="form-control input-sm" id="itemPrice" name="item_price">
+                                </div>
+
+                                <div class="mb-1">
+                                    <label for="category" class="form-label">Category:</label>
+                                    <input type="text" class="form-control input-sm" id="category" name="category">
+                                </div>
+
+                                <div class="mb-1">
+                                    <label for="dateOrdered" class="form-label">Date Ordered:</label>
+                                    <input type="date" class="form-control" id="dateOrdered" name="date_ordered">
+                                </div>
+
+                                <div class="mb-1">
+                                    <label for="quantity" class="form-label">Quantity:</label>
+                                    <input type="text" class="form-control" id="quantity" name="quantity">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+
+                <div class="modal fade" id="deleteItemModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel"> Delete </h1>
+                        <button type="button" class="btn-close"
+                        data-bs-dismiss="modal" aria-label="Close"
+                        (click)="closeClick()"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Are you sure to delete?</p>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <a href="/delete_item/{{ item.id }}">
+                            <button type="button" class="btn btn-primary">Yes</button>
+                        </a>
+                    </div>
+
+                    </div>
+                </div>
+                </div>
                 {% endfor %}
                 </tbody>
             </table>
@@ -98,131 +177,57 @@
     </div>
     </div>
 
-    <!-- Edit Modal -->
-    <div class="modal fade" id="editItemsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel"> Edit </h1>
-            <button type="button" class="btn-close" 
-            data-bs-dismiss="modal" aria-label="Close"
-            (click)="closeClick()"></button>
-        </div>
-
-        <div class="modal-body">
-            <div class ="form-group">
-                <div class="row"> </div>
-                <div class="mb-1">
-                    <label for="itemName" class="form-label">Item name:</label>
-                    <input type="text" class="form-control input-sm" id="itemName" name="itemName">
-                </div>
-                
-                <div class="mb-1">
-                    <label for="itemPrice" class="form-label">Item Price:</label>
-                    <input type="text" class="form-control input-sm" id="itemPrice" name="firstName">
-                </div>
-
-                <div class="mb-1">
-                    <label for="category" class="form-label">Category:</label>
-                    <input type="text" class="form-control input-sm" id="category" name="category">
-                </div>
-
-                <div class="mb-1">
-                    <label for="dateOrdered" class="form-label">Date Ordered:</label>
-                    <input type="text" class="form-control" id="dateOrdered" name="date">
-                </div>
-
-                <div class="mb-1">
-                    <label for="quantity" class="form-label">Quantity:</label>
-                    <input type="text" class="form-control" id="quantity" name="quantity">
-                </div>
-            </div>
-        </div>
-
-
-        <div class="modal-footer">
-            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-        
-        </div>
-    </div>
-    </div>
-
-    <!-- Delete Modal -->
-    <div class="modal fade" id="deleteItemModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel"> Delete </h1>
-            <button type="button" class="btn-close" 
-            data-bs-dismiss="modal" aria-label="Close"
-            (click)="closeClick()"></button>
-        </div>
-
-        <div class="modal-body">
-            <p>Are you sure to delete?</p>
-        </div>
-
-
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-            <button type="button" class="btn btn-primary">Yes</button>
-        </div>
-        
-        </div>
-    </div>
-    </div>
-
     <!-- Add modal -->
     <div class="modal fade" id="addItemsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel"> Add </h1>
-            <button type="button" class="btn-close" 
-            data-bs-dismiss="modal" aria-label="Close"
-            (click)="closeClick()"></button>
-        </div>
-
-        <div class="modal-body">
-            <div class ="form-group">
-                <div class="row"> </div>
-                <div class="mb-1">
-                    <label for="itemName" class="form-label">Item name:</label>
-                    <input type="text" class="form-control input-sm" id="itemName" name="itemName">
-                </div>
-                
-                <div class="mb-1">
-                    <label for="itemPrice" class="form-label">Item Price:</label>
-                    <input type="text" class="form-control input-sm" id="itemPrice" name="firstName">
+        <form action="/create_item" method="post">
+            {% csrf_token %}
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel"> Add </h1>
+                    <button type="button" class="btn-close"
+                    data-bs-dismiss="modal" aria-label="Close"
+                    (click)="closeClick()"></button>
                 </div>
 
-                <div class="mb-1">
-                    <label for="category" class="form-label">Category:</label>
-                    <input type="text" class="form-control input-sm" id="category" name="category">
+                <div class="modal-body">
+                    <div class ="form-group">
+                        <div class="row"> </div>
+                        <div class="mb-1">
+                            <label for="item_name" class="form-label">Item name:</label>
+                            <input type="text" class="form-control input-sm" id="create_item_name" name="item_name">
+                        </div>
+
+                        <div class="mb-1">
+                            <label for="item_price" class="form-label">Item Price:</label>
+                            <input type="text" class="form-control input-sm" id="create_item_price" name="item_price">
+                        </div>
+
+                        <div class="mb-1">
+                            <label for="expense" class="form-label">Expense:</label>
+                            <input type="text" class="form-control input-sm" id="create_expense" name="expense">
+                        </div>
+
+                        <div class="mb-1">
+                            <label for="category" class="form-label">Category:</label>
+                            <input type="text" class="form-control" id="create_category" name="category">
+                        </div>
+
+                        <div class="mb-1">
+                            <label for="date_ordered" class="form-label">Date Ordered:</label>
+                            <input type="date" class="form-control" id="create_date_ordered" name="date_ordered">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="mb-1">
-                    <label for="dateOrdered" class="form-label">Date Ordered:</label>
-                    <input type="text" class="form-control" id="dateOrdered" name="date">
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Add">
                 </div>
 
-                <div class="mb-1">
-                    <label for="quantity" class="form-label">Quantity:</label>
-                    <input type="text" class="form-control" id="quantity" name="quantity">
                 </div>
             </div>
-        </div>
-
-
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Add</button>
-        </div>
-        
-        </div>
+        </form>
     </div>
-    </div>
-
 {% endblock %}

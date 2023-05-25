@@ -93,12 +93,12 @@
 <div class="allProfs my-5">
     <div class="row my-5">
         <div class="col">
-            <h5>All Profits</h5>
+            <h5>All {{ panel }}</h5>
         </div>
         <div class="col"></div>
         <div class="col-5">
             <div class="input-group">
-                <input type="search" class="form-control rounded" placeholder="Search Profits" aria-label="Search" aria-describedby="search-addon" />
+                <input type="search" class="form-control rounded" placeholder="Search {{ panel }}" aria-label="Search" aria-describedby="search-addon" />
                 <button type="button" class="btn btn-outline-primary">Search</button>
               </div>
         </div>
@@ -155,7 +155,104 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.0/dist/chart.umd.min.js"></script>
-<script src="{% static 'main/scripts/accounting/charts.js' %}"></script>
+<script type="text/javascript">
+    const prdBreak = document.getElementById('prodBreakdown');
+    const prdBreak1 = document.getElementById('prodBreakdown1');
+    const prdBreak2 = document.getElementById('prodBreakdown2');
+
+
+
+    new Chart(prdBreak, {
+      type: 'doughnut',
+      data: {
+        labels: [
+          'Electronics',
+          'Furniture',
+          'Bags and Packages',
+          'Accessories'
+        ],
+        datasets: [{
+          label: 'Sales Breakdown by Product',
+          data: [300, 100, 60, 30, 10],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+            'rgb(0,88,255)'
+          ],
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Sales Breakdown by Product',
+          }
+        }
+      }
+    });
+    new Chart(prdBreak1, {
+      type: 'doughnut',
+      data: {
+        labels: [
+          'Electronics',
+          'Furniture',
+          'Bags and Packages',
+          'Accessories'
+        ],
+        datasets: [{
+          label: 'Sales Breakdown by Product',
+          data: [300, 100, 60, 30, 10],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+            'rgb(0,88,255)'
+          ],
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Sales Breakdown by Product',
+          }
+        }
+      }
+    });
+    new Chart(prdBreak2, {
+      type: 'doughnut',
+      data: {
+        labels: [
+          'Electronics',
+          'Furniture',
+          'Bags and Packages',
+          'Accessories'
+        ],
+        datasets: [{
+          label: 'Sales Breakdown by Product',
+          data: [300, 100, 60, 30, 10],
+          backgroundColor: [
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)',
+            'rgb(0,88,255)'
+          ],
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          title: {
+            display: true,
+            text: 'Sales Breakdown by Product',
+          }
+        }
+      }
+    });
+</script>
 
 <script type="text/javascript">
     let valueDisplays = document.querySelectorAll(".numbers");

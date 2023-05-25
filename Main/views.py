@@ -91,8 +91,8 @@ def dashboard(request):
     furniture_sales = check_top_sales(items)[1]
     tech_sales = check_top_sales(items)[2]
 
-    # for item in items:
-    #     total_expenses += item.expense
+    for item in items:
+        total_expenses += item.expense
 
     return render(request, 'Main/Landing/dashboard.html', {
         'user': user,
@@ -121,8 +121,43 @@ def inventory(request, item_filter):
     return render(request, 'Main/Landing/inventory.html', {
         'user': user,
         'all_items': items,
-        'items': items[:round(len(items) * .2)]
+        'items': items[:20]
     })
+
+
+def create_item(request):
+    user = request.user
+    store = Store.objects.filter(storeOwner=user)
+
+    if request.method == 'POST':
+        item = Item(
+            item_name=request.POST.get('item_name', ''),
+            item_price=request.POST.get('item_price', ''),
+            expense=request.POST.get('expense', ''),
+            category=request.POST.get('category', ''),
+            date_ordered=request.POST.get('date_ordered', ''),
+            store=store[0]
+        )
+        item.save()
+
+        return HttpResponseRedirect(reverse('inventory', args=['all']))
+
+def update_item(request, item_id):
+    if request.method == 'POST':
+        item = Item.objects.get(id=item_id)
+        item.item_name = request.POST.get('item_name', '')
+        item.item_price = request.POST.get('item_price', 1)
+        item.category = request.POST.get('category', '')
+        item.date_ordered = request.POST.get('date_ordered', None)
+        item.save()
+
+    return HttpResponseRedirect(reverse('inventory', args=['all']))
+
+def delete_item(request, item_id):
+    item = Item.objects.get(id=item_id)
+    item.delete()
+
+    return HttpResponseRedirect(reverse('inventory', args=['all']))
 
 
 def accounting(request, filter_data):

@@ -15,7 +15,7 @@ class Item(models.Model):
     item_price = models.IntegerField()
     expense = models.IntegerField()
     category = models.CharField(max_length=64)
-    date_ordered = models.DateTimeField(auto_now=True)
+    date_ordered = models.DateTimeField()
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='location')
 
 
