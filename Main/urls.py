@@ -19,5 +19,6 @@ urlpatterns = [
     path('help', views.help, name='help'),
     path('generate_data', views.generate_data, name='generate'),
     path('delete', views.delete_data, name='delete'),
-    path('generate_sales', views.generate_sales, name='gen_sales')
+    path('generate_sales', views.generate_sales, name='gen_sales'),
+    path('generate_dates', views.generate_dates, name='gen_dates')
 ]

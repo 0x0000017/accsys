@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from .models import Store, Address, Item, Sale
+from datetime import datetime
 import random
 
 
@@ -259,3 +260,28 @@ def generate_sales(request):
         new_sale.save()
 
     return 'success'
+
+
+def generate_dates(request):
+    user = request.user
+    store = Store.objects.filter(storeOwner=user)
+    items = Item.objects.filter(store__in=store).all()
+
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+              'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+    for item in items:
+        month = months[random.randrange(0, 12)]
+        time = random.randrange(1, 12)
+        day_time = ['AM', 'PM']
+
+        if month == 'Jan' or month == 'Mar' or month == 'May' or month == 'Jul' or month == 'Aug' or month == 'Oct' or month == 'Dec':
+            day = random.randrange(1, 31)
+        else:
+            day = random.randrange(1, 28)
+
+        test = f'{month} {day} 2023 {time}:{random.randrange(10, 59)}{day_time[random.randrange(0,2)]}'
+        item.date_ordered = datetime.strptime(test, '%b %d %Y %I:%M%p').date()
+        item.save()
+
+    return 'test success'
