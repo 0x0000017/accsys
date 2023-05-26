@@ -30,27 +30,65 @@
     </div>
     <div class="col"></div>
     <div class="col nprofit">
-        <button type="button" class="btn btn-success">New {{ panel }}</button>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">New {{ panel }}</button>
     </div>
     <hr>
+</div>
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">New {{panel}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="modal-body">
+          <div class ="form-group">
+              <div class="row"> </div>
+              <div class="mb-1">
+                  <label for="itemName" class="form-label">Item name:</label>
+                  <input type="text" class="form-control input-sm" id="itemName" name="item_name">
+              </div>
+
+              <div class="mb-1">
+                  <label for="itemPrice" class="form-label">Item Price:</label>
+                  <input type="text" class="form-control input-sm" id="itemPrice" name="item_price">
+              </div>
+
+              <div class="mb-1">
+                  <label for="category" class="form-label">Category:</label>
+                  <input type="text" class="form-control input-sm" id="category" name="category">
+              </div>
+
+              <div class="mb-1">
+                  <label for="dateOrdered" class="form-label">Date Ordered:</label>
+                  <input type="date" class="form-control" id="dateOrdered" name="date_ordered">
+              </div>
+
+              <div class="mb-1">
+                  <label for="quantity" class="form-label">Quantity:</label>
+                  <input type="text" class="form-control" id="quantity" name="quantity">
+              </div>
+          </div>
+      </div>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 
 <!--numbers-->
-<div class="row mb-5">
-    <div class="col moneySec mx-5">
-        <div class="numbers" data-val="760"></div>
-        <span>overdue</span>
-    </div>
-    <div class="col moneySec mx-5">
-        <div class="numbers" data-val="760"></div>
-        <span>total outstanding</span>
-    </div>
-    <div class="col moneySec mx-5">
-        <div class="numbers" data-val="760"></div>
-        <span>in draft</span>
-    </div>
-</div>
 
 
 <!--reports-->
