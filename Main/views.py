@@ -96,7 +96,7 @@ def dashboard(request):
         total_expenses += item.expense
         revenue += item.item_price
 
-    for sale in Sale.objects.all():
+    for sale in Sale.objects.filter(store__in=store):
         total_sales += sale.amount
 
     net_income = revenue - total_expenses
@@ -108,7 +108,7 @@ def dashboard(request):
         'expense': total_expenses,
         'net_income': net_income,
         'all_items': items,
-        'recent_sales': Item.objects.filter(store__in=store).all()[:10:-1],
+        'recent_sales': Sale.objects.filter(store__in=store)[:10:-1],
         'office_sales': office_sales,
         'furniture_sales': furniture_sales,
         'tech_sales': tech_sales,
@@ -144,6 +144,7 @@ def create_item(request):
             expense=request.POST.get('expense', ''),
             category=request.POST.get('category', ''),
             date_ordered=request.POST.get('date_ordered', ''),
+            quantity=request.POST.get('quantity', ''),
             store=store[0]
         )
         item.save()

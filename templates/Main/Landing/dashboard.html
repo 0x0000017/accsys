@@ -83,13 +83,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for item in recent_sales %}
+                    {% for sale in recent_sales %}
                         <tr>
-                            <td >{{ item.item_name }}</td>
-                            <td class="text-center">{{ item.item_price }}</td>
-                            <td class="text-center">{{ item.category }}</td>
-                            <td class="text-center">{{ item.date_ordered }}</td>
-                            <td class="text-center">{{ 'hello' }}</td>
+                            <td >{{ sale.item.item_name }}</td>
+                            <td class="text-center">{{ sale.item.item_price }}</td>
+                            <td class="text-center">{{ sale.item.category }}</td>
+                            <td class="text-center">{{ sale.item.date_ordered }}</td>
+                            <td class="text-center">{{ sale.amount }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
