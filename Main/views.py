@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from .models import Store, Address, Item, Sale
+import random
 
 
 # Create your views here.
@@ -105,6 +106,7 @@ def dashboard(request):
         'office_sales': office_sales,
         'furniture_sales': furniture_sales,
         'tech_sales': tech_sales,
+        'store': store
     })
 
 
@@ -238,3 +240,17 @@ def check_top_sales(items):
             categs[2] += 1
 
     return categs
+
+
+def generate_sales(request):
+    user = request.user
+    store = Store.objects.filter(storeOwner=user)
+    items = Item.objects.filter(store__in=store).all()
+
+    for item in items:
+        ran_num = random.randint(1, 100)
+        new_sale = Sale(item=item, amount=ran_num)
+
+        new_sale.save()
+
+    return 'success'
