@@ -22,6 +22,10 @@ body
 
 }
 
+#homeCon{
+    margin-top: 9% !important;
+}
+
 
 .home-btns {
     padding-top: 10vh;
@@ -33,17 +37,40 @@ body
     padding-right: 50px;
     padding-top: 10px;
     padding-bottom: 10px;
-    border-radius: 50px;
+    border-radius: 50px !important;
+    width: 50%;
+}
+#btnLogin.col{
+    padding-left: 2% !important;
+}
+#btnSignUp{
+    margin-left: -15% !important;
+}
+.btn-success {
+    background-color: #02BB7D !important;
+    border: 0 !important;
+}
+h1 {
+    font-weight: bolder !important;
+    font-size: 3rem !important;
+    color: #160637 !important;
+}
+.text1{
+    /* width: 30% !important; */
+    padding-top: 4%;
+    padding-right: 18%;
+    color: #8989A2;
 }
 .logo-cont {
     align-items: center!important;
 }
 .home-logo {
     position: relative;
-    height: 20vw;
+    width: 22vw;
     padding-top: 0;
     align-items: start;
+    bottom: 25%;
 }
-.btn-success {
-    color: #02BB7D;
+#spacerleft{
+    margin-right: 7% !important;
 }

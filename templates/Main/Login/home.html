@@ -2,30 +2,28 @@
 {% load static %}
 
 {% block section-1 %}
-<br><br><br>
-<div class ="row">
-    <div class="col">
+<!-- <br><br><br> -->
+<div id="homeCon" class ="row">
+    <div id="spacerleft" class="col">
     </div>
-    <div class="col-4">
+    <div id="textContainer" class="col-4">
         <h1> Your data with real-<br>time analytics</h1>
-        <span>Harness the potential of Big Data Analytics & Cloud Services and become a data-driven organization. </span>
+        <p class="text1">Harness the potential of Big Data Analytics & Cloud Services and become a data-driven organization. </p>
         <div class ="home-btns">
             <div class ="row">
-                <div class ="col"> 
+                <div id="btnLogin" class ="col"> 
                     <a href ="{% url 'login' %}"><button type="button" class="btn btn-success shadow-sm rounded">Login</button></a>
                 </div>
-                <div class ="col">
-                    <a href ="{% url 'register' %}"><button type="button" class="btn btn-light shadow-sm rounded">Sign Up</button></a>
+                <div id="btnSignUp" class ="col">
+                    <a href ="{% url 'register' %}"><button  type="button" class="btn btn-light shadow-sm rounded">Sign Up</button></a>
                 </div>
             </div>
         </div>
     </div>
-    <div class ="col-4 logo-cont">
-        <center>
-        <img src ="{% static 'main/assets/images/logov2.png' %}" class ="home-logo center-block">
-        </center>
+    <div id="bigLogoCon" class ="col-4 logo-cont">
+            <img src ="{% static 'main/assets/images/logov2.png' %}" class ="home-logo center-block">
     </div>
-    <div class ="col">
+    <div id="spacerright" class ="col">
     </div>
 </div>
 
