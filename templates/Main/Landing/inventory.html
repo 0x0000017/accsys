@@ -54,10 +54,10 @@
                 {% for item in items %}
                     <tr class="text-center" >
                     <td>{{ item.item_name }}</td>
-                    <td>PHP {{ item.item_price }}</td>
+                    <td>₱ {{ item.item_price }}</td>
                     <td>{{ item.category }}</td>
                     <td>{{ item.date_ordered }}</td>
-                    <td>Test</td>
+                    <td>{{ item.quantity }}</td>
                     <td>
                         <button type="button"
                                 class="btn btn-primary"
@@ -94,27 +94,27 @@
                                 <div class="row"> </div>
                                 <div class="mb-1">
                                     <label for="itemName" class="form-label">Item name:</label>
-                                    <input type="text" class="form-control input-sm" id="itemName" name="item_name">
+                                    <input type="text" class="form-control input-sm" id="itemName" name="item_name" value ="{{ item.item_name }}" required>
                                 </div>
 
                                 <div class="mb-1">
                                     <label for="itemPrice" class="form-label">Item Price:</label>
-                                    <input type="text" class="form-control input-sm" id="itemPrice" name="item_price">
+                                    <input type="text" class="form-control input-sm" id="itemPrice" name="item_price" value="{{ item.item_price }}" required>
                                 </div>
 
                                 <div class="mb-1">
                                     <label for="category" class="form-label">Category:</label>
-                                    <input type="text" class="form-control input-sm" id="category" name="category">
+                                    <input type="text" class="form-control input-sm" id="category" name="category" value="{{ item.category }}" required>
                                 </div>
 
                                 <div class="mb-1">
                                     <label for="dateOrdered" class="form-label">Date Ordered:</label>
-                                    <input type="date" class="form-control" id="dateOrdered" name="date_ordered">
+                                    <input type="date" class="form-control" id="dateOrdered" name="date_ordered" value="{{ item.date_ordered }}" required>
                                 </div>
 
                                 <div class="mb-1">
                                     <label for="quantity" class="form-label">Quantity:</label>
-                                    <input type="text" class="form-control" id="quantity" name="quantity">
+                                    <input type="text" class="form-control" id="quantity" name="quantity" value="{{ item.quantity }}" required>
                                 </div>
                             </div>
                         </div>

@@ -81,12 +81,13 @@ def register(request):
 
 
 # VIEWS FOR LOGGED IN USERS
+@login_required(login_url='login')
 def dashboard(request):
     user = request.user
     store = Store.objects.filter(storeOwner=user)
     items = Item.objects.filter(store__in=store).all()
-    total_expenses = 1
-    revenue = 1
+    total_expenses = 0
+    revenue = 0
     office_sales = check_top_sales(items)[0]
     furniture_sales = check_top_sales(items)[1]
     tech_sales = check_top_sales(items)[2]
@@ -158,6 +159,7 @@ def update_item(request, item_id):
         item.item_price = request.POST.get('item_price', 1)
         item.category = request.POST.get('category', '')
         item.date_ordered = request.POST.get('date_ordered', None)
+        item.quantity = request.POST.get('quantity', '')
         item.save()
 
     return HttpResponseRedirect(reverse('inventory', args=['all']))
@@ -187,14 +189,19 @@ def profile(request):
 
     return render(request, 'Main/Landing/profile.html', {
         'user': user
+       
     })
 
 
 def help(request):
     user = request.user
+    store = Store.objects.filter(storeOwner=user)
+    storeName = Store.objects.filter(storeName=user)
 
     return render(request, 'Main/Landing/help.html', {
-        'user': user
+        'user': user,
+        'store' : store,
+        'storeName' : storeName
     })
 
 
