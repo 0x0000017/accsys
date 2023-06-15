@@ -37,7 +37,6 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-
     return HttpResponseRedirect(reverse('login'))
 
 
@@ -127,7 +126,7 @@ def dashboard(request):
 
 def inventory(request, item_filter):
     user = request.user
-    store = Store.objects.filter(storeOwner=user)
+    store = Store.objects.filter(storeOwner=user.id)
     item_set = item_filter.lower()
 
     if item_set == 'all':
@@ -211,18 +210,6 @@ def profile(request):
             'store': Store.objects.filter(storeOwner=request.user.id),
             'username': request.user.username
         })
-
-
-def help(request):
-    user = request.user
-    store = Store.objects.filter(storeOwner=user)
-    storeName = Store.objects.filter(storeName=user)
-
-    return render(request, 'Main/Landing/help.html', {
-        'user': user,
-        'store' : store,
-        'storeName' : storeName
-    })
 
 
 def delete_data(request):

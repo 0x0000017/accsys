@@ -17,6 +17,5 @@ urlpatterns = [
     path('delete_item/<int:item_id>', views.delete_item, name='delete_item'),
     path('accounting/<str:filter_data>', views.accounting, name='accounting'),
     path('profile', views.profile, name='profile'),
-    path('help', views.help, name='help'),
     path('delete', views.delete_data, name='delete'),
 ]
