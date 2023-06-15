@@ -23,13 +23,14 @@ def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        user = authenticate(username=username, password=password)
 
-        print(user)
+        user = authenticate(username=username, password=password)
         # Check if authentication successful
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse('dashboard'))
+        else:
+            return HttpResponseRedirect(reverse('login'))
     else:
         return render(request, 'Main/Login/login.html')
 
@@ -194,19 +195,22 @@ def accounting(request, filter_data):
 
 
 def profile(request):
-    user = request.user
-    username = user.username
-    userpw = user.password
+    if request.method == 'POST':
+        password = request.POST.get('password')
+        confirm_pass = request.POST.get('confirm_pass')
 
-    store = Store.objects.filter(storeOwner=user)
+        if password == confirm_pass:
+            user = User.objects.get(id=request.user.id)
+            user.set_password(password)
+            user.save()
 
-    return render(request, 'Main/Landing/profile.html', {
-        'user': user,
-        'store': store,
-        'username': username,
-        'userpw' : userpw,
-       
-    })
+            return HttpResponseRedirect(reverse('profile'))
+    else:
+        return render(request, 'Main/Landing/profile.html', {
+            'user': request.user,
+            'store': Store.objects.filter(storeOwner=request.user.id),
+            'username': request.user.username
+        })
 
 
 def help(request):
@@ -219,36 +223,6 @@ def help(request):
         'store' : store,
         'storeName' : storeName
     })
-
-
-def generate_data(request):
-    df = pd.read_csv('Main/datasets/Processed Superstore Data.csv')
-    store = Store.objects.get(id=1)
-
-    for i in range(2, len(df.index)):
-        new_item = Item(item_name=df['Sub-Category'][i],
-                        item_price=df['Price per Item'][i],
-                        expense=df['Production Cost'][i],
-                        category=df['Category'][i],
-                        store=store)
-        new_item.save()
-
-    return HttpResponse('Generation Complete')
-
-
-def generate_sale_data(request):
-    df = pd.read_csv('Main/datasets/Processed Superstore Data.csv')
-    items = Item.objects.all()
-    store = Store.objects.get(id=1)
-
-    for i in range(2, len(df.index)):
-        new_sale = Sale(item_name=df['Sub-Category'][i],
-                        item_price=df['Price per Item'][i],
-                        category=df['Category'][i],
-                        store=store)
-        new_sale.save()
-
-    return HttpResponse('Generation Complete')
 
 
 def delete_data(request):
@@ -270,42 +244,3 @@ def check_top_sales(items):
             categs[2] += 1
 
     return categs
-
-
-def generate_sales(request):
-    user = request.user
-    store = Store.objects.filter(storeOwner=user)
-    items = Item.objects.filter(store__in=store).all()
-
-    for item in items:
-        ran_num = random.randint(1, 100)
-        new_sale = Sale(item=item, amount=ran_num)
-
-        new_sale.save()
-
-    return 'success'
-
-
-def generate_dates(request):
-    user = request.user
-    store = Store.objects.filter(storeOwner=user)
-    items = Item.objects.filter(store__in=store).all()
-
-    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-              'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-
-    for item in items:
-        month = months[random.randrange(0, 12)]
-        time = random.randrange(1, 12)
-        day_time = ['AM', 'PM']
-
-        if month == 'Jan' or month == 'Mar' or month == 'May' or month == 'Jul' or month == 'Aug' or month == 'Oct' or month == 'Dec':
-            day = random.randrange(1, 31)
-        else:
-            day = random.randrange(1, 28)
-
-        test = f'{month} {day} 2023 {time}:{random.randrange(10, 59)}{day_time[random.randrange(0,2)]}'
-        item.date_ordered = datetime.strptime(test, '%b %d %Y %I:%M%p').date()
-        item.save()
-
-    return 'test success'

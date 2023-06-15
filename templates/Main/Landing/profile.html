@@ -5,33 +5,35 @@
 <h1>Profile</h1>
 <div class = "row">
     <div class ="col-12">
-        <div class ="profileCardBox">
+        <form method="post">
+            {% csrf_token %}
+            <div class ="profileCardBox">
                 <div class ="row mt-5 mb-5">
                     <div class ="col">
                         <label for="input-1">Username</label>
-                        <input type="text" class="form-control" id ="username" placeholder="Username" value ="{{username}}">
+                        <input type="text" class="form-control" autocomplete="off" id ="username" placeholder="Username" value ="{{username}}">
                     </div>
                     <div class ="col">
                         <label for="input-2">Password</label>
-                        <input type="password" class="form-control" id ="password" placeholder="Password" value ="{{userpw}}">
+                        <input type="password" class="form-control" autocomplete="off" name="password" id="password" placeholder="Password">
                     </div>
                     <div class ="col">
                         <label for="input-3">Confirm Password</label>
-                        <input type="password" class="form-control" id ="confirmpass" placeholder="Confirm Password" value ="{{userpw}}">
+                        <input type="password" class="form-control" autocomplete="off" name="confirm_pass" id="confirmpass" placeholder="Confirm Password">
                     </div>
                 </div>
                 <div class ="row mb-5">
                     <div class ="col">
                         <label for="input-4">First Name</label>
-                        <input type="text" class="form-control" id ="firstName" placeholder="First name" value ="{{user.first_name}}">
+                        <input type="text" class="form-control" id ="firstName" placeholder="First name" value="{{user.first_name}}">
                     </div>
                     <div class ="col">
                         <label for="input-5">Last Name</label>
-                        <input type="text" class="form-control" id ="lastName" placeholder="Last name" value ="{{user.last_name}}">
+                        <input type="text" class="form-control" id ="lastName" placeholder="Last name" value="{{user.last_name}}">
                     </div>
                     <div class ="col">
                         <label for="input-6">Store Name</label>
-                        <input type="text" class="form-control" id ="storeName" placeholder="Store name" value ="{{store}}">
+                        <input type="text" class="form-control" id ="storeName" placeholder="Store name" value="{{ store.storeName }}">
                     </div>
                 </div>
                 <div class ="row mb-5">
@@ -50,11 +52,11 @@
                     <div class ="col"></div>
                     <div class ="col prof-buttons">
                         <button type="button" class="btn btn-danger">Cancel</button>
-                        <button type="button" class="btn btn-success">Submit</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}

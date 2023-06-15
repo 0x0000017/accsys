@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Store(models.Model):
     storeName = models.CharField(max_length=200)
-    storeOwner = models.ManyToManyField(User, related_name='store_owner')
+    storeOwner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='store_owner')
     storeAddress = models.CharField(max_length=200)
     date_registered = models.DateTimeField(auto_now=True)
 
