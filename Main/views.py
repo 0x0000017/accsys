@@ -186,9 +186,17 @@ def accounting(request, filter_data):
 
 def profile(request):
     user = request.user
+    username = user.username
+    userpw = user.password
+
+    store = Store.objects.filter(storeOwner=user)
+
 
     return render(request, 'Main/Landing/profile.html', {
-        'user': user
+        'user': user,
+        'store': store,
+        'username': username,
+        'userpw' : userpw,
        
     })
 

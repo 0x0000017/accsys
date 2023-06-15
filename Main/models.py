@@ -9,7 +9,6 @@ class Store(models.Model):
     storeAddress = models.CharField(max_length=200)
     date_registered = models.DateTimeField(auto_now=True)
 
-
 class Item(models.Model):
     item_name = models.CharField(max_length=200)
     item_price = models.IntegerField()
@@ -18,7 +17,6 @@ class Item(models.Model):
     category = models.CharField(max_length=64)
     date_ordered = models.DateTimeField()
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='location')
-
 
 class Sale(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='product')
@@ -29,6 +27,3 @@ class Sale(models.Model):
 class Address(models.Model):
     address_name = models.CharField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_address')
-
-
-
