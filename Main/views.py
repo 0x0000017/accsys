@@ -21,16 +21,23 @@ def home(request):
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
 
+        print(user)
         # Check if authentication successful
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse('dashboard'))
     else:
         return render(request, 'Main/Login/login.html')
+
+
+def logout_view(request):
+    logout(request)
+
+    return HttpResponseRedirect(reverse('login'))
 
 
 def register(request):
@@ -56,7 +63,7 @@ def register(request):
             })
 
         try:
-            newUser = User(username=username, first_name=first_name, last_name=last_name,
+            newUser = User.objects.create_user(username=username, first_name=first_name, last_name=last_name,
                            password=password, email=email)
 
             new_address = Address(address_name=customer_address, user=newUser)
@@ -152,6 +159,7 @@ def create_item(request):
 
         return HttpResponseRedirect(reverse('inventory', args=['all']))
 
+
 def update_item(request, item_id):
     if request.method == 'POST':
         item = Item.objects.get(id=item_id)
@@ -163,6 +171,7 @@ def update_item(request, item_id):
         item.save()
 
     return HttpResponseRedirect(reverse('inventory', args=['all']))
+
 
 def delete_item(request, item_id):
     item = Item.objects.get(id=item_id)
@@ -190,7 +199,6 @@ def profile(request):
     userpw = user.password
 
     store = Store.objects.filter(storeOwner=user)
-
 
     return render(request, 'Main/Landing/profile.html', {
         'user': user,
