@@ -18,7 +18,6 @@ import random
 def home(request):
     return render(request, 'Main/Login/home.html')
 
-
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -34,11 +33,9 @@ def login_view(request):
     else:
         return render(request, 'Main/Login/login.html')
 
-
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('login'))
-
 
 def register(request):
     if request.method == 'POST':
@@ -123,7 +120,6 @@ def dashboard(request):
         'store': store,
     })
 
-
 def inventory(request, item_filter):
     user = request.user
     store = Store.objects.filter(storeOwner=user.id)
@@ -139,7 +135,6 @@ def inventory(request, item_filter):
         'all_items': items,
         'items': items[:20]
     })
-
 
 def create_item(request):
     user = request.user
@@ -159,7 +154,6 @@ def create_item(request):
 
         return HttpResponseRedirect(reverse('inventory', args=['all']))
 
-
 def update_item(request, item_id):
     if request.method == 'POST':
         item = Item.objects.get(id=item_id)
@@ -172,13 +166,11 @@ def update_item(request, item_id):
 
     return HttpResponseRedirect(reverse('inventory', args=['all']))
 
-
 def delete_item(request, item_id):
     item = Item.objects.get(id=item_id)
     item.delete()
 
     return HttpResponseRedirect(reverse('inventory', args=['all']))
-
 
 def accounting(request, filter_data):
     user = request.user
@@ -192,18 +184,27 @@ def accounting(request, filter_data):
         'item_tail': Item.objects.filter(store__in=store).all()[:5:-1]
     })
 
-
 def profile(request):
     if request.method == 'POST':
+        user = User.objects.get(id=request.user.id)
+        store = Store.objects.get(storeName=user.id)
+
         password = request.POST.get('password')
         confirm_pass = request.POST.get('confirm_pass')
 
-        if password == confirm_pass:
-            user = User.objects.get(id=request.user.id)
+        
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+
+        store_name = request.POST.get('store_name')
+        addr = request.POST.get('address')
+
+        if password == confirm_pass and password != None and confirm_pass != None:
             user.set_password(password)
             user.save()
-
             return HttpResponseRedirect(reverse('profile'))
+        
+        
     else:
         return render(request, 'Main/Landing/profile.html', {
             'user': request.user,
