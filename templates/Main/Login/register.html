@@ -18,7 +18,7 @@
                             <h4 class="fw-bold"> Personal Information </h4>
                         </div>
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control input-sm" id="userName" placeholder="Your Username" name="username" required>
+                        <input type="text" class="form-control input-sm" id="userName" placeholder="Your Username" minlength="6" name="username" required>
         
                         <label for="firstName" class="form-label">First Name</label>
                         <input type="text" class="form-control input-sm" id="firstName" placeholder="Your First Name" name="firstName" required>
@@ -48,10 +48,10 @@
                         </div>
         
                         <label for="emailAddr" class="form-label">Email address</label>
-                        <input type="email" class="form-control" id="emailAddr" placeholder="youremailaddress@example.com" name="email" required>
+                        <input type="email" class="form-control" id="emailAddr" placeholder="emailaddress@example.com" name="email" required>
         
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Minimum of 6 characters" name="password" min="6" required>
+                        <input type="password" class="form-control" id="password" placeholder="Minimum of 6 characters" name="password" minlength="6" required>
         
                         <label for="confirmPass" class="form-label">Confirm Password</label>
                         <input type="password" class="form-control" id="confirmPass" placeholder="Confirm your password" name="confirmPass" required>

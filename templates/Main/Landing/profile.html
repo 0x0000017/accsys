@@ -12,7 +12,7 @@
                     <h5><b>Login Information</b></h5>
                     <div class ="col-6">
                         <label for="input-1">Username</label>
-                        <input type="text" class="form-control" autocomplete="off" name ="username" id ="username" placeholder="Username" value ="{{username}}">
+                        <input type="text" class="form-control" autocomplete="off" name ="username" id ="username" minlength="6" placeholder="Username" value ="{{username}}">
                     </div>
                     <div class ="col-6">
                         <label for="input-1">Password</label><br>
@@ -30,11 +30,11 @@
                                 <div class="modal-body">
                                     <div class="pwfield mb-3">
                                         <label for="input-1">New Password</label>
-                                        <input type="password" class="form-control" autocomplete="off" id ="tmppw" placeholder="Password" value ="" required>
+                                        <input type="password" class="form-control" autocomplete="off" id ="tmppw" placeholder="Password" minlength="6" value ="" required>
                                     </div>
                                     <div class="pwfield mb-3">
                                         <label for="input-1">Confirm Password</label>
-                                        <input type="password" class="form-control" autocomplete="off" id ="tmpcpw" placeholder="Confirm Password" value ="" required>
+                                        <input type="password" class="form-control" autocomplete="off" id ="tmpcpw" placeholder="Confirm Password" minlength="6" value ="" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
