@@ -141,6 +141,18 @@ def inventory(request, item_filter):
     store = Store.objects.filter(storeOwner=user.id)
     item_set = item_filter.lower()
 
+    if request.method == 'POST':
+        searched = Item.objects.filter(store__in=store, item_name__contains=request.POST.get('searched_items')).all()
+
+        print(searched)
+
+        return render(request, 'Main/Landing/inventory.html', {
+            'user': user,
+            'all_items': searched,
+            'items': searched[:20]
+        })
+
+
     if item_set == 'all':
         items = Item.objects.filter(store__in=store).all()
     else:

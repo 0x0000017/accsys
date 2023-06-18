@@ -7,9 +7,12 @@
 
         <div class="search">
             <label>
-                <input type="text" placeholder="Search Inventory">
-                <ion-icon type="button" name="search-outline"></ion-icon>
-
+                <form method="post">
+                    {% csrf_token %}
+                    <input name="searched_items" type="text" placeholder="Search Inventory">
+                    <ion-icon name="search-outline"></ion-icon>
+                    <input type="submit" value="Search">
+                </form>
             </label>
         </div>
     </div>
