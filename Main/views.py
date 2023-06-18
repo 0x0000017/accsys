@@ -88,20 +88,25 @@ def dashboard(request):
     user = request.user
     store = Store.objects.get(storeOwner=user.id)
     items = Item.objects.filter(store=store).all()
-    total_expenses = 0
-    revenue = 0
+    sales = Sale.objects.filter(store=store).all()
+
     office_sales = check_top_sales(items)[0]
     furniture_sales = check_top_sales(items)[1]
     tech_sales = check_top_sales(items)[2]
-    total_sales = 0
 
+    revenue = 0
+    total_sales = 0
+    total_expenses = 0
+
+    # expenses
     for item in items:
         total_expenses += item.expense
-        revenue += item.item_price
 
-    for sale in Sale.objects.filter(store=store):
-        total_sales += sale.amount
+    # revenue
+    for sale in sales:
+        total_sales += sale.item.item_price * sale.amount
 
+    # net income
     net_income = revenue - total_expenses
 
     return render(request, 'Main/Landing/dashboard.html', {
