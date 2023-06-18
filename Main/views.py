@@ -227,7 +227,8 @@ def profile(request):
         return render(request, 'Main/Landing/profile.html', {
             'user': request.user,
             'store': store.storeName,
-            'username': request.user.username
+            'username': request.user.username,
+            'address' : store.storeAddress
         })
 
 
