@@ -65,12 +65,10 @@ def register(request):
 
             new_address = Address(address_name=customer_address, user=newUser)
 
-            new_store = Store(storeName=store_name, storeAddress=store_address)
             newUser.save()
             new_address.save()
-            new_store.save()
 
-            new_store.storeOwner.add(newUser)
+            new_store = Store(storeName=store_name, storeAddress=store_address, storeOwner=newUser)
             new_store.save()
 
         except IntegrityError:
@@ -120,6 +118,7 @@ def dashboard(request):
         'store': store,
     })
 
+
 def inventory(request, item_filter):
     user = request.user
     store = Store.objects.filter(storeOwner=user.id)
@@ -136,23 +135,27 @@ def inventory(request, item_filter):
         'items': items[:20]
     })
 
+
 def create_item(request):
-    user = request.user
-    store = Store.objects.filter(storeOwner=user)
+    user_store = Store.objects.all()
+
+    for store in user_store:
+        print(store.storeName)
 
     if request.method == 'POST':
-        item = Item(
-            item_name=request.POST.get('item_name', ''),
-            item_price=request.POST.get('item_price', ''),
-            expense=request.POST.get('expense', ''),
-            category=request.POST.get('category', ''),
-            date_ordered=request.POST.get('date_ordered', ''),
-            quantity=request.POST.get('quantity', ''),
-            store=store[0]
-        )
-        item.save()
+        # item = Item(
+        #     item_name=request.POST.get('item_name', ''),
+        #     item_price=request.POST.get('item_price', ''),
+        #     expense=request.POST.get('expense', ''),
+        #     category=request.POST.get('category', ''),
+        #     date_ordered=request.POST.get('date_ordered', ''),
+        #     quantity=request.POST.get('quantity', ''),
+        #     store=user_store
+        # )
+        # item.save()
 
         return HttpResponseRedirect(reverse('inventory', args=['all']))
+
 
 def update_item(request, item_id):
     if request.method == 'POST':
@@ -166,11 +169,13 @@ def update_item(request, item_id):
 
     return HttpResponseRedirect(reverse('inventory', args=['all']))
 
+
 def delete_item(request, item_id):
     item = Item.objects.get(id=item_id)
     item.delete()
 
     return HttpResponseRedirect(reverse('inventory', args=['all']))
+
 
 def accounting(request, filter_data):
     user = request.user
@@ -184,6 +189,7 @@ def accounting(request, filter_data):
         'item_tail': Item.objects.filter(store__in=store).all()[:5:-1]
     })
 
+
 def profile(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
@@ -191,14 +197,13 @@ def profile(request):
         password = request.POST.get('password')
         confirm_pass = request.POST.get('confirm_pass')
 
-        
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
 
         store_name = request.POST.get('store_name')
         addr = request.POST.get('address')
 
-        if password == confirm_pass and password != None and confirm_pass != None:
+        if password == confirm_pass and password is not None and confirm_pass is not None:
             user.set_password(password)
             user.save()
             return HttpResponseRedirect(reverse('profile'))
