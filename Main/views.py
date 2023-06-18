@@ -137,22 +137,19 @@ def inventory(request, item_filter):
 
 
 def create_item(request):
-    user_store = Store.objects.all()
-
-    for store in user_store:
-        print(store.storeName)
+    user_store = Store.objects.get(storeOwner=request.user.id)
 
     if request.method == 'POST':
-        # item = Item(
-        #     item_name=request.POST.get('item_name', ''),
-        #     item_price=request.POST.get('item_price', ''),
-        #     expense=request.POST.get('expense', ''),
-        #     category=request.POST.get('category', ''),
-        #     date_ordered=request.POST.get('date_ordered', ''),
-        #     quantity=request.POST.get('quantity', ''),
-        #     store=user_store
-        # )
-        # item.save()
+        item = Item(
+            item_name=request.POST.get('item_name', ''),
+            item_price=request.POST.get('item_price', ''),
+            expense=request.POST.get('expense', ''),
+            category=request.POST.get('category', ''),
+            date_ordered=request.POST.get('date_ordered', ''),
+            quantity=request.POST.get('quantity', ''),
+            store=user_store
+        )
+        item.save()
 
         return HttpResponseRedirect(reverse('inventory', args=['all']))
 
@@ -207,12 +204,13 @@ def profile(request):
             user.set_password(password)
             user.save()
             return HttpResponseRedirect(reverse('profile'))
-        
-        
+
     else:
+        store = Store.objects.get(storeOwner=request.user.id)
+
         return render(request, 'Main/Landing/profile.html', {
             'user': request.user,
-            'store': Store.objects.filter(storeOwner=request.user.id),
+            'store': store.storeName,
             'username': request.user.username
         })
 
