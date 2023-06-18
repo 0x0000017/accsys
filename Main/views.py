@@ -90,6 +90,21 @@ def dashboard(request):
     items = Item.objects.filter(store=store).all()
     sales = Sale.objects.filter(store=store).all()
 
+    monthly_sales = [
+        get_sum_of_sales(Sale.objects.filter(date__month='01', store=store).all()),
+        get_sum_of_sales(Sale.objects.filter(date__month='02', store=store).all()),
+        get_sum_of_sales(Sale.objects.filter(date__month='03', store=store).all()),
+        get_sum_of_sales(Sale.objects.filter(date__month='04', store=store).all()),
+        get_sum_of_sales(Sale.objects.filter(date__month='05', store=store).all()),
+        get_sum_of_sales(Sale.objects.filter(date__month='06', store=store).all()),
+        get_sum_of_sales(Sale.objects.filter(date__month='07', store=store).all()),
+        get_sum_of_sales(Sale.objects.filter(date__month='08', store=store).all()),
+        get_sum_of_sales(Sale.objects.filter(date__month='09', store=store).all()),
+        get_sum_of_sales(Sale.objects.filter(date__month='10', store=store).all()),
+        get_sum_of_sales(Sale.objects.filter(date__month='11', store=store).all()),
+        get_sum_of_sales(Sale.objects.filter(date__month='12', store=store).all())
+    ]
+
     office_sales = check_top_sales(items)[0]
     furniture_sales = check_top_sales(items)[1]
     tech_sales = check_top_sales(items)[2]
@@ -117,9 +132,7 @@ def dashboard(request):
         'all_items': items,
         'recent_items': Item.objects.filter(store=store),
         'recent_sales': Sale.objects.filter(store=store),
-        'office_sales': office_sales,
-        'furniture_sales': furniture_sales,
-        'tech_sales': tech_sales,
+        'monthly_sales': monthly_sales,
         'store': store,
     })
 
@@ -183,6 +196,8 @@ def reduce_item_quanttiy(request, item_id):
     if request.method == 'POST':
         quantity = int(request.POST.get('quantity'))
         item = Item.objects.get(id=item_id)
+        item.quantity -= quantity
+        item.save()
 
         new_sale = Sale(item=item, amount=quantity, store=Store.objects.get(storeOwner=request.user.id))
         new_sale.save()
@@ -259,3 +274,12 @@ def check_top_sales(items):
             categs[2] += 1
 
     return categs
+
+
+def get_sum_of_sales(monthly_sales):
+    total_sale = 0
+
+    for sale in monthly_sales:
+        total_sale += (sale.item.item_price - sale.item.expense) * sale.amount
+
+    return total_sale
