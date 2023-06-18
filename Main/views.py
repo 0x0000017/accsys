@@ -100,7 +100,7 @@ def dashboard(request):
 
     # expenses
     for item in items:
-        total_expenses += item.expense
+        total_expenses += item.expense * item.quantity
 
     # revenue
     for sale in sales:
