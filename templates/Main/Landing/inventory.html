@@ -47,6 +47,8 @@
                     <th class="text-center" scope="col">CATEGORY</th>
                     <th class="text-center" scope="col">DATE ORDERED</th>
                     <th class="text-center" scope="col">QUANTITY</th>
+                    <th class="text-center" scope="col">ACTIONS</th>
+                    <th class="text-center" scope="col">SOLD</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -69,10 +71,17 @@
                         <button type="button"
                                 class="btn btn-danger"
                                 data-bs-toggle="modal"
-                                data-bs-target="#deleteItemModal-{{ item.id }}"
-                        >
-                            <ion-icon name="trash-outline" style="font-size: 1.13em;">
-                        </ion-icon></button>
+                                data-bs-target="#deleteItemModal-{{ item.id }}">
+                            <ion-icon name="trash-outline" style="font-size: 1.13em;"></ion-icon>
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#soldItemsModal-{{ item.id }}"
+                                class="btn btn-success">
+                            <ion-icon name="remove-circle-outline" style="font-size: 1.13em;"></ion-icon>
+                        </button>
                     </td>
                 </tr>
 
@@ -154,6 +163,35 @@
                     </div>
                 </div>
                 </div>
+
+                <div class="modal fade" id="soldItemsModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <form action="/update_item/{{ item.id }}" method="post">
+                        {% csrf_token %}
+                        <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel"> Sold </h1>
+                            <button type="button" class="btn-close"
+                            data-bs-dismiss="modal" aria-label="Close"
+                            (click)="closeClick()"></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class ="form-group">
+                                <div class="row"> </div>
+                                <div class="mb-1">
+                                    <label for="itemName" class="form-label">Quantity (minimum: 1)</label>
+                                    <input type="number" class="form-control input-sm" id="itemName" min="1" name="item_name" value ="{{ item.quantity }}" required>
+                                </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
                 {% endfor %}
                 </tbody>
             </table>
@@ -210,7 +248,7 @@
 
                         <div class="mb-1">
                             <label for="category" class="form-label">Category:</label>
-                            <select name ="category" class="form-select" aria-label="Default select example">
+                            <select name ="category" class="form-select">
                                 <option selected>--</option>
                                 <option value="Drinks">Drinks</option>
                                 <option value="Condiments">Condiments</option>
