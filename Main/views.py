@@ -86,8 +86,8 @@ def register(request):
 @login_required(login_url='login')
 def dashboard(request):
     user = request.user
-    store = Store.objects.filter(storeOwner=user)
-    items = Item.objects.filter(store__in=store).all()
+    store = Store.objects.get(storeOwner=user.id)
+    items = Item.objects.filter(store=store).all()
     total_expenses = 0
     revenue = 0
     office_sales = check_top_sales(items)[0]
@@ -99,7 +99,7 @@ def dashboard(request):
         total_expenses += item.expense
         revenue += item.item_price
 
-    for sale in Sale.objects.filter(store__in=store):
+    for sale in Sale.objects.filter(store=store):
         total_sales += sale.amount
 
     net_income = revenue - total_expenses
@@ -111,7 +111,8 @@ def dashboard(request):
         'expense': total_expenses,
         'net_income': net_income,
         'all_items': items,
-        'recent_sales': Sale.objects.filter(store__in=store)[:10:-1],
+        'recent_items': Item.objects.filter(store=store),
+        'recent_sales': Sale.objects.filter(store=store),
         'office_sales': office_sales,
         'furniture_sales': furniture_sales,
         'tech_sales': tech_sales,
