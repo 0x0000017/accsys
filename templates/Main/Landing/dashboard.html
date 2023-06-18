@@ -178,8 +178,12 @@
                 'Others',
             ],
             datasets: [{
-                label: 'Top Sales',
-                data: ['{{ office_sales }}', '{{ furniture_sales }}', '{{ tech_sales }}'],
+                label: 'Top Sales in ₱',
+                data: [
+                    {% for sale in top_sales %}
+                        {{ sale }},
+                    {% endfor %}
+                ],
                 backgroundColor: [
                   'rgb(255, 99, 132)',
                   'rgb(54, 162, 235)',
@@ -194,7 +198,7 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'Top Sales',
+                    text: 'Top Sales in ₱',
                 }
             }
         }
