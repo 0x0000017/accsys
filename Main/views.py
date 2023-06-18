@@ -204,26 +204,34 @@ def accounting(request, filter_data):
 
 
 def profile(request):
-    if request.method == 'POST':
-        user = User.objects.get(id=request.user.id)
+    store = Store.objects.get(storeOwner=request.user.id)
 
+    if request.method == 'POST':
         password = request.POST.get('password')
         confirm_pass = request.POST.get('confirm_pass')
+
+        user = User.objects.get(id=request.user.id)
 
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
 
         store_name = request.POST.get('store_name')
-        addr = request.POST.get('address')
+        addr = request.POST.get('store_address')
 
-        if password == confirm_pass and password is not None and confirm_pass is not None:
+        if password and confirm_pass and password == confirm_pass:
             user.set_password(password)
-            user.save()
-            return HttpResponseRedirect(reverse('profile'))
+        
+        user.first_name = first_name
+        user.last_name = last_name
+        store.storeName = store_name
+        store.storeAddress = addr
 
+        user.save()
+        store.save()
+
+        return HttpResponseRedirect(reverse('profile'))
+    
     else:
-        store = Store.objects.get(storeOwner=request.user.id)
-
         return render(request, 'Main/Landing/profile.html', {
             'user': request.user,
             'store': store.storeName,
