@@ -268,17 +268,17 @@ def check_top_sales(items):
 
     for item in items:
         if item.item.category == 'Drinks':
-            categs[0] += 1
+            categs[0] += (item.item.item_price - item.item.expense) * item.amount
         elif item.item.category == 'Condiments':
-            categs[1] += 1
+            categs[1] += (item.item.item_price - item.item.expense) * item.amount
         elif item.item.category == 'Snacks':
-            categs[2] += 1
+            categs[2] += (item.item.item_price - item.item.expense) * item.amount
         elif item.item.category == 'Canned Goods':
-            categs[3] += 1
+            categs[3] += (item.item.item_price - item.item.expense) * item.amount
         elif item.item.category == 'Detergents':
-            categs[4] += 1
+            categs[4] += (item.item.item_price - item.item.expense) * item.amount
         elif item.item.category == 'Others':
-            categs[5] += 1
+            categs[5] += (item.item.item_price - item.item.expense) * item.amount
 
     return categs
 
