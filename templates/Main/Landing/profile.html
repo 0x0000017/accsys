@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" onclick="storepw()" class="btn btn-primary" data-bs-dismiss="modal">Update Password</button>
+                                    <button type="submit" onclick="storepw()" class="btn btn-primary" data-bs-dismiss="modal">Log out and Update Password</button>
                                 </div>
                               </div>
                             </div>
@@ -95,7 +95,6 @@
         password.value = temp_pw;
         confirm_pass.value = temp_cpw;
 
-        alert("Password is saved. Click 'Submit' to update.");
     }
 </script>
 {% endblock %}

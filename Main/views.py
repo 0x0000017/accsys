@@ -235,6 +235,8 @@ def profile(request):
 
         if password and confirm_pass and password == confirm_pass:
             user.set_password(password)
+            user.save()
+            return HttpResponseRedirect(reverse('login'))
         
         user.first_name = first_name
         user.last_name = last_name
