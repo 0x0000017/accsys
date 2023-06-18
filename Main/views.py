@@ -182,10 +182,7 @@ def delete_item(request, item_id):
 def reduce_item_quanttiy(request, item_id):
     if request.method == 'POST':
         quantity = int(request.POST.get('quantity'))
-
         item = Item.objects.get(id=item_id)
-        item.quantity -= quantity
-        item.save()
 
         new_sale = Sale(item=item, amount=quantity, store=Store.objects.get(storeOwner=request.user.id))
         new_sale.save()
