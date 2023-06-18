@@ -178,7 +178,7 @@
                 'Others',
             ],
             datasets: [{
-                label: 'Top Sales',
+                label: 'Top Sales in ₱',
                 data: [
                     {% for sale in top_sales %}
                         {{ sale }},
@@ -198,7 +198,7 @@
             plugins: {
                 title: {
                     display: true,
-                    text: 'Top Sales',
+                    text: 'Top Sales in ₱',
                 }
             }
         }
