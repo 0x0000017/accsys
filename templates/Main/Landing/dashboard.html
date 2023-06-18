@@ -179,7 +179,11 @@
             ],
             datasets: [{
                 label: 'Top Sales',
-                data: ['{{ office_sales }}', '{{ furniture_sales }}', '{{ tech_sales }}'],
+                data: [
+                    {% for sale in top_sales %}
+                        {{ sale }},
+                    {% endfor %}
+                ],
                 backgroundColor: [
                   'rgb(255, 99, 132)',
                   'rgb(54, 162, 235)',

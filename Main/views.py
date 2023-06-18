@@ -105,9 +105,7 @@ def dashboard(request):
         get_sum_of_sales(Sale.objects.filter(date__month='12', store=store).all())
     ]
 
-    office_sales = check_top_sales(items)[0]
-    furniture_sales = check_top_sales(items)[1]
-    tech_sales = check_top_sales(items)[2]
+    top_sales = check_top_sales(Sale.objects.filter(store=store).all())
 
     revenue = 0
     total_sales = 0
@@ -133,6 +131,7 @@ def dashboard(request):
         'recent_items': Item.objects.filter(store=store),
         'recent_sales': Sale.objects.filter(store=store),
         'monthly_sales': monthly_sales,
+        'top_sales': top_sales,
         'store': store,
     })
 
@@ -243,7 +242,7 @@ def profile(request):
             'user': request.user,
             'store': store.storeName,
             'username': request.user.username,
-            'address' : store.storeAddress
+            'address': store.storeAddress
         })
 
 
@@ -255,15 +254,21 @@ def delete_data(request):
 
 
 def check_top_sales(items):
-    categs = [0, 0, 0]
+    categs = [0, 0, 0, 0, 0, 0]
 
     for item in items:
-        if item.category == 'Office Supplies':
+        if item.item.category == 'Drinks':
             categs[0] += 1
-        elif item.category == 'Furniture':
+        elif item.item.category == 'Condiments':
             categs[1] += 1
-        elif item.category == 'Technology':
+        elif item.item.category == 'Snacks':
             categs[2] += 1
+        elif item.item.category == 'Canned Goods':
+            categs[3] += 1
+        elif item.item.category == 'Detergents':
+            categs[4] += 1
+        elif item.item.category == 'Others':
+            categs[5] += 1
 
     return categs
 
