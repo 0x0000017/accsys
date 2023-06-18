@@ -59,7 +59,11 @@
                     <td>₱ {{ item.item_price }}</td>
                     <td>{{ item.category }}</td>
                     <td>{{ item.date_ordered }}</td>
-                    <td>{{ item.quantity }}</td>
+                    {% if item.quantity == 0 %}
+                        <td>Sold Out</td>
+                    {% else %}
+                        <td>{{ item.quantity }}</td>
+                    {% endif %}
                     <td>
                         <button type="button"
                                 class="btn btn-primary"

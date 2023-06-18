@@ -89,7 +89,11 @@
                             <td class="text-center">{{ recent_item.item_price }}</td>
                             <td class="text-center">{{ recent_item.category }}</td>
                             <td class="text-center">{{ recent_item.date_ordered }}</td>
-                            <td class="text-center">{{ recent_item.quantity }}</td>
+                            {% if recent_item.quantity == 0 %}
+                                <td class="text-center">Sold Out</td>
+                            {% else %}
+                                <td class="text-center">{{ recent_item.quantity }}</td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>
