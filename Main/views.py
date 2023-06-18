@@ -97,6 +97,7 @@ def dashboard(request):
     revenue = 0
     total_sales = 0
     total_expenses = 0
+    net_income = 0
 
     # expenses
     for item in items:
@@ -105,9 +106,7 @@ def dashboard(request):
     # revenue
     for sale in sales:
         total_sales += sale.item.item_price * sale.amount
-
-    # net income
-    net_income = revenue - total_expenses
+        net_income += (sale.item.item_price - sale.item.expense) * sale.amount
 
     return render(request, 'Main/Landing/dashboard.html', {
         'user': user,
@@ -178,6 +177,20 @@ def delete_item(request, item_id):
     item.delete()
 
     return HttpResponseRedirect(reverse('inventory', args=['all']))
+
+
+def reduce_item_quanttiy(request, item_id):
+    if request.method == 'POST':
+        quantity = int(request.POST.get('quantity'))
+
+        item = Item.objects.get(id=item_id)
+        item.quantity -= quantity
+        item.save()
+
+        new_sale = Sale(item=item, amount=quantity, store=Store.objects.get(storeOwner=request.user.id))
+        new_sale.save()
+
+        return HttpResponseRedirect(reverse('inventory', args=['all']))
 
 
 def accounting(request, filter_data):

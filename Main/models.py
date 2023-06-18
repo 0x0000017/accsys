@@ -8,7 +8,7 @@ class Store(models.Model):
     storeOwner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='store_owner')
     storeAddress = models.CharField(max_length=200)
     date_registered = models.DateTimeField(auto_now=True)
-    
+
 
 class Item(models.Model):
     item_name = models.CharField(max_length=200)

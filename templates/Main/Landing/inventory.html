@@ -165,7 +165,7 @@
                 </div>
 
                 <div class="modal fade" id="soldItemsModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <form action="/update_item/{{ item.id }}" method="post">
+                    <form action="/reduce_item_quantity/{{ item.id }}" method="post">
                         {% csrf_token %}
                         <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -181,7 +181,7 @@
                                 <div class="row"> </div>
                                 <div class="mb-1">
                                     <label for="itemName" class="form-label">Quantity (minimum: 1)</label>
-                                    <input type="number" class="form-control input-sm" id="itemName" min="1" name="item_name" value ="{{ item.quantity }}" required>
+                                    <input type="number" class="form-control input-sm" id="itemName" min="1" name="quantity" required>
                                 </div>
 
                         <div class="modal-footer">
