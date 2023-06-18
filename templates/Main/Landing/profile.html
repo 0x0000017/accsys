@@ -39,7 +39,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" onclick="storepw()" class="btn btn-primary" data-bs-dismiss="modal">Update Password</button>
+                                    <button type="submit" onclick="storepw()" class="btn btn-primary" data-bs-dismiss="modal">Log out and Update Password</button>
                                 </div>
                               </div>
                             </div>
@@ -65,7 +65,7 @@
                 <div class ="row mb-5">
                     <div class ="col">
                         <label for="input-8">Address</label>
-                        <input type="text" class="form-control" name ="address" id ="address" placeholder="Address" value="{{address}}">
+                        <input type="text" class="form-control" name ="store_address" id ="address" placeholder="Address" value="{{address}}">
                     </div>
                     <div class ="col">
                         <input type="hidden" id="password" name="password" value="">
@@ -95,7 +95,6 @@
         password.value = temp_pw;
         confirm_pass.value = temp_cpw;
 
-        alert("Password is saved. Click 'Submit' to update.");
     }
 </script>
 {% endblock %}
