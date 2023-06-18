@@ -187,7 +187,6 @@ def accounting(request, filter_data):
 def profile(request):
     if request.method == 'POST':
         user = User.objects.get(id=request.user.id)
-        store = Store.objects.get(storeName=user.id)
 
         password = request.POST.get('password')
         confirm_pass = request.POST.get('confirm_pass')
