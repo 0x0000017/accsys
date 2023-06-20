@@ -1,8 +1,15 @@
 .terms-heading {
-    font-weight: bold;
+    font-weight: bold !important;
     margin-top: 5%;
 }
+#heading1{
+    margin-top: 3%;
 
+}
+h1{
+    font-weight: bold !important;
+    margin-bottom: 20px !important;
+}
 #last-updated-terms {
     font-weight: bold;
 }
