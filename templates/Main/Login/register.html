@@ -55,7 +55,15 @@
         
                         <label for="confirmPass" class="form-label">Confirm Password</label>
                         <input type="password" class="form-control" id="confirmPass" placeholder="Confirm your password" name="confirmPass" required>
+                        
+                        <br>
+                        <div class="termsAndCond">
 
+                            <input type="checkbox" class="btn-check col" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" required>
+                            <label class="btn btn-outline-primary" for="vbtn-radio1" style=" font-weight:bold;"> ✓ </label>
+                            <p class="terms">By checking this I understand the <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Terms and Conditions</a>.</p>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -66,5 +74,98 @@
             </div>
         </form>
     </div>
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Terms and Conditions</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h1  style="font-size: 40px !important;">Terms and Conditions</h1>
+                <br>
+
+                <p>
+                    Please read these terms and conditions carefully before using our inventory system.
+                    By accessing or using the system, you agree to be bound by these terms and conditions.
+                    If you do not agree with any part of these terms, please refrain from using the system.
+                </p>
+                <br>
+            
+                <h4 class="terms-heading">1. System Usage:</h4>
+                <p>
+                    a. The inventory system is provided on an "as is" basis, and we do not guarantee its availability, accuracy, or
+                    functionality.
+                </p>
+                <p>
+                    b. You are responsible for maintaining the confidentiality of your account and any activities that occur under
+                    your account.
+                </p>
+                <p>c. You agree not to use the inventory system for any illegal or unauthorized purposes.</p>
+            
+                <h4 class="terms-heading">2. Intellectual Property:</h4>
+                <p>a. All content and materials provided in the inventory system, including but not limited to software, graphics,
+                    logos, and design, are the property of their respective owners and protected by intellectual property laws.</p>
+                <p>
+                    b. You may not modify, copy, distribute, transmit, display, perform, reproduce, publish, license, create
+                    derivative works from, transfer, or sell any information, software, products, or services obtained from the
+                    inventory system without prior written consent.
+                </p>
+            
+                <h4 class="terms-heading">3. Data Privacy:</h4>
+                <p>a. We respect your privacy and handle your data in accordance with applicable data protection laws.</p>
+                <p>
+                    b. By using the inventory system, you agree to the collection, use, and storage of your data as outlined in
+                    our Privacy Policy.
+                </p>
+            
+                <h4 class="terms-heading">4. Limitation of Liability:</h4>
+                <p>
+                    a. We shall not be liable for any direct, indirect, incidental, consequential, or exemplary damages arising
+                    from the use or inability to use the inventory system.
+                </p>
+                <p>b. We shall not be responsible for any interruptions, errors, or defects in the system or any delays in its operation.</p>
+            
+                <h4 class="terms-heading">5. Termination:</h4>
+                <p>
+                    a. We reserve the right to suspend or terminate your access to the inventory system at any time and for any
+                    reason without notice.
+                </p>
+                <p>
+                    b. Upon termination, you must immediately cease all use of the system and return or destroy any materials
+                    obtained from it.
+                </p>
+            
+                <h4 class="terms-heading">6. Governing Law:</h4>
+                <p>
+                    These terms and conditions shall be governed by and construed in accordance with the laws of RA 10175.
+                    Any disputes arising out of or relating to these terms and conditions shall be subject to the exclusive
+                    jurisdiction of the courts in the Philippines.
+                </p>
+            
+                <br>
+                <p>
+                    Please note that these terms and conditions are subject to change without prior notice.
+                    It is your responsibility to review them periodically for any updates or modifications.
+                    If you continue to use the inventory system after any changes, it will be considered as your acceptance
+                    of the revised terms and conditions.
+                </p>
+                <br>
+                <p>
+                    If you have any questions or concerns about these terms and conditions, please contact us at accsysadmin@gmail.com.
+                </p>
+                <br>
+                <h6 id="last-updated-terms">Last updated: June 18, 2023</h6>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
 </div>
 {% endblock %}
