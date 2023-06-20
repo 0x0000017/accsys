@@ -42,7 +42,7 @@ hr {
 }
 .termsAndCond{
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(4,1fr);
     grid-gap: 10px;
     height: 20px;
 }
@@ -50,4 +50,8 @@ hr {
     position: relative;
     top: 15%;
     white-space: nowrap;
+    font-size: 15px;
+}
+#vbtn-radio1{
+    width: 40px !;
 }
