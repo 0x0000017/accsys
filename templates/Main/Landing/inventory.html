@@ -47,6 +47,7 @@
                 <tr>
                     <th class="text-center" scope="col">ITEM NAME</th>
                     <th class="text-center" scope="col">ITEM PRICE</th>
+                    <th class="text-center" scope="col">PURCHASE COST</th>
                     <th class="text-center" scope="col">CATEGORY</th>
                     <th class="text-center" scope="col">DATE ORDERED</th>
                     <th class="text-center" scope="col">QUANTITY</th>
@@ -61,6 +62,7 @@
                         <tr class="text-center" >
                         <td>{{ item.item_name }}</td>
                         <td>₱ {{ item.item_price }}</td>
+                        <td>₱ {{ item.expense }}</td>
                         <td>{{ item.category }}</td>
                         <td>{{ item.date_ordered.date }}</td>
                         {% if item.quantity == 0 %}

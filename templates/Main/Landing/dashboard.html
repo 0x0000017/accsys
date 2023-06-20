@@ -77,6 +77,7 @@
                     <tr>
                         <td >Item Name</td>
                         <td class="text-center">Item Price</td>
+                        <td class="text-center">Purchase Cost</td>
                         <td class="text-center">Item Category</td>
                         <td class="text-center">Date Ordered</td>
                         <td class="text-center">Quantity</td>
@@ -86,7 +87,8 @@
                     {% for recent_item in recent_items %}
                         <tr>
                             <td >{{ recent_item.item_name }}</td>
-                            <td class="text-center">{{ recent_item.item_price }}</td>
+                            <td class="text-center">₱ {{ recent_item.item_price }}</td>
+                            <td class="text-center">₱ {{ recent_item.expense }}</td>
                             <td class="text-center">{{ recent_item.category }}</td>
                             <td class="text-center">{{ recent_item.date_ordered.date }}</td>
                             {% if recent_item.quantity == 0 %}
@@ -112,6 +114,7 @@
                     <tr>
                         <td >Item Name</td>
                         <td class="text-center">Item Price</td>
+                        <td class="text-center">Purchase Cost</td>
                         <td class="text-center">Item Category</td>
                         <td class="text-center">Date Ordered</td>
                         <td class="text-center">Quantity</td>
@@ -121,7 +124,8 @@
                     {% for sale in all_sales %}
                         <tr>
                             <td >{{ sale.item.item_name }}</td>
-                            <td class="text-center">{{ sale.item.item_price }}</td>
+                            <td class="text-center">₱ {{ sale.item.item_price }}</td>
+                            <td class="text-center">₱ {{ sale.item.expense }}</td>
                             <td class="text-center">{{ sale.item.category }}</td>
                             <td class="text-center">{{ sale.item.date_ordered.date }}</td>
                             {% if sale.quantity == 0 %}
