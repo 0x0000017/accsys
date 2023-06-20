@@ -29,7 +29,7 @@ body
 
 .home-btns {
     padding-top: 10vh;
-    overflow: hidden;
+    /* overflow: hidden; */
     border-collapse: collapse;
 }
 .home-btns button {
@@ -45,6 +45,7 @@ body
 }
 #btnSignUp{
     margin-left: -15% !important;
+    white-space: nowrap;
 }
 .btn-success {
     background-color: #02BB7D !important;

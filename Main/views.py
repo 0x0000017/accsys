@@ -76,8 +76,8 @@ def register(request):
                 'error_message': 'User already exists.'
             })
 
-        login(request, newUser)
-        return HttpResponseRedirect(reverse('dashboard'))
+        # login(request, newUser)
+        return HttpResponseRedirect(reverse('login'))
     else:
         return render(request, 'Main/Login/register.html')
 

@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-_pm0_(a=a!-jx59)mq)npo4v07f(=hl%9m4=3^wc^ms((l3tlm
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://accsys.loca.lt']
 
 LOGOUT_REDIRECT_URL = 'login'
 # Application definition
