@@ -13,7 +13,7 @@
         </div>
     </div> -->
 
-    <!-- <div class="Scard">
+    <div class="Scard">
         <div>
             <div class="numbers" data-val="0"><span>₱</span> 0</div>
             <div class="cardName">Sales</div>
@@ -21,7 +21,7 @@
         <div class="iconBx">
             <ion-icon name="cart-outline"></ion-icon>
         </div>
-    </div> -->
+    </div>
 
     <div class="Scard">
         <div>
@@ -71,6 +71,41 @@
             <div class="cardHeader">
                 <h2>Recent Items</h2>
                 <a href="{% url 'inventory' 'all' %}"><button class="btn btn-primary">View All</button></a>
+            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <td >Item Name</td>
+                        <td class="text-center">Item Price</td>
+                        <td class="text-center">Item Category</td>
+                        <td class="text-center">Date Ordered</td>
+                        <td class="text-center">Quantity</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for recent_item in recent_items %}
+                        <tr>
+                            <td >{{ recent_item.item_name }}</td>
+                            <td class="text-center">{{ recent_item.item_price }}</td>
+                            <td class="text-center">{{ recent_item.category }}</td>
+                            <td class="text-center">{{ recent_item.date_ordered }}</td>
+                            {% if recent_item.quantity == 0 %}
+                                <td class="text-center">Sold Out</td>
+                            {% else %}
+                                <td class="text-center">{{ recent_item.quantity }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+    </div>
+</div>
+
+<div class="details">
+    <div class="recentOrders table-responsive">
+            <div class="cardHeader">
+                <h2>Recent Sales</h2>
+                <a href=""><button class="btn btn-primary">View All</button></a>
             </div>
             <table class="table table-striped table-hover">
                 <thead>
