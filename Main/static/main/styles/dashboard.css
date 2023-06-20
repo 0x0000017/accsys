@@ -15,10 +15,7 @@ html {
     --black2: #999;
 }
 .printbtn {
-    align-items: end;
-    justify-content: end;
-    align-content: end;
-    margin-left: 2vw;
+    margin-right: 2vw;
 }
 .cardBox
 {
