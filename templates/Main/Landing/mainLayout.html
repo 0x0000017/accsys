@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{%static 'main/styles/dashboard.css'%}">
     <link rel="stylesheet" type="text/css" href="{%static 'main/styles/profile.css'%}">
     <link rel="stylesheet" type="text/css" href="{%static 'main/styles/accounting.css'%}">
+    <link rel="stylesheet" type="text/css" href="{%static 'main/styles/termsandconditions.css'%}">
     <link rel="icon" href="{%static 'main/assets/images/site-logo.png'%}">
 
 
@@ -69,6 +70,13 @@
                     <a href="{% url 'profile' %}">
                         <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
                         <span class="title" style="font-family: Metropolis;">Profile</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'terms' %}">
+                        <span class="icon"><ion-icon name="newspaper-outline"></ion-icon></span>
+                        <span class="title" style="font-family: Metropolis;">Terms and Conditions</span>
                     </a>
                 </li>
 

@@ -18,5 +18,6 @@ urlpatterns = [
     path('reduce_item_quantity/<int:item_id>', views.reduce_item_quantity, name='reduce_items'),
     path('accounting/<str:filter_data>', views.accounting, name='accounting'),
     path('profile', views.profile, name='profile'),
+    path('terms_and_conditions', views.terms_and_conditions, name='terms'),
     path('delete', views.delete_data, name='delete'),
 ]

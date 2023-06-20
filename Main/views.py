@@ -269,6 +269,10 @@ def profile(request):
         })
 
 
+def terms_and_conditions(request):
+    return render(request, 'Main/Landing/termsandconditions.html')
+
+
 def delete_data(request):
     items = Item.objects.all()
     items.delete()
