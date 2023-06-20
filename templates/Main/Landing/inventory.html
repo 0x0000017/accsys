@@ -306,7 +306,7 @@
     <!-- upload modal -->
 
     <div class="modal fade" id="uploadItemsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form action="" method="post">
+        <form action="/upload_csv" method="post" enctype="multipart/form-data">
             <div class="modal-dialog modal-dialog-centered">
             {% csrf_token %}
                 <div class="modal-content">
@@ -321,13 +321,10 @@
                     <div class ="form-group">
                         <div class="mb-1">
                             <label for="upload" class="form-label">Upload CSV file:</label>
-                            <input type="file" class="form-control input-sm" id="" name="" required>
+                            <input type="file" accept=".csv" class="form-control input-sm" name="store_data" required>
                         </div>
-
-                        
                     </div>
                 </div>
-
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

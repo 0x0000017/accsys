@@ -12,6 +12,7 @@ urlpatterns = [
     path('register', views.register, name='register'),
     path('dashboard', views.dashboard, name='dashboard'),
     path('inventory/<str:item_filter>', views.inventory, name='inventory'),
+    path('upload_csv', views.upload_store_data, name='upload_store_data'),
     path('create_item', views.create_item, name='create_item'),
     path('update_item/<int:item_id>', views.update_item, name='update_item'),
     path('delete_item/<int:item_id>', views.delete_item, name='delete_item'),

@@ -273,6 +273,28 @@ def terms_and_conditions(request):
     return render(request, 'Main/Landing/termsandconditions.html')
 
 
+def upload_store_data(request):
+    if request.method == 'POST':
+        store = Store.objects.get(storeOwner=request.user.id)
+        store_data = request.FILES.get('store_data')
+
+        if store_data is not None:
+            df = pd.read_csv(store_data)
+            for i in df.index:
+                new_item = Item(
+                    item_name=df['item_name'][i],
+                    item_price=df['item_price'][i],
+                    expense=df['expense'][i],
+                    quantity=df['quantity'][i],
+                    category=df['category'][i],
+                    date_ordered=df['date_ordered'][i],
+                    store=store
+                )
+                new_item.save()
+
+        return HttpResponseRedirect(reverse('inventory', args=['all']))
+
+
 def delete_data(request):
     items = Item.objects.all()
     items.delete()
