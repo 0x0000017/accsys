@@ -38,9 +38,8 @@
                     <li><a class="dropdown-item" href="{% url 'inventory' 'item_price' %}">Price</a></li>
                     <li><a class="dropdown-item" href="{% url 'inventory' 'category' %}">Category</a></li>
                     <li><a class="dropdown-item" href="{% url 'inventory' 'date_ordered' %}">Date</a></li>
-                    <li><a class="dropdown-item" href="{% url 'inventory' 'all' %}">Quantity</a></li>
+                    <li><a class="dropdown-item" href="{% url 'inventory' 'quantity' %}">Quantity</a></li>
                 </ul>
-
             </div>
 
             <table class="table table-striped table-hover">
@@ -252,7 +251,7 @@
                         </div>
 
                         <div class="mb-1">
-                            <label for="expense" class="form-label">Expense:</label>
+                            <label for="expense" class="form-label">Purchase Cost:</label>
                             <input type="text" class="form-control input-sm" id="create_expense" name="expense">
                         </div>
 
