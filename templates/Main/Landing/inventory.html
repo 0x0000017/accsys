@@ -208,7 +208,7 @@
             <div class="col-md-12 text-right">
                 <button type="button" 
                         class="btn btn-primary ml-2 pl-2" 
-                        style="float: right; font-family: Metropolis;"
+                        style="float: right; margin-left: 0.5%; font-family: Metropolis;"
                         data-bs-toggle="modal" 
                         data-bs-target="#addItemsModal" 
                 >
@@ -217,6 +217,18 @@
                     </span>
                     Add Items
                 </button>
+
+                <button type="button" 
+                        class="btn btn-primary ml-2 pl-2" 
+                        style="float: right; font-family: Metropolis;"
+                        data-bs-toggle="modal" 
+                        data-bs-target="#uploadItemsModal" 
+                >
+                    <span style="font-size: 1.13em;">
+                        <ion-icon name="cloud-upload-outline"></ion-icon> 
+                    </span>
+                    Upload CSV file
+                </button>
                 <br>
             </div>
 
@@ -224,8 +236,8 @@
     </div>
     </div>
 
-    <!-- Add modal -->
-    <div class="modal fade" id="addItemsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+     <!-- Add modal -->
+     <div class="modal fade" id="addItemsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <form action="/create_item" method="post">
             {% csrf_token %}
             <div class="modal-dialog modal-dialog-centered">
@@ -242,17 +254,17 @@
                         <div class="row"> </div>
                         <div class="mb-1">
                             <label for="item_name" class="form-label">Item name:</label>
-                            <input type="text" class="form-control input-sm" id="create_item_name" name="item_name">
+                            <input type="text" class="form-control input-sm" id="create_item_name" name="item_name" required> 
                         </div>
 
                         <div class="mb-1">
                             <label for="item_price" class="form-label">Item Price:</label>
-                            <input type="text" class="form-control input-sm" id="create_item_price" name="item_price">
+                            <input type="text" class="form-control input-sm" id="create_item_price" name="item_price" required>
                         </div>
 
                         <div class="mb-1">
                             <label for="expense" class="form-label">Purchase Cost:</label>
-                            <input type="text" class="form-control input-sm" id="create_expense" name="expense">
+                            <input type="text" class="form-control input-sm" id="create_expense" name="expense" required>
                         </div>
 
                         <div class="mb-1">
@@ -270,13 +282,49 @@
 
                         <div class="mb-1">
                             <label for="quantity" class="form-label">Quantity:</label>
-                            <input type="text" class="form-control" id="create_category" name="quantity">
+                            <input type="text" class="form-control" id="create_category" name="quantity" required>
                         </div>
 
                         <div class="mb-1">
                             <label for="date_ordered" class="form-label">Date Ordered:</label>
-                            <input type="date" class="form-control" id="create_date_ordered" name="date_ordered">
+                            <input type="date" class="form-control" id="create_date_ordered" name="date_ordered" required>
                         </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary" value="Add">
+                </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- upload modal -->
+
+    <div class="modal fade" id="uploadItemsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <form action="" method="post">
+            <div class="modal-dialog modal-dialog-centered">
+            {% csrf_token %}
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel"> Upload </h1>
+                    <button type="button" class="btn-close"
+                    data-bs-dismiss="modal" aria-label="Close"
+                    (click)="closeClick()"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class ="form-group">
+                        <div class="mb-1">
+                            <label for="upload" class="form-label">Upload CSV file:</label>
+                            <input type="file" class="form-control input-sm" id="" name="" required>
+                        </div>
+
+                        
                     </div>
                 </div>
 
