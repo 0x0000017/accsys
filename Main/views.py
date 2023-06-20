@@ -128,6 +128,7 @@ def dashboard(request):
         'expense': total_expenses,
         'net_income': net_income,
         'all_items': items,
+        'all_sales': sales,
         'recent_items': Item.objects.filter(store=store),
         'recent_sales': Sale.objects.filter(store=store),
         'monthly_sales': monthly_sales,
@@ -151,7 +152,6 @@ def inventory(request, item_filter):
             'all_items': searched,
             'items': searched[:20]
         })
-
 
     if item_set == 'all':
         items = Item.objects.filter(store__in=store).all()
@@ -198,12 +198,13 @@ def update_item(request, item_id):
 
 def delete_item(request, item_id):
     item = Item.objects.get(id=item_id)
-    item.delete()
+    item.is_deleted = True
+    item.save()
 
     return HttpResponseRedirect(reverse('inventory', args=['all']))
 
 
-def reduce_item_quanttiy(request, item_id):
+def reduce_item_quantity(request, item_id):
     if request.method == 'POST':
         quantity = int(request.POST.get('quantity'))
         item = Item.objects.get(id=item_id)

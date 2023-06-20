@@ -118,16 +118,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for recent_item in recent_items %}
+                    {% for sale in all_sales %}
                         <tr>
-                            <td >{{ recent_item.item_name }}</td>
-                            <td class="text-center">{{ recent_item.item_price }}</td>
-                            <td class="text-center">{{ recent_item.category }}</td>
-                            <td class="text-center">{{ recent_item.date_ordered }}</td>
-                            {% if recent_item.quantity == 0 %}
+                            <td >{{ sale.item.item_name }}</td>
+                            <td class="text-center">{{ sale.item.item_price }}</td>
+                            <td class="text-center">{{ sale.item.category }}</td>
+                            <td class="text-center">{{ sale.item.date_ordered }}</td>
+                            {% if sale.quantity == 0 %}
                                 <td class="text-center">Sold Out</td>
                             {% else %}
-                                <td class="text-center">{{ recent_item.quantity }}</td>
+                                <td class="text-center">{{ sale.amount }}</td>
                             {% endif %}
                         </tr>
                     {% endfor %}

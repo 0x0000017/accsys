@@ -18,6 +18,7 @@ class Item(models.Model):
     category = models.CharField(max_length=64)
     date_ordered = models.DateTimeField()
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='location')
+    is_deleted = models.BooleanField(default=False)
 
 
 class Sale(models.Model):

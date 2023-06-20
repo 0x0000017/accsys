@@ -58,148 +58,150 @@
                 </thead>
                 <tbody>
                 {% for item in items %}
-                    <tr class="text-center" >
-                    <td>{{ item.item_name }}</td>
-                    <td>₱ {{ item.item_price }}</td>
-                    <td>{{ item.category }}</td>
-                    <td>{{ item.date_ordered }}</td>
-                    {% if item.quantity == 0 %}
-                        <td>Sold Out</td>
-                    {% else %}
-                        <td>{{ item.quantity }}</td>
-                    {% endif %}
-                    <td>
-                        <button type="button"
-                                class="btn btn-primary"
-                                data-bs-toggle="modal"
-                                data-bs-target="#editItemsModal-{{ item.id }}"
-                        >
-                            <ion-icon name="create-outline" style="font-size: 1.13em;"></ion-icon>
-                        </button>
-                        <button type="button"
-                                class="btn btn-danger"
-                                data-bs-toggle="modal"
-                                data-bs-target="#deleteItemModal-{{ item.id }}">
-                            <ion-icon name="trash-outline" style="font-size: 1.13em;"></ion-icon>
-                        </button>
-                    </td>
-                    <td>
-                        <button type="button"
-                                data-bs-toggle="modal"
-                                data-bs-target="#soldItemsModal-{{ item.id }}"
-                                class="btn btn-success">
-                            <ion-icon name="remove-circle-outline" style="font-size: 1.13em;"></ion-icon>
-                        </button>
-                    </td>
-                </tr>
+                    {% if not item.is_deleted %}
+                        <tr class="text-center" >
+                        <td>{{ item.item_name }}</td>
+                        <td>₱ {{ item.item_price }}</td>
+                        <td>{{ item.category }}</td>
+                        <td>{{ item.date_ordered }}</td>
+                        {% if item.quantity == 0 %}
+                            <td>Sold Out</td>
+                        {% else %}
+                            <td>{{ item.quantity }}</td>
+                        {% endif %}
+                            <td>
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#editItemsModal-{{ item.id }}"
+                                >
+                                    <ion-icon name="create-outline" style="font-size: 1.13em;"></ion-icon>
+                                </button>
+                                <button type="button"
+                                        class="btn btn-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteItemModal-{{ item.id }}">
+                                    <ion-icon name="trash-outline" style="font-size: 1.13em;"></ion-icon>
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#soldItemsModal-{{ item.id }}"
+                                        class="btn btn-success">
+                                    <ion-icon name="remove-circle-outline" style="font-size: 1.13em;"></ion-icon>
+                                </button>
+                            </td>
+                            </tr>
 
-                <!-- MODALS -->
-                <div class="modal fade" id="editItemsModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <form action="/update_item/{{ item.id }}" method="post">
-                        {% csrf_token %}
-                        <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel"> Edit </h1>
-                            <button type="button" class="btn-close"
-                            data-bs-dismiss="modal" aria-label="Close"
-                            (click)="closeClick()"></button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class ="form-group">
-                                <div class="row"> </div>
-                                <div class="mb-1">
-                                    <label for="itemName" class="form-label">Item name:</label>
-                                    <input type="text" class="form-control input-sm" id="itemName" name="item_name" value ="{{ item.item_name }}" required>
+                            <!-- MODALS -->
+                            <div class="modal fade" id="editItemsModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <form action="/update_item/{{ item.id }}" method="post">
+                                {% csrf_token %}
+                                <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"> Edit </h1>
+                                    <button type="button" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close"
+                                    (click)="closeClick()"></button>
                                 </div>
 
-                                <div class="mb-1">
-                                    <label for="itemPrice" class="form-label">Item Price:</label>
-                                    <input type="text" class="form-control input-sm" id="itemPrice" name="item_price" value="{{ item.item_price }}" required>
+                                <div class="modal-body">
+                                    <div class ="form-group">
+                                        <div class="row"> </div>
+                                        <div class="mb-1">
+                                            <label for="itemName" class="form-label">Item name:</label>
+                                            <input type="text" class="form-control input-sm" id="itemName" name="item_name" value ="{{ item.item_name }}" required>
+                                        </div>
+
+                                        <div class="mb-1">
+                                            <label for="itemPrice" class="form-label">Item Price:</label>
+                                            <input type="text" class="form-control input-sm" id="itemPrice" name="item_price" value="{{ item.item_price }}" required>
+                                        </div>
+
+                                        <div class="mb-1">
+                                            <label for="category" class="form-label">Category:</label>
+                                            <input type="text" class="form-control input-sm" id="category" name="category" value="{{ item.category }}" required>
+                                        </div>
+
+                                        <div class="mb-1">
+                                            <label for="dateOrdered" class="form-label">Date Ordered:</label>
+                                            <input type="date" class="form-control" id="dateOrdered" name="date_ordered" value="{{ item.date_ordered }}" required>
+                                        </div>
+
+                                        <div class="mb-1">
+                                            <label for="quantity" class="form-label">Quantity:</label>
+                                            <input type="text" class="form-control" id="quantity" name="quantity" value="{{ item.quantity }}" required>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="mb-1">
-                                    <label for="category" class="form-label">Category:</label>
-                                    <input type="text" class="form-control input-sm" id="category" name="category" value="{{ item.category }}" required>
-                                </div>
 
-                                <div class="mb-1">
-                                    <label for="dateOrdered" class="form-label">Date Ordered:</label>
-                                    <input type="date" class="form-control" id="dateOrdered" name="date_ordered" value="{{ item.date_ordered }}" required>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
                                 </div>
-
-                                <div class="mb-1">
-                                    <label for="quantity" class="form-label">Quantity:</label>
-                                    <input type="text" class="form-control" id="quantity" name="quantity" value="{{ item.quantity }}" required>
                                 </div>
                             </div>
-                        </div>
+                            </form>
+                            </div>
+
+                            <div class="modal fade" id="deleteItemModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel"> Delete </h1>
+                                <button type="button" class="btn-close"
+                                data-bs-dismiss="modal" aria-label="Close"
+                                (click)="closeClick()"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <p>Are you sure to delete?</p>
+                            </div>
 
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                        </div>
-                        </div>
-                    </div>
-                    </form>
-                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                <a href="/delete_item/{{ item.id }}">
+                                    <button type="button" class="btn btn-primary">Yes</button>
+                                </a>
+                            </div>
 
-                <div class="modal fade" id="deleteItemModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel"> Delete </h1>
-                        <button type="button" class="btn-close"
-                        data-bs-dismiss="modal" aria-label="Close"
-                        (click)="closeClick()"></button>
-                    </div>
+                            </div>
+                            </div>
+                            </div>
 
-                    <div class="modal-body">
-                        <p>Are you sure to delete?</p>
-                    </div>
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                        <a href="/delete_item/{{ item.id }}">
-                            <button type="button" class="btn btn-primary">Yes</button>
-                        </a>
-                    </div>
-
-                    </div>
-                </div>
-                </div>
-
-                <div class="modal fade" id="soldItemsModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <form action="/reduce_item_quantity/{{ item.id }}" method="post">
-                        {% csrf_token %}
-                        <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel"> Sold </h1>
-                            <button type="button" class="btn-close"
-                            data-bs-dismiss="modal" aria-label="Close"
-                            (click)="closeClick()"></button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class ="form-group">
-                                <div class="row"> </div>
-                                <div class="mb-1">
-                                    <label for="itemName" class="form-label">Quantity (minimum: 1)</label>
-                                    <input type="number" class="form-control input-sm" id="itemName" min="1" name="quantity" required>
+                            <div class="modal fade" id="soldItemsModal-{{ item.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <form action="/reduce_item_quantity/{{ item.id }}" method="post">
+                                {% csrf_token %}
+                                <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel"> Sold </h1>
+                                    <button type="button" class="btn-close"
+                                    data-bs-dismiss="modal" aria-label="Close"
+                                    (click)="closeClick()"></button>
                                 </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                        </div>
-                        </div>
-                    </div>
-                    </form>
-                </div>
+                                <div class="modal-body">
+                                    <div class ="form-group">
+                                        <div class="row"> </div>
+                                        <div class="mb-1">
+                                            <label for="itemName" class="form-label">Quantity (minimum: 1)</label>
+                                            <input type="number" class="form-control input-sm" id="itemName" min="1" name="quantity" required>
+                                        </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                                </div>
+                            </div>
+                            </form>
+                            </div>
+                    {% endif %}
                 {% endfor %}
                 </tbody>
             </table>
