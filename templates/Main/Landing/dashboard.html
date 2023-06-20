@@ -115,6 +115,7 @@
                         <td >Item Name</td>
                         <td class="text-center">Item Price</td>
                         <td class="text-center">Purchase Cost</td>
+                        <td class="text-center">Profit</td>
                         <td class="text-center">Item Category</td>
                         <td class="text-center">Date Ordered</td>
                         <td class="text-center">Quantity</td>
@@ -126,6 +127,7 @@
                             <td >{{ sale.item.item_name }}</td>
                             <td class="text-center">₱ {{ sale.item.item_price }}</td>
                             <td class="text-center">₱ {{ sale.item.expense }}</td>
+                            <td class="text-center">₱ {{ sale.profit }}</td>
                             <td class="text-center">{{ sale.item.category }}</td>
                             <td class="text-center">{{ sale.item.date_ordered.date }}</td>
                             {% if sale.quantity == 0 %}

@@ -211,7 +211,12 @@ def reduce_item_quantity(request, item_id):
         item.quantity -= quantity
         item.save()
 
-        new_sale = Sale(item=item, amount=quantity, store=Store.objects.get(storeOwner=request.user.id))
+        new_sale = Sale(
+            item=item,
+            amount=quantity,
+            store=Store.objects.get(storeOwner=request.user.id),
+            profit=(item.item_price - item.expense) * quantity
+        )
         new_sale.save()
 
         return HttpResponseRedirect(reverse('inventory', args=['all']))

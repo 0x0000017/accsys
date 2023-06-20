@@ -24,6 +24,7 @@ class Item(models.Model):
 class Sale(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='product')
     amount = models.IntegerField()
+    profit = models.IntegerField()
     date = models.DateTimeField(auto_now=True)
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='sale_location')
 
