@@ -25,4 +25,7 @@
     --black1: #222;
     --black2: #999;
 }
-
+.tableInventory{
+    height: 100px !important;
+    overflow-y: scroll !important;
+}

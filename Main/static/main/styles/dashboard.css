@@ -104,13 +104,15 @@ html {
 .details .recentOrders
 {
     position: relative;
-    min-height: 500px;
+    max-height: 500px !important;
     background: var(--white);
     padding: 20px;
+    overflow-y: scroll !important;
+
     box-shadow: 0 7px 25px 0 rgba(0,0,0,0.08);
     border-radius: 20px;
 }
-.cardHeader
+.details .cardHeader
 {
     display: flex;
     justify-content: space-between;
