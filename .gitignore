@@ -9,3 +9,4 @@ __pycache__
 /Main/migrations/__pycache__/
 /django-env
 *.pyc
+*.sqlite3
