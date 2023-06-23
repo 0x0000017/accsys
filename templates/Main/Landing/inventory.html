@@ -232,9 +232,20 @@
                     </span>
                     Upload CSV file
                 </button>
-                <br>
-            </div>
 
+                <button type="button" 
+                        class="btn btn-primary ml-2 pl-2" 
+                        style="float: right; font-family: Metropolis; margin-right: 0.5rem"
+                        onclick="downloadTemplate()">
+                    <span style="font-size: 1.13em;">
+                        <ion-icon name="cloud-download-outline"></ion-icon> 
+                    </span>
+                    Download CSV template
+                </button>
+                <br><br>
+                <div id="noteFormat">
+                </div>
+            </div>
         </div>
     </div>
     </div>
@@ -338,4 +349,12 @@
             </div>
         </form>
     </div>
+    <script>
+        function downloadTemplate() {
+            const displayNote = document.getElementById("noteFormat");
+            displayNote.classList.add("active");
+            displayNote.innerHTML ="NOTE: Please use the date format DD/MM/YYYY H:MM when editing Date field. Thank You.";
+            window.location.href = "{% static 'main/assets/Template.csv' %}";
+        }
+    </script>
 {% endblock %}

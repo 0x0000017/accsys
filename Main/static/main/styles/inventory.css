@@ -29,3 +29,8 @@
     height: 100px !important;
     overflow-y: scroll !important;
 }
+
+#noteFormat {
+    text-align: end;
+    justify-content: end;
+}
