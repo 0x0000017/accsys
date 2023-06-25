@@ -61,8 +61,12 @@ body
     padding-top: 10px!important;
     padding-bottom: 10px!important;
     border-radius: 50px !important;
-    width: 75%!important;
+    width: 65%!important;
 }
+.welcomeMsg {
+    margin-left: 12px;
+}
+
 .btn-success {
     background-color: #02BB7D !important;
     border: 0 !important;

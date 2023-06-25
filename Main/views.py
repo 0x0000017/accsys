@@ -21,7 +21,7 @@ def home(request):
     if request.user.is_authenticated:
         first_name = request.user.first_name
         last_name = request.user.last_name
-        context['message'] = f"Hello, {first_name} {last_name} !"
+        context['message'] = f"Hello, {first_name} {last_name}!"
     else:
         context['message'] = " "
 
