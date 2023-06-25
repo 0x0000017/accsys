@@ -13,11 +13,15 @@
             <div class ="row">
                 {% if request.user.is_authenticated %}
                     <h5>{{message}}</h5>
-                    <div id="btnSignUp" class ="col"> 
-                        <a href ="{% url 'dashboard' %}"><button type="button" class="btn btn-success shadow-sm rounded">Go to Dashboard</button></a>
+                    <div id="btnDb" class ="col"> 
+                        <a href ="{% url 'dashboard' %}">
+                            <button type="button" class="btn btn-success shadow-sm rounded ml-5">Go to Dashboard</button>
+                        </a>
                     </div>
                     <div id="btnLogin" class ="col"> 
-                        <a href ="{% url 'logout' %}"><button type="button" class="btn btn-danger shadow-sm rounded">Logout</button></a>
+                        <a href ="{% url 'logout' %}">
+                            <button type="button" class="btn btn-danger shadow-sm rounded">Logout</button>
+                        </a>
                     </div>
                 {% else %}
                     <div id="btnLogin" class ="col"> 
