@@ -11,7 +11,7 @@
         <hr class ="my-3">
         <form method="post">
             {% csrf_token %}
-            <div class ="form-group was-validated" >
+            <div class ="form-group" >
                 <div class="row">
                     <div class="col-4">
                         <div class ="d-flex pb-2">
@@ -57,7 +57,7 @@
                         <input type="password" class="form-control" id="confirmPass" placeholder="Confirm your password" name="confirmPass" required>
                         
                         <br>
-                        <div class="form-check">
+                        <div class="form-check was-validated">
                             <input type="checkbox" class="form-check-input success" id="flexCheckDefault" required>
                             <label class="form-check-label" for="flexCheckDefault"> 
                                 <p class="terms">
@@ -65,8 +65,7 @@
                                     and have read the <a href="" data-bs-toggle="modal" data-bs-target="#dataPrivacyModdal">Data Privacy Policy</a>.
                                 </p>
                             </label>
-
-                            <div class="valid-feedback">Valid.</div>
+                            <!-- <div class="valid-feedback">Valid.</div> -->
                             <div class="invalid-feedback">Check this checkbox to continue.</div>
                         </div>
                         
