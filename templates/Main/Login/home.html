@@ -12,7 +12,7 @@
         <div class ="home-btns">
             <div class ="row">
                 {% if request.user.is_authenticated %}
-                    <h5>{{message}}</h5>
+                    <h5 class ="welcomeMsg">{{message}}</h5>
                     <div id="btnDb" class ="col"> 
                         <a href ="{% url 'dashboard' %}">
                             <button type="button" class="btn btn-success shadow-sm rounded ml-5 db-btn">Go to Dashboard</button>
