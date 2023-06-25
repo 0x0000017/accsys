@@ -301,19 +301,25 @@ def upload_store_data(request):
         store = Store.objects.get(storeOwner=request.user.id)
         store_data = request.FILES.get('store_data')
 
+        if not store_data.name.endswith('.csv'):
+            return render(request, 'Main/Landing/inventory.html', {'error': 'Upload Failed. Only CSV files are allowed.'})
+
         if store_data is not None:
             df = pd.read_csv(store_data)
-            for i in df.index:
-                new_item = Item(
-                    item_name=df['item_name'][i],
-                    item_price=df['item_price'][i],
-                    expense=df['expense'][i],
-                    quantity=df['quantity'][i],
-                    category=df['category'][i],
-                    date_ordered=df['date_ordered'][i],
-                    store=store
-                )
-                new_item.save()
+            try:
+                for i in df.index:
+                    new_item = Item(
+                        item_name=df['item_name'][i],
+                        item_price=df['item_price'][i],
+                        expense=df['expense'][i],
+                        quantity=df['quantity'][i],
+                        category=df['category'][i],
+                        date_ordered=df['date_ordered'][i],
+                        store=store
+                    )
+                    new_item.save()
+            except:
+                return render(request, 'Main/Landing/inventory.html', {'error': 'Upload Failed. Please check your CSV file and try again.'})
 
         return HttpResponseRedirect(reverse('inventory', args=['all']))
     
@@ -326,11 +332,14 @@ def upload_image(request):
             profile_image = request.FILES['profile_image']
 
             if profile_image.size > 2 * 1024 * 1024:
-                return render(request, 'Main/Landing/profile.html', {'error': 'File size should be up to 2MB.'})
+                return render(request, 'Main/Landing/profile.html', {'error': 'Upload Failed. File size should be up to 2MB.'})
             
             if not profile_image.content_type.startswith('image/'):
-                return render(request, 'Main/Landing/profile.html', {'error': 'Only image files are allowed.'})
+                return render(request, 'Main/Landing/profile.html', {'error': 'Upload Failed. Only image files are allowed.'})
             
+            if profile_image.name.endswith('.gif'):
+                return render(request, 'Main/Landing/profile.html', {'error': 'Upload Failed. Only JPG, JPEG, and PNG are allowed.'})
+
             if user_profile.profile_image:
                 os.remove(user_profile.profile_image.path)
             

@@ -2,17 +2,38 @@
 {% load static %}
 
 {% block content %}
+
+{% if error %}
+    <div class="modal fade" id="onload" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+              <button type="button" onclick="history.back()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>{{error}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" onclick="history.back()" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <script type="text/javascript">
+        window.onload = () => {
+            $('#onload').modal('show');
+        }
+    </script>
+{% endif %}
+
+
 <h1>Profile</h1>
 <div class = "row">
     <div class ="col-12">
             <div class ="profileCardBox">
                 <div class ="row mb-2">
                     <h5><b>Personal Information</b></h5>
-                    {% if error %}
-                        <script>
-                            alert("{{error}}");
-                        </script>
-                    {% endif %}
                     <div class="row">
                         <div class="col mb-3">
                             <label for="input-4">Picture</label><br>
@@ -36,7 +57,7 @@
                                     <form action="/upload_image" method="post" enctype="multipart/form-data">
                                         {% csrf_token %}
                                         <div class="modal-body">
-                                            <input class="form-control" type="file" id="image-input" name="profile_image" accept=".jpg, .png, .jpeg, .gif">
+                                            <input class="form-control" type="file" id="image-input" name="profile_image" accept=".jpg, .png, .jpeg">
                                             <span style ="font-size: 1vw;">Maximum image size: 2MB</span><br>
                                             <br>
                                             <label for="image-preview" class="form-label">Image Preview</label>
