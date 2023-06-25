@@ -28,3 +28,8 @@
 .uploadField {
     max-width: 25%;
 }
+.imgprev {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

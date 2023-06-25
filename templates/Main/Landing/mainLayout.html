@@ -25,6 +25,8 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
     <div class="wContainer">
@@ -106,9 +108,13 @@
                 </div> -->
 
                 <!-- userImg -->
-                <!-- <div class="user">
-                    <a href ="{% url 'profile' %}"><img src="{% static 'main/assets/images/user.jpg' %}" alt="User"></a>
-                </div> -->
+                <div class="user">
+                    {% if user_profile.profile_image %}
+                        <a href ="{% url 'profile' %}"><img src="{{ user_profile.profile_image.url }}" alt="User"></a>
+                    {% else %}
+                        <a href ="{% url 'profile' %}"><img src="{% static 'main/assets/images/user.jpg' %}" alt="User"></a>
+                    {% endif %}
+                </div>
             </div>
             <!-- navbar top -->
 

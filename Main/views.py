@@ -1,4 +1,5 @@
 import sys
+import os
 import pandas as pd
 sys.path.append('..')
 
@@ -9,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
-from .models import Store, Address, Item, Sale
+from .models import Store, Address, Item, Sale, UserProfile
 from datetime import datetime
 import random
 
@@ -86,6 +87,7 @@ def register(request):
 @login_required(login_url='login')
 def dashboard(request):
     user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     store = Store.objects.get(storeOwner=user.id)
     items = Item.objects.filter(store=store).all()
     sales = Sale.objects.filter(store=store).all()
@@ -134,11 +136,13 @@ def dashboard(request):
         'monthly_sales': monthly_sales,
         'top_sales': top_sales,
         'store': store,
+        'user_profile': user_profile
     })
 
 
 def inventory(request, item_filter):
     user = request.user
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     store = Store.objects.filter(storeOwner=user.id)
     item_set = item_filter.lower()
 
@@ -161,7 +165,8 @@ def inventory(request, item_filter):
     return render(request, 'Main/Landing/inventory.html', {
         'user': user,
         'all_items': items,
-        'items': items[:20]
+        'items': items[:20],
+        'user_profile': user_profile
     })
 
 
@@ -237,6 +242,7 @@ def accounting(request, filter_data):
 
 def profile(request):
     store = Store.objects.get(storeOwner=request.user.id)
+    user_profile = UserProfile.objects.get(user=request.user)
 
     if request.method == 'POST':
         password = request.POST.get('password')
@@ -270,12 +276,16 @@ def profile(request):
             'user': request.user,
             'store': store.storeName,
             'username': request.user.username,
-            'address': store.storeAddress
+            'address': store.storeAddress,
+            'user_profile': user_profile
         })
 
 
 def terms_and_conditions(request):
-    return render(request, 'Main/Landing/termsandconditions.html')
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    return render(request, 'Main/Landing/termsandconditions.html', {
+        'user_profile': user_profile,
+    })
 
 
 def upload_store_data(request):
@@ -298,6 +308,32 @@ def upload_store_data(request):
                 new_item.save()
 
         return HttpResponseRedirect(reverse('inventory', args=['all']))
+    
+
+def upload_image(request):
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    
+    if request.method == 'POST':
+        if 'profile_image' in request.FILES:
+            profile_image = request.FILES['profile_image']
+
+            if profile_image.size > 2 * 1024 * 1024:
+                return render(request, 'Main/Landing/profile.html', {'error': 'File size should be up to 2MB.'})
+            
+            if not profile_image.content_type.startswith('image/'):
+                return render(request, 'Main/Landing/profile.html', {'error': 'Only image files are allowed.'})
+            
+            if user_profile.profile_image:
+                os.remove(user_profile.profile_image.path)
+            
+            user_profile.profile_image = profile_image
+            username = request.user.username
+            filename, file_extension = os.path.splitext(profile_image.name)
+            new_filename = f"{username}{file_extension}"
+            user_profile.profile_image.name = new_filename
+            user_profile.save()
+
+    return HttpResponseRedirect(reverse('profile'))
 
 
 def delete_data(request):

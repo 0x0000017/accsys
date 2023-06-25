@@ -32,3 +32,10 @@ class Sale(models.Model):
 class Address(models.Model):
     address_name = models.CharField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_address')
+
+
+
+# TESTING
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    profile_image = models.ImageField(upload_to='profile_images/', null=True, blank=True)
