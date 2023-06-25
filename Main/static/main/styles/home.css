@@ -55,6 +55,14 @@ body
 #btnDb{
     white-space: nowrap;
 }
+.db-btn {
+    padding-left: 40px!important;
+    padding-right: 40px!important;
+    padding-top: 10px!important;
+    padding-bottom: 10px!important;
+    border-radius: 50px !important;
+    width: 75%!important;
+}
 .btn-success {
     background-color: #02BB7D !important;
     border: 0 !important;
