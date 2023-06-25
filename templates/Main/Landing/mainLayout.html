@@ -110,9 +110,9 @@
                 <!-- userImg -->
                 <div class="user">
                     {% if user_profile.profile_image %}
-                        <a href ="{% url 'profile' %}"><img src="{{ user_profile.profile_image.url }}" alt="User"></a>
+                        <a href ="{% url 'profile' %}"><img class ="rounded-circle shadow-4-strong border border-dark border-3" src="{{ user_profile.profile_image.url }}" alt="User"></a>
                     {% else %}
-                        <a href ="{% url 'profile' %}"><img src="{% static 'main/assets/images/user.jpg' %}" alt="User"></a>
+                        <a href ="{% url 'profile' %}"><img class ="rounded-circle shadow-4-strong border border-dark border-3" src="{% static 'main/assets/images/user.jpg' %}" alt="User"></a>
                     {% endif %}
                 </div>
             </div>

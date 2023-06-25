@@ -17,7 +17,15 @@ import random
 
 # Create your views here.
 def home(request):
-    return render(request, 'Main/Login/home.html')
+    context = {}
+    if request.user.is_authenticated:
+        first_name = request.user.first_name
+        last_name = request.user.last_name
+        context['message'] = f"Hello, {first_name} {last_name} !"
+    else:
+        context['message'] = " "
+
+    return render(request, 'Main/Login/home.html', context)
 
 def login_view(request):
     if request.method == 'POST':

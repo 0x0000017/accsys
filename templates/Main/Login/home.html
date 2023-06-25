@@ -11,12 +11,22 @@
         <p class="text1">Harness the potential of Accounting & Sales Management and become a data driven organization.</p>
         <div class ="home-btns">
             <div class ="row">
-                <div id="btnLogin" class ="col"> 
-                    <a href ="{% url 'login' %}"><button type="button" class="btn btn-success shadow-sm rounded">Login</button></a>
-                </div>
-                <div id="btnSignUp" class ="col">
-                    <a href ="{% url 'register' %}"><button  type="button" class="btn btn-light shadow-sm rounded">Sign Up</button></a>
-                </div>
+                {% if request.user.is_authenticated %}
+                    <h5>{{message}}</h5>
+                    <div id="btnSignUp" class ="col"> 
+                        <a href ="{% url 'dashboard' %}"><button type="button" class="btn btn-success shadow-sm rounded">Go to Dashboard</button></a>
+                    </div>
+                    <div id="btnLogin" class ="col"> 
+                        <a href ="{% url 'logout' %}"><button type="button" class="btn btn-danger shadow-sm rounded">Logout</button></a>
+                    </div>
+                {% else %}
+                    <div id="btnLogin" class ="col"> 
+                        <a href ="{% url 'login' %}"><button type="button" class="btn btn-success shadow-sm rounded">Login</button></a>
+                    </div>
+                    <div id="btnSignUp" class ="col">
+                        <a href ="{% url 'register' %}"><button  type="button" class="btn btn-light shadow-sm rounded">Sign Up</button></a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
