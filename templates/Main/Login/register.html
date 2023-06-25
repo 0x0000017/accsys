@@ -11,7 +11,7 @@
         <hr class ="my-3">
         <form method="post">
             {% csrf_token %}
-            <div class ="form-group">
+            <div class ="form-group was-validated" >
                 <div class="row">
                     <div class="col-4">
                         <div class ="d-flex pb-2">
@@ -57,11 +57,17 @@
                         <input type="password" class="form-control" id="confirmPass" placeholder="Confirm your password" name="confirmPass" required>
                         
                         <br>
-                        <div class="termsAndCond">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input success" id="flexCheckDefault" required>
+                            <label class="form-check-label" for="flexCheckDefault"> 
+                                <p class="terms">
+                                    By checking this I understand the <a href="" data-bs-toggle="modal" data-bs-target="#termsModal">Terms and Conditions</a>
+                                    and have read the <a href="" data-bs-toggle="modal" data-bs-target="#dataPrivacyModdal">Data Privacy Policy</a>.
+                                </p>
+                            </label>
 
-                            <input type="checkbox" class="btn-check col" name="vbtn-radio" id="vbtn-radio1" autocomplete="off" required>
-                            <label class="btn btn-outline-primary" for="vbtn-radio1" style=" font-weight:bold;"> ✓ </label>
-                            <p class="terms">By checking this I understand the <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal">Terms and Conditions</a>.</p>
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Check this checkbox to continue.</div>
                         </div>
                         
                     </div>
@@ -77,11 +83,11 @@
 
 
 
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Terms and Conditions</h1>
+              <h1 class="modal-title fs-5" id="termsModalLabel">Terms and Conditions</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -159,6 +165,50 @@
                 </p>
                 <br>
                 <h6 id="last-updated-terms">Last updated: June 18, 2023</h6>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="dataPrivacyModdal" tabindex="-1" aria-labelledby="dataPrivacyModdalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="dataPrivacyModdalLabel">Data Privacy Policy</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h1  style="font-size: 40px !important;">Data Privacy Policy</h1>
+                <br>
+
+                <p>
+                    We are aware of our responsibility to protect your personal data. 
+                    We act in accordance with the principles introduced by 
+                    <a href="https://privacy.gov.ph/data-privacy-act/">Data Privacy Act of 2012</a>  
+                    and the general principle on good faith in the processing of personal data.
+                </p>
+                <br>
+
+                <p>
+                    We determine clearly and precisely its legitimate and lawful purpose for processing 
+                    personal data and process personal data to the extent necessary and in connection 
+                    with the products and services we offer.
+                </p>
+                <br>
+
+                <p>
+                    We transfer your personal data in compliance with applicable laws and only when 
+                    it is necessary. We take required technical and administrative measures to protect 
+                    your personal data and also we ensure that Data Processors take administrative and 
+                    technical measures regarding data security by signing non-disclosure agreements.
+                </p>
+                <br>
+                
+                <br>
+                <h6 id="last-updated-terms">Last updated: June 22, 2023</h6>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
