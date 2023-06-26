@@ -23,6 +23,8 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),
     path('terms_and_conditions', views.terms_and_conditions, name='terms'),
     path('delete', views.delete_data, name='delete'),
+    path('export-items', views.export_items_to_csv, name='export-items'),
+    path('export-sales', views.export_sales_to_csv, name='export-sales'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

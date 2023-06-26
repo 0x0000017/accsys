@@ -1,6 +1,7 @@
 import sys
 import os
 import pandas as pd
+import csv
 sys.path.append('..')
 
 from django.db import IntegrityError
@@ -12,6 +13,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from .models import Store, Address, Item, Sale, UserProfile
 from datetime import datetime
+from datetime import date
 import random
 
 
@@ -37,8 +39,16 @@ def login_view(request):
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse('dashboard'))
+        
         else:
-            return HttpResponseRedirect(reverse('login'))
+            try:
+                user = User.objects.get(username=username)
+                error_message = "Wrong Password. Please enter the correct password."
+
+            except User.DoesNotExist:
+                error_message = 'User does not exist. Please enter a valid username or register first.'
+
+            return render(request, 'Main/Login/login.html', {'error': error_message})
     else:
         return render(request, 'Main/Login/login.html')
 
@@ -302,7 +312,7 @@ def upload_store_data(request):
         store_data = request.FILES.get('store_data')
 
         if not store_data.name.endswith('.csv'):
-            return render(request, 'Main/Landing/inventory.html', {'error': 'Upload Failed. Only CSV files are allowed.'})
+            return render(request, 'Main/Landing/inventory.html', {'error': 'Only CSV files are allowed.'})
 
         if store_data is not None:
             df = pd.read_csv(store_data)
@@ -319,7 +329,7 @@ def upload_store_data(request):
                     )
                     new_item.save()
             except:
-                return render(request, 'Main/Landing/inventory.html', {'error': 'Upload Failed. Please check your CSV file and try again.'})
+                return render(request, 'Main/Landing/inventory.html', {'error': 'Please check your CSV file and try again.'})
 
         return HttpResponseRedirect(reverse('inventory', args=['all']))
     
@@ -332,13 +342,13 @@ def upload_image(request):
             profile_image = request.FILES['profile_image']
 
             if profile_image.size > 2 * 1024 * 1024:
-                return render(request, 'Main/Landing/profile.html', {'error': 'Upload Failed. File size should be up to 2MB.'})
+                return render(request, 'Main/Landing/profile.html', {'error': 'File size should be up to 2MB.'})
             
             if not profile_image.content_type.startswith('image/'):
-                return render(request, 'Main/Landing/profile.html', {'error': 'Upload Failed. Only image files are allowed.'})
+                return render(request, 'Main/Landing/profile.html', {'error': 'Only image files are allowed.'})
             
             if profile_image.name.endswith('.gif'):
-                return render(request, 'Main/Landing/profile.html', {'error': 'Upload Failed. Only JPG, JPEG, and PNG are allowed.'})
+                return render(request, 'Main/Landing/profile.html', {'error': 'Only JPG, JPEG, and PNG are allowed.'})
 
             if user_profile.profile_image:
                 os.remove(user_profile.profile_image.path)
@@ -387,3 +397,40 @@ def get_sum_of_sales(monthly_sales):
         total_sale += (sale.item.item_price - sale.item.expense) * sale.amount
 
     return total_sale
+
+
+def export_items_to_csv(request):
+    today = date.today().strftime('%Y-%m-%d')
+    filename = f"{today}_ITEMS_REPORT.csv"
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Item Name', 'Item Price', 'Expense', 'Quantity', 'Category', 'Date Ordered'])
+
+    items = Item.objects.filter(store__storeOwner=request.user)
+
+    for item in items:
+        writer.writerow([item.item_name, item.item_price, item.expense, item.quantity, item.category, item.date_ordered])
+
+    return response
+
+
+def export_sales_to_csv(request):
+    today = date.today().strftime('%Y-%m-%d')
+    filename = f"{today}_SALES_REPORT.csv"
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Item Name', 'Item Price', 'Category', 'Amount', 'Profit', 'Date'])
+
+    sales = Sale.objects.filter(store__storeOwner=request.user)
+
+    for sale in sales:
+        item = sale.item
+        writer.writerow([item.item_name, item.item_price, item.category, sale.amount, sale.profit, sale.date])
+
+    return response
