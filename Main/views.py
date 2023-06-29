@@ -5,7 +5,9 @@ import csv
 sys.path.append('..')
 
 from django.db import IntegrityError
+from django.template.defaultfilters import floatformat
 from django.shortcuts import render
+from django.contrib.humanize.templatetags.humanize import intcomma
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -109,7 +111,7 @@ def dashboard(request):
     store = Store.objects.get(storeOwner=user.id)
     items = Item.objects.filter(store=store).all()
     sales = Sale.objects.filter(store=store).all()
-
+    
     monthly_sales = [
         get_sum_of_sales(Sale.objects.filter(date__month='01', store=store).all()),
         get_sum_of_sales(Sale.objects.filter(date__month='02', store=store).all()),
@@ -143,18 +145,18 @@ def dashboard(request):
 
     return render(request, 'Main/Landing/dashboard.html', {
         'user': user,
-        'sales': total_sales,
-        'revenue': revenue,
-        'expense': total_expenses,
-        'net_income': net_income,
+        'sales': intcomma(floatformat(total_sales, 2)),
+        'revenue': intcomma(floatformat(revenue, 2)),
+        'expense': intcomma(floatformat(total_expenses, 2)),
+        'net_income': intcomma(floatformat(net_income, 2)),
         'all_items': items,
         'all_sales': sales,
-        'recent_items': Item.objects.filter(store=store),
-        'recent_sales': Sale.objects.filter(store=store),
         'monthly_sales': monthly_sales,
         'top_sales': top_sales,
         'store': store,
-        'user_profile': user_profile
+        'user_profile': user_profile,
+        'recent_items' : Item.objects.filter(store=store),
+        'recent_sales': Sale.objects.filter(store=store)
     })
 
 
