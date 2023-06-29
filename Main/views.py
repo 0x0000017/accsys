@@ -6,6 +6,7 @@ sys.path.append('..')
 
 from django.db import IntegrityError
 from django.template.defaultfilters import floatformat
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.contrib.humanize.templatetags.humanize import intcomma
 from django.contrib.auth import authenticate, login, logout
@@ -167,25 +168,32 @@ def inventory(request, item_filter):
     item_set = item_filter.lower()
 
     if request.method == 'POST':
-        searched = Item.objects.filter(store__in=store, item_name__contains=request.POST.get('searched_items')).all()
-
-        print(searched)
+        searched_items = request.POST.get('searched_items')
+        searched = Item.objects.filter(store__in=store, item_name__icontains=searched_items).all()
+        paginator = Paginator(searched, 20)  # Number of items per page
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
 
         return render(request, 'Main/Landing/inventory.html', {
             'user': user,
             'all_items': searched,
-            'items': searched[:20]
+            'items': page_obj,
+            'user_profile': user_profile
         })
 
     if item_set == 'all':
         items = Item.objects.filter(store__in=store).all()
     else:
         items = Item.objects.filter(store__in=store).order_by(f'{item_set}').all()
+    
+    paginator = Paginator(items, 20)  # Number of items per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     return render(request, 'Main/Landing/inventory.html', {
         'user': user,
         'all_items': items,
-        'items': items[:20],
+        'items': page_obj,
         'user_profile': user_profile
     })
 
@@ -353,7 +361,10 @@ def upload_image(request):
                 return render(request, 'Main/Landing/profile.html', {'error': 'Only JPG, JPEG, and PNG are allowed.'})
 
             if user_profile.profile_image:
-                os.remove(user_profile.profile_image.path)
+                try:
+                    os.remove(user_profile.profile_image.path)
+                except:
+                    return render(request, 'Main/Landing/profile.html', {'error': 'Please contact administrator.'})
             
             user_profile.profile_image = profile_image
             username = request.user.username

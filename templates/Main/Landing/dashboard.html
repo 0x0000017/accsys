@@ -128,9 +128,9 @@
                     {% for sale in all_sales %}
                         <tr>
                             <td >{{ sale.item.item_name }}</td>
-                            <td class="text-center">₱ {{ sale.item.item_price }}</td>
-                            <td class="text-center">₱ {{ sale.item.expense }}</td>
-                            <td class="text-center">₱ {{ sale.profit }}</td>
+                            <td class="text-center">₱ {{ sale.item.item_price|floatformat:2|intcomma }}</td>
+                            <td class="text-center">₱ {{ sale.item.expense|floatformat:2|intcomma }}</td>
+                            <td class="text-center">₱ {{ sale.profit|floatformat:2|intcomma }}</td>
                             <td class="text-center">{{ sale.item.category }}</td>
                             <td class="text-center">{{ sale.item.date_ordered.date }}</td>
                             {% if sale.quantity == 0 %}

@@ -1,5 +1,6 @@
 {% extends 'Main/Landing/mainLayout.html' %}
 {% load static %}
+{% load humanize %}
 {% block content %}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -90,8 +91,8 @@
                         {% if not item.is_deleted %}
                             <tr class="text-center" >
                             <td>{{ item.item_name }}</td>
-                            <td>₱ {{ item.item_price }}</td>
-                            <td>₱ {{ item.expense }}</td>
+                            <td>₱ {{ item.item_price|floatformat:2|intcomma }}</td>
+                            <td>₱ {{ item.expense|floatformat:2|intcomma }}</td>
                             <td>{{ item.category }}</td>
                             <td>{{ item.date_ordered.date }}</td>
                             {% if item.quantity == 0 %}
@@ -235,6 +236,40 @@
                     {% endfor %}
                     </tbody>
             </table>
+
+            <div class="pagination-container">
+                <nav aria-label="Pagination">
+                  <ul class="pagination justify-content-center">
+              
+                    {% if items.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ items.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+              
+                    {% for i in items.paginator.page_range %}
+                    {% if items.number == i %}
+                    <li class="page-item active">
+                      <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+              
+                    {% if items.has_next %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ items.next_page_number }}">Next</a>
+                    </li>
+                    {% endif %}
+              
+                  </ul>
+                </nav>
+              </div>
+
+              
 
             <div class="col-md-12 text-right">
                 <button type="button" 
