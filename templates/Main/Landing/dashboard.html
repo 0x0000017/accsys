@@ -71,13 +71,21 @@
     <div class="recentOrders table-responsive">
             <div class="cardHeader">
                 <h2>Recent Items</h2>
-                <a href="{% url 'inventory' 'all' %}"><button class="btn btn-primary">View All</button></a>
-                <a href="{% url 'export-items' %}"><button class="btn btn-primary">Export Items to CSV</button></a>
+                <div class="row">
+                    <div class="col-4">
+                        <a href="{% url 'inventory' 'all' %}"><button class="btn btn-primary" style="white-space: nowrap;">View All</button></a>
+                    </div>
+                    <div class="col-8">
+                        <a href="{% url 'export-items' %}"><button class="btn btn-primary">Export Items to CSV</button></a>
+                    </div>
+                </div>
+                
             </div>
             <table id="table1" class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <td>Item Name</td>
+                        <td class="text-center" scope="col">No.</th>
+                        <td class="text-center">Item Name</td>
                         <td class="text-center">Item Price</td>
                         <td class="text-center">Purchase Cost</td>
                         <td class="text-center">Item Category</td>
@@ -88,7 +96,8 @@
                 <tbody>
                     {% for recent_item in recent_items %}
                         <tr>
-                            <td>{{ recent_item.item_name }}</td>
+                            <td class="text-center">1</td>
+                            <td class="text-start" style="font-weight: bold !important;">{{ recent_item.item_name }}</td>
                             <td class="text-center">₱ {{ recent_item.item_price|floatformat:2|intcomma }}</td>
                             <td class="text-center">₱ {{ recent_item.expense|floatformat:2|intcomma }}</td>
                             <td class="text-center">{{ recent_item.category }}</td>
@@ -115,7 +124,8 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <td >Item Name</td>
+                        <td class="text-center" scope="col">No.</th>
+                        <td class="text-center">Item Name</td>
                         <td class="text-center">Item Price</td>
                         <td class="text-center">Purchase Cost</td>
                         <td class="text-center">Profit</td>
@@ -127,7 +137,8 @@
                 <tbody>
                     {% for sale in all_sales %}
                         <tr>
-                            <td >{{ sale.item.item_name }}</td>
+                            <td class="text-center">1</td>
+                            <td class="text-start" style="font-weight: bold !important;">{{ sale.item.item_name }}</td>
                             <td class="text-center">₱ {{ sale.item.item_price|floatformat:2|intcomma }}</td>
                             <td class="text-center">₱ {{ sale.item.expense|floatformat:2|intcomma }}</td>
                             <td class="text-center">₱ {{ sale.profit|floatformat:2|intcomma }}</td>

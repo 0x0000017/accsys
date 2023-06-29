@@ -29,7 +29,13 @@
     height: 100px !important;
     overflow-y: scroll !important;
 }
-
+.cardHeader
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 50px;
+}
 #noteFormat {
     text-align: end;
     justify-content: end;
