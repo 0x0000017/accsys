@@ -1,6 +1,58 @@
 {% extends 'Main/Login/layout.html' %}
 
 {% block section-1 %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+{% if error %}
+    <div class="modal fade" id="onload" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Registration Failed</h5>
+              <button type="button" onclick="history.back()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>{{error}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" onclick="history.back()" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <script type="text/javascript">
+        window.onload = () => {
+            $('#onload').modal('show');
+        }
+    </script>
+{% endif %}
+
+{% if message %}
+    <div class="modal fade" id="onload" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Registration Success</h5>
+              <button type="button" onclick="window.location.href='{% url 'login' %}'" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>{{message}}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" onclick="window.location.href='{% url 'login' %}'" class="btn btn-success" data-bs-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    <script type="text/javascript">
+        window.onload = () => {
+            $('#onload').modal('show');
+        }
+    </script>
+{% endif %}
+
+
+
 <br>
 <div class="row justify-content-center">
     <div class="col-10 bg-light border-opacity-50 rounded-2 px-5 pb-4 shadow bg-body-tertiary rounded" 
@@ -79,47 +131,6 @@
             </div>
         </form>
     </div>
-
-    <div class="modal fade" id="" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Register</h5>
-              <button type="button" onclick="history.back()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p>
-                <!-- lagay error text -->
-              </p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" onclick="history.back()" class="btn btn-success" data-bs-dismiss="modal">OK</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- registered successfully -->
-      <div class="modal fade" id="" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Register</h5>
-              <button type="button" onclick="history.back()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <p>
-                Registered Successfully!
-                <!-- tapos redirect sa login page -->
-              </p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" onclick="history.back()" class="btn btn-success" data-bs-dismiss="modal">OK</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
 
     <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">

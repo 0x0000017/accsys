@@ -78,7 +78,7 @@ def register(request):
 
         if password != confirm:
             return render(request, 'Main/Login/register.html', {
-                'error_message': 'Passwords do not match.'
+                'error': 'Passwords do not match.'
             })
 
         try:
@@ -95,11 +95,14 @@ def register(request):
 
         except IntegrityError:
             return render(request, 'Main/Login/register.html', {
-                'error_message': 'User already exists.'
+                'error': 'User already exists.'
             })
 
         # login(request, newUser)
-        return HttpResponseRedirect(reverse('login'))
+        message = 'User registered successfully. You can log-in now.'
+        return render(request, 'Main/Login/register.html', {
+            'message': message
+        })
     else:
         return render(request, 'Main/Login/register.html')
 
@@ -321,28 +324,45 @@ def upload_store_data(request):
         store = Store.objects.get(storeOwner=request.user.id)
         store_data = request.FILES.get('store_data')
 
-        if not store_data.name.endswith('.csv'):
-            return render(request, 'Main/Landing/inventory.html', {'error': 'Only CSV files are allowed.'})
+        if not store_data.name.endswith(('.csv', '.xlsx', '.xls')):
+            return render(request, 'Main/Landing/inventory.html', {'error': 'Only CSV and Excel files are allowed.'})
 
         if store_data is not None:
-            df = pd.read_csv(store_data)
-            try:
-                for i in df.index:
-                    new_item = Item(
-                        item_name=df['item_name'][i],
-                        item_price=df['item_price'][i],
-                        expense=df['expense'][i],
-                        quantity=df['quantity'][i],
-                        category=df['category'][i],
-                        date_ordered=df['date_ordered'][i],
-                        store=store
-                    )
-                    new_item.save()
-            except:
-                return render(request, 'Main/Landing/inventory.html', {'error': 'Please check your CSV file and try again.'})
+            if store_data.name.endswith('.csv'):
+                df = pd.read_csv(store_data)
+                try:
+                    for i in df.index:
+                        new_item = Item(
+                            item_name=df['item_name'][i],
+                            item_price=df['item_price'][i],
+                            expense=df['expense'][i],
+                            quantity=df['quantity'][i],
+                            category=df['category'][i],
+                            date_ordered=df['date_ordered'][i],
+                            store=store
+                        )
+                        new_item.save()
+                except:
+                    return render(request, 'Main/Landing/inventory.html', {'error': 'Please check your CSV file and try again.'})
+            elif store_data.name.endswith(('.xlsx', '.xls')):
+                df = pd.read_excel(store_data)
+                try:
+                    for i in df.index:
+                        new_item = Item(
+                            item_name=df['item_name'][i],
+                            item_price=df['item_price'][i],
+                            expense=df['expense'][i],
+                            quantity=df['quantity'][i],
+                            category=df['category'][i],
+                            date_ordered=df['date_ordered'][i],
+                            store=store
+                        )
+                        new_item.save()
+                except:
+                    return render(request, 'Main/Landing/inventory.html', {'error': 'Please check your Excel file and try again.'})
 
         return HttpResponseRedirect(reverse('inventory', args=['all']))
-    
+
 
 def upload_image(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)

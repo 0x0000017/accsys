@@ -96,7 +96,7 @@
                 <tbody>
                     {% for recent_item in recent_items %}
                         <tr>
-                            <td class="text-center">1</td>
+                            <td class="text-center">{{ forloop.counter }}</td>
                             <td class="text-start" style="font-weight: bold !important;">{{ recent_item.item_name }}</td>
                             <td class="text-center">₱ {{ recent_item.item_price|floatformat:2|intcomma }}</td>
                             <td class="text-center">₱ {{ recent_item.expense|floatformat:2|intcomma }}</td>
@@ -137,7 +137,7 @@
                 <tbody>
                     {% for sale in all_sales %}
                         <tr>
-                            <td class="text-center">1</td>
+                            <td class="text-center">{{ forloop.counter }}</td>
                             <td class="text-start" style="font-weight: bold !important;">{{ sale.item.item_name }}</td>
                             <td class="text-center">₱ {{ sale.item.item_price|floatformat:2|intcomma }}</td>
                             <td class="text-center">₱ {{ sale.item.expense|floatformat:2|intcomma }}</td>

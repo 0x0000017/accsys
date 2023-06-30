@@ -12,8 +12,8 @@ class Store(models.Model):
 
 class Item(models.Model):
     item_name = models.CharField(max_length=200)
-    item_price = models.IntegerField()
-    expense = models.IntegerField()
+    item_price = models.DecimalField(max_digits=10, decimal_places=2)
+    expense = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
     category = models.CharField(max_length=64)
     date_ordered = models.DateTimeField()
@@ -24,7 +24,7 @@ class Item(models.Model):
 class Sale(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='product')
     amount = models.IntegerField()
-    profit = models.IntegerField()
+    profit = models.DecimalField(max_digits=10, decimal_places=2)
     date = models.DateTimeField(auto_now=True)
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='sale_location')
 

@@ -5,6 +5,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
+
 {% if error %}
     <div class="modal fade" id="onload" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -21,7 +22,7 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
     <script type="text/javascript">
         window.onload = () => {
             $('#onload').modal('show');
@@ -33,7 +34,6 @@
 
     <div class = "row">
     <div class="container d-flex justify-content-center  mb-4">
-
         <div class="search">
             <label>
                 <form method="post">
@@ -48,33 +48,27 @@
     <div class ="col-12">
         <div class ="inventoryCardBox">
             <h2>Item Lists</h2>
-
-            <!-- <div class="col-md-12 bg-light">
-                <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Date</button>
-                <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Name</button>
-                <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Price</button>
-                <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Category</button>
-                <button type="button" class="btn btn-success btn-sm m-2 px-2 py-2">Quantity</button>
-            </div> -->
-            
-            <div class="dropdown">
-                <div class="cardHeader">
-                    <button class="btn btn-primary dropdown-toggle my-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-family: Metropolis;">
-                        Sort by:
-                    </button>
-
-                    <a href=""><button class="btn btn-primary">Export Items to CSV</button></a>
+            <div class="row">
+                <div class="col-2">
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle my-2" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-family: Metropolis;">
+                            Sort by:
+                        </button>
+                        <ul class="dropdown-menu" style="font-family: Metropolis;">
+                            <li><a class="dropdown-item" href="{% url 'inventory' 'item_name' %}">Name</a></li>
+                            <li><a class="dropdown-item" href="{% url 'inventory' 'item_price' %}">Price</a></li>
+                            <li><a class="dropdown-item" href="{% url 'inventory' 'category' %}">Category</a></li>
+                            <li><a class="dropdown-item" href="{% url 'inventory' 'date_ordered' %}">Date</a></li>
+                            <li><a class="dropdown-item" href="{% url 'inventory' 'quantity' %}">Quantity</a></li>
+                        </ul>
+                    </div>
                 </div>
-                
-
-
-                <ul class="dropdown-menu" style="font-family: Metropolis;">
-                    <li><a class="dropdown-item" href="{% url 'inventory' 'item_name' %}">Name</a></li>
-                    <li><a class="dropdown-item" href="{% url 'inventory' 'item_price' %}">Price</a></li>
-                    <li><a class="dropdown-item" href="{% url 'inventory' 'category' %}">Category</a></li>
-                    <li><a class="dropdown-item" href="{% url 'inventory' 'date_ordered' %}">Date</a></li>
-                    <li><a class="dropdown-item" href="{% url 'inventory' 'quantity' %}">Quantity</a></li>
-                </ul>
+                <div class="col-8"></div>
+                <div class="col-2">
+                    <div class="cardHeader">
+                        <a href="{% url 'export-items' %}"><button class="btn btn-primary">Export Items to CSV</button></a>
+                    </div>
+                </div>
             </div>
 
             <table class="table table-striped table-hover">
@@ -94,10 +88,10 @@
                 </thead>
                     
                     <tbody>
-                    {% for item in items %}
+                    {% for item in items.object_list %}
                         {% if not item.is_deleted %}
                             <tr class="text-center" >
-                            <td>1</td>
+                            <td>{{ items.start_index|add:forloop.counter0 }}</td>
                             <td class="text-start" style="font-weight: bold !important;">{{ item.item_name }}</td>
                             <td>₱ {{ item.item_price|floatformat:2|intcomma }}</td>
                             <td>₱ {{ item.expense|floatformat:2|intcomma }}</td>
@@ -301,18 +295,32 @@
                     <span style="font-size: 1.13em;">
                         <ion-icon name="cloud-upload-outline"></ion-icon> 
                     </span>
-                    Upload CSV file
+                    Upload CSV/Excel File
                 </button>
 
-                <button type="button" 
+                <div class="dropdown">
+                    <button type="button" 
                         class="btn btn-primary ml-2 pl-2" 
                         style="float: right; font-family: Metropolis; margin-right: 0.5rem"
-                        onclick="downloadTemplate()">
+                        data-bs-toggle="dropdown">
                     <span style="font-size: 1.13em;">
                         <ion-icon name="cloud-download-outline"></ion-icon> 
                     </span>
-                    Download CSV template
+                    Download Template
                 </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                        <a class="dropdown-item" href="#" onclick="downloadCSV()" data-bs-toggle="modal" data-bs-target="#csvFileInfo">
+                            CSV
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#" onclick="downloadXLSX()">
+                            Excel (XLSX/XLS)
+                        </a>
+                    </li>
+                  </ul>
+                </div>
                 <br><br>
                 <div id="noteFormat">
                 </div>
@@ -321,8 +329,8 @@
     </div>
     </div>
 
-     <!-- Add modal -->
-     <div class="modal fade" id="addItemsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Add modal -->
+    <div class="modal fade" id="addItemsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <form action="/create_item" method="post">
             {% csrf_token %}
             <div class="modal-dialog modal-dialog-centered">
@@ -389,9 +397,8 @@
     </div>
 
     <!-- upload modal -->
-
     <div class="modal fade" id="uploadItemsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <form action="/upload_csv" method="post" enctype="multipart/form-data">
+        <form action="/upload_db" method="post" enctype="multipart/form-data">
             <div class="modal-dialog modal-dialog-centered">
             {% csrf_token %}
                 <div class="modal-content">
@@ -405,8 +412,8 @@
                 <div class="modal-body">
                     <div class ="form-group">
                         <div class="mb-1">
-                            <label for="upload" class="form-label">Upload CSV file:</label>
-                            <input type="file" accept=".csv" class="form-control input-sm" name="store_data" required>
+                            <label for="upload" class="form-label">Upload CSV/XLSX file:</label>
+                            <input type="file" accept=".csv, .xlsx, .xls" class="form-control input-sm" name="store_data" required>
                         </div>
                     </div>
                 </div>
@@ -420,12 +427,42 @@
             </div>
         </form>
     </div>
+
+    <div class="modal fade" id="csvFileInfo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Disclaimer</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Please do note that Comma Separated Values (CSV) are just text files without proper formatting.<br>
+              It is advisable for you to use the Excel Template if you have, for example, Microsoft Office or Libre Office and such.<br>
+              But if you insist, please follow the format below.<br><br>
+              <ul>
+                <li>The field '<b>item_price</b>' and '<b>expense</b>' should contain atleast 2 decimal numbers. <i>ex.: 2.50 </i></li>
+                <li>The field '<b>date_ordered</b>' should be formatted as <b>'YYYY-MM-DD H:MM'</b>. <i>ex: 2023-06-30 12:00</i></li>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK, I understand</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
     <script>
-        function downloadTemplate() {
-            const displayNote = document.getElementById("noteFormat");
-            displayNote.classList.add("active");
-            displayNote.innerHTML ="NOTE: Please use the date format YYYY-MM-DD H:MM when editing Date field. Thank You.";
-            window.location.href = "{% static 'main/assets/Template.csv' %}";
+        function downloadCSV() {
+            // const displayNote = document.getElementById("noteFormat");
+            // displayNote.classList.add("active");
+            // displayNote.innerHTML ="NOTE: Please use the date format YYYY-MM-DD H:MM when editing Date field. Thank You.";
+            window.location.href = "{% static 'main/assets/CSV-TEMPLATE.csv' %}";
+        }
+        function downloadXLSX() {
+            // const displayNote = document.getElementById("noteFormat");
+            // displayNote.classList.add("active");
+            // displayNote.innerHTML ="NOTE: Please use the date format YYYY-MM-DD H:MM when editing Date field. Thank You.";
+            window.location.href = "{% static 'main/assets/EXCEL-TEMPLATE.xlsx' %}";
         }
     </script>
 {% endblock %}
