@@ -24,7 +24,9 @@ urlpatterns = [
     path('terms_and_conditions', views.terms_and_conditions, name='terms'),
     path('delete', views.delete_data, name='delete'),
     path('export-items', views.export_items_to_csv, name='export-items'),
+    path('export-items-xls/', views.export_items_to_excel, name='export-items-xls'),
     path('export-sales', views.export_sales_to_csv, name='export-sales'),
+    path('export-sales-xls/', views.export_sales_to_excel, name='export-sales-xls'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

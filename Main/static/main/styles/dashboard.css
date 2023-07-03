@@ -112,6 +112,7 @@ html {
     box-shadow: 0 7px 25px 0 rgba(0,0,0,0.08);
     border-radius: 20px;
 }
+
 .details .cardHeader
 {
     display: flex;
@@ -229,7 +230,6 @@ html {
     color: var(--white);
 }
 
-
 /* responsive */
 /* @media (max-width: 1520px)
 {
@@ -270,8 +270,3 @@ html {
         width: auto;
     }
 }
-@media print {
-    .noPrint{
-      display:none;
-    }
-  }

@@ -2,6 +2,7 @@ import sys
 import os
 import pandas as pd
 import csv
+import pytz
 sys.path.append('..')
 
 from django.db import IntegrityError
@@ -18,6 +19,8 @@ from .models import Store, Address, Item, Sale, UserProfile
 from datetime import datetime
 from datetime import date
 import random
+
+
 
 
 # Create your views here.
@@ -465,5 +468,66 @@ def export_sales_to_csv(request):
     for sale in sales:
         item = sale.item
         writer.writerow([item.item_name, item.item_price, item.category, sale.amount, sale.profit, sale.date])
+
+    return response
+
+
+def export_items_to_excel(request):
+    today = date.today().strftime('%Y-%m-%d')
+    filename = f"{today}_ITEMS_REPORT.xlsx"
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    items = Item.objects.filter(is_deleted=False).values(
+        'item_name',
+        'item_price',
+        'expense',
+        'quantity',
+        'category',
+        'date_ordered'
+    )
+
+    items = [
+        {
+            'item_name': item['item_name'],
+            'item_price': item['item_price'],
+            'expense': item['expense'],
+            'quantity': item['quantity'],
+            'category': item['category'],
+            'date_ordered': item['date_ordered'].replace(tzinfo=None) if item['date_ordered'] else None
+        }
+        for item in items
+    ]
+
+    df = pd.DataFrame.from_records(items)
+    df.to_excel(response, index=False)
+
+    return response
+
+
+def export_sales_to_excel(request):
+    today = date.today().strftime('%Y-%m-%d')
+    filename = f"{today}_SALES_REPORT.xlsx"
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    sales = Sale.objects.filter(store__storeOwner=request.user).select_related('item')
+
+    data = [
+        {
+            'Item Name': sale.item.item_name,
+            'Item Price': sale.item.item_price,
+            'Category': sale.item.category,
+            'Amount': sale.amount,
+            'Profit': sale.profit,
+            'Date': sale.date.astimezone(pytz.timezone('UTC')).replace(tzinfo=None),
+        }
+        for sale in sales
+    ]
+
+    df = pd.DataFrame(data)
+    df.to_excel(response, index=False)
 
     return response
