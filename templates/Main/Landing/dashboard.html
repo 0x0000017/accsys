@@ -76,7 +76,15 @@
                         <a href="{% url 'inventory' 'all' %}"><button class="btn btn-primary" style="white-space: nowrap;">View All</button></a>
                     </div>
                     <div class="col-8">
-                        <a href="{% url 'export-items' %}"><button class="btn btn-primary">Export Items to CSV</button></a>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Export Items
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                              <li><a class="dropdown-item" href="{% url 'export-items' %}">Export to CSV</a></li>
+                              <li><a class="dropdown-item" href="{% url 'export-items-xls' %}">Export to Excel</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 
