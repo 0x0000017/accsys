@@ -261,18 +261,6 @@ def reduce_item_quantity(request, item_id):
         return HttpResponseRedirect(reverse('inventory', args=['all']))
 
 
-def accounting(request, filter_data):
-    user = request.user
-    store = Store.objects.filter(storeOwner=user)
-    items = Item.objects.filter(store__in=store).all()[:20]
-
-    return render(request, 'Main/Landing/accounting.html', {
-        'user': user,
-        'panel': filter_data.capitalize(),
-        'items': items,
-        'item_tail': Item.objects.filter(store__in=store).all()[:5:-1]
-    })
-
 
 def profile(request):
     store = Store.objects.get(storeOwner=request.user.id)
