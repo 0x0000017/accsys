@@ -188,7 +188,7 @@ def inventory(request, item_filter):
         })
 
     if item_set == 'all':
-        items = Item.objects.filter(store__in=store).all()
+        items = Item.objects.filter(is_deleted=False,store__in=store).all()
     else:
         items = Item.objects.filter(store__in=store).order_by(f'{item_set}').all()
     
@@ -445,7 +445,7 @@ def export_items_to_csv(request):
     writer = csv.writer(response)
     writer.writerow(['Item Name', 'Item Price', 'Expense', 'Quantity', 'Category', 'Date Ordered'])
 
-    items = Item.objects.filter(store__storeOwner=request.user)
+    items = Item.objects.filter(is_deleted=False, store__storeOwner=request.user)
 
     for item in items:
         writer.writerow([item.item_name, item.item_price, item.expense, item.quantity, item.category, item.date_ordered])
@@ -479,7 +479,8 @@ def export_items_to_excel(request):
     response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     response['Content-Disposition'] = f'attachment; filename="{filename}"'
 
-    items = Item.objects.filter(is_deleted=False).values(
+    user_inventory = Item.objects.filter(is_deleted=False, store__storeOwner=request.user)
+    items = user_inventory.values(
         'item_name',
         'item_price',
         'expense',
@@ -490,17 +491,25 @@ def export_items_to_excel(request):
 
     items = [
         {
-            'item_name': item['item_name'],
-            'item_price': item['item_price'],
-            'expense': item['expense'],
-            'quantity': item['quantity'],
-            'category': item['category'],
-            'date_ordered': item['date_ordered'].replace(tzinfo=None) if item['date_ordered'] else None
+            'Item Name': item['item_name'],
+            'Item Price': item['item_price'],
+            'Expense': item['expense'],
+            'Quantity': item['quantity'],
+            'Category': item['category'],
+            'Date Ordered': item['date_ordered'].replace(tzinfo=None) if item['date_ordered'] else None
         }
         for item in items
     ]
 
     df = pd.DataFrame.from_records(items)
+    df.rename(columns={
+        'item_name': 'Item Name',
+        'item_price': 'Item Price',
+        'expense': 'Expense',
+        'quantity': 'Quantity',
+        'category': 'Category',
+        'date_ordered': 'Date Ordered'
+    }, inplace=True)
     df.to_excel(response, index=False)
 
     return response

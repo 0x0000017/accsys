@@ -103,6 +103,7 @@
                 </thead>
                 <tbody>
                     {% for recent_item in recent_items %}
+                    {% if not recent_item.is_deleted %}
                         <tr>
                             <td class="text-center">{{ forloop.counter }}</td>
                             <td class="text-start" style="font-weight: bold !important;">{{ recent_item.item_name }}</td>
@@ -116,6 +117,7 @@
                                 <td class="text-center">{{ recent_item.quantity }}</td>
                             {% endif %}
                         </tr>
+                        {% endif %}
                     {% endfor %}
                 </tbody>
             </table>            
