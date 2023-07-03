@@ -16,14 +16,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from .models import Store, Address, Item, Sale, UserProfile
-from datetime import datetime
 from datetime import date
-import random
 
 
-
-
-# Create your views here.
 def home(request):
     context = {}
     if request.user.is_authenticated:
