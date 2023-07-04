@@ -18,6 +18,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from .models import Store, Address, Item, Sale, UserProfile
 from datetime import date
+from datetime import datetime
 from calendar import month_name
 from django.utils import timezone
 from django.db.models.functions import Coalesce
@@ -536,6 +537,8 @@ def generate_report(request):
     total_expenses = 0
     net_income = 0
 
+    current_date = datetime.now().date()
+
     user = request.user
     store = Store.objects.get(storeOwner=user.id)
     items = Item.objects.filter(store=store).all()
@@ -559,13 +562,28 @@ def generate_report(request):
     
     most_sold_item = Sale.objects.filter(store=store).values('item').annotate(total_money=Sum('profit', output_field=DecimalField())).order_by('-total_money').first()
     
+    sales_aggregate = Sale.objects.filter(store=store).values('item__item_name').annotate(total_quantity=Sum('amount')).order_by('-total_quantity').first()
+    item_name = sales_aggregate['item__item_name'] if sales_aggregate else None
+
+    most_item = Item.objects.filter(store=store).order_by('-quantity')
+    most_quantity = most_item.first().quantity if most_item else 0
+    most_item_name = [item.item_name for item in most_item if item.quantity == most_quantity]
+
+
     total_money = 0
 
     if most_sold_item:
         item = Item.objects.get(id=most_sold_item['item'])
         total_money = most_sold_item['total_money']
     
-    return render(request, 'Main/Landing/report.html', {
+    return render(request, 'Main/Landing/dashboard.html', {
+        'success': 1,
+        'user': request.user,
+        'store': store.storeName,
+        'current_date' : current_date,
+        'item_name': item_name,
+        'most_item_name': most_item_name,
+        'most_quantity' : most_quantity,
         'total_quantity': total_quantity,
         'total_sales_quantity': total_sales_quantity,
         'total_money': intcomma(floatformat(total_money, 2)),
