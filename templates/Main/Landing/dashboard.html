@@ -14,7 +14,7 @@
               <button type="button" onclick="history.back()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <h2>Items and Sales Report</h2>
+                <h2 class="reportHeader text-center">Items and Sales Report</h2>
     
                 <p>Below is the report of the Items and Sales as of {{current_date}}.</p>
 
@@ -167,8 +167,9 @@
                 </div>
                 
             </div>
-            <table id="table1" class="table table-striped table-hover">
-                <thead>
+            <div class="tbody">
+              <table id="table1" class="table table-striped table-hover">
+                <thead class="sticky-top">
                     <tr>
                         <td class="text-center" scope="col">No.</th>
                         <td class="text-center">Item Name</td>
@@ -198,10 +199,12 @@
                         {% endif %}
                     {% endfor %}
                 </tbody>
-            </table>            
+              </table>  
+            </div>
+                      
     </div>
 </div>
-
+<!-- recent sales -->
 <div class="details">
     <div class="recentOrders table-responsive">
             <div class="cardHeader">
@@ -216,9 +219,9 @@
                     </ul>
                 </div>
             </div>
-            <div class="table-wrapper">
+            <div class="tbody">
                 <table class="table table-striped table-hover">
-                    <thead>
+                    <thead class="sticky-top">
                         <tr>
                             <td class="text-center" scope="col">No.</th>
                             <td class="text-center">Item Name</td>

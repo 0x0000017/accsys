@@ -7,6 +7,8 @@
 {
     background: var(--white);
     padding: 30px;
+    max-height: 800px!important;
+    overflow-y: hidden;
     border-radius: 20px;
     box-shadow: 0 7px 25px 0px rgba(0, 0, 0, 0.08);
 }
@@ -16,7 +18,10 @@
     font-family: Metropolis;
     color: var(--blue);
 }
-
+.tbodyInventory{
+    height: 440px !important;
+    overflow-y: scroll;
+}
 :root
 {
     --blue: #1B53EE;
@@ -39,4 +44,7 @@
 #noteFormat {
     text-align: end;
     justify-content: end;
+}
+.pagination-container{
+    margin-top: 2%!important;
 }
