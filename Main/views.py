@@ -2,6 +2,7 @@ import sys
 import os
 import pandas as pd
 import csv
+import pytz
 sys.path.append('..')
 
 from django.db import IntegrityError
@@ -15,12 +16,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from .models import Store, Address, Item, Sale, UserProfile
-from datetime import datetime
 from datetime import date
-import random
 
 
-# Create your views here.
 def home(request):
     context = {}
     if request.user.is_authenticated:
@@ -185,7 +183,7 @@ def inventory(request, item_filter):
         })
 
     if item_set == 'all':
-        items = Item.objects.filter(store__in=store).all()
+        items = Item.objects.filter(is_deleted=False,store__in=store).all()
     else:
         items = Item.objects.filter(store__in=store).order_by(f'{item_set}').all()
     
@@ -257,18 +255,6 @@ def reduce_item_quantity(request, item_id):
 
         return HttpResponseRedirect(reverse('inventory', args=['all']))
 
-
-def accounting(request, filter_data):
-    user = request.user
-    store = Store.objects.filter(storeOwner=user)
-    items = Item.objects.filter(store__in=store).all()[:20]
-
-    return render(request, 'Main/Landing/accounting.html', {
-        'user': user,
-        'panel': filter_data.capitalize(),
-        'items': items,
-        'item_tail': Item.objects.filter(store__in=store).all()[:5:-1]
-    })
 
 
 def profile(request):
@@ -442,7 +428,7 @@ def export_items_to_csv(request):
     writer = csv.writer(response)
     writer.writerow(['Item Name', 'Item Price', 'Expense', 'Quantity', 'Category', 'Date Ordered'])
 
-    items = Item.objects.filter(store__storeOwner=request.user)
+    items = Item.objects.filter(is_deleted=False, store__storeOwner=request.user)
 
     for item in items:
         writer.writerow([item.item_name, item.item_price, item.expense, item.quantity, item.category, item.date_ordered])
@@ -465,5 +451,75 @@ def export_sales_to_csv(request):
     for sale in sales:
         item = sale.item
         writer.writerow([item.item_name, item.item_price, item.category, sale.amount, sale.profit, sale.date])
+
+    return response
+
+
+def export_items_to_excel(request):
+    today = date.today().strftime('%Y-%m-%d')
+    filename = f"{today}_ITEMS_REPORT.xlsx"
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    user_inventory = Item.objects.filter(is_deleted=False, store__storeOwner=request.user)
+    items = user_inventory.values(
+        'item_name',
+        'item_price',
+        'expense',
+        'quantity',
+        'category',
+        'date_ordered'
+    )
+
+    items = [
+        {
+            'Item Name': item['item_name'],
+            'Item Price': item['item_price'],
+            'Expense': item['expense'],
+            'Quantity': item['quantity'],
+            'Category': item['category'],
+            'Date Ordered': item['date_ordered'].replace(tzinfo=None) if item['date_ordered'] else None
+        }
+        for item in items
+    ]
+
+    df = pd.DataFrame.from_records(items)
+    df.rename(columns={
+        'item_name': 'Item Name',
+        'item_price': 'Item Price',
+        'expense': 'Expense',
+        'quantity': 'Quantity',
+        'category': 'Category',
+        'date_ordered': 'Date Ordered'
+    }, inplace=True)
+    df.to_excel(response, index=False)
+
+    return response
+
+
+def export_sales_to_excel(request):
+    today = date.today().strftime('%Y-%m-%d')
+    filename = f"{today}_SALES_REPORT.xlsx"
+
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    sales = Sale.objects.filter(store__storeOwner=request.user).select_related('item')
+
+    data = [
+        {
+            'Item Name': sale.item.item_name,
+            'Item Price': sale.item.item_price,
+            'Category': sale.item.category,
+            'Amount': sale.amount,
+            'Profit': sale.profit,
+            'Date': sale.date.astimezone(pytz.timezone('UTC')).replace(tzinfo=None),
+        }
+        for sale in sales
+    ]
+
+    df = pd.DataFrame(data)
+    df.to_excel(response, index=False)
 
     return response

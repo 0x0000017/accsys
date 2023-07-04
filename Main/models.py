@@ -9,6 +9,9 @@ class Store(models.Model):
     storeAddress = models.CharField(max_length=200)
     date_registered = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.storeName
+
 
 class Item(models.Model):
     item_name = models.CharField(max_length=200)
@@ -16,17 +19,23 @@ class Item(models.Model):
     expense = models.DecimalField(max_digits=10, decimal_places=2)
     quantity = models.IntegerField()
     category = models.CharField(max_length=64)
-    date_ordered = models.DateTimeField()
+    date_ordered = models.DateField()
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='location')
     is_deleted = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.item_name
 
 
 class Sale(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE, related_name='product')
     amount = models.IntegerField()
     profit = models.DecimalField(max_digits=10, decimal_places=2)
-    date = models.DateTimeField(auto_now=True)
+    date = models.DateField(auto_now=True)
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='sale_location')
+
+    def __str__(self):
+        return f"Sale of {self.item} ({self.date})"
 
 
 class Address(models.Model):

@@ -76,7 +76,15 @@
                         <a href="{% url 'inventory' 'all' %}"><button class="btn btn-primary" style="white-space: nowrap;">View All</button></a>
                     </div>
                     <div class="col-8">
-                        <a href="{% url 'export-items' %}"><button class="btn btn-primary">Export Items to CSV</button></a>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Export Items
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                              <li><a class="dropdown-item" href="{% url 'export-items' %}">Export to CSV</a></li>
+                              <li><a class="dropdown-item" href="{% url 'export-items-xls' %}">Export to Excel</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 
@@ -95,6 +103,7 @@
                 </thead>
                 <tbody>
                     {% for recent_item in recent_items %}
+                    {% if not recent_item.is_deleted %}
                         <tr>
                             <td class="text-center">{{ forloop.counter }}</td>
                             <td class="text-start" style="font-weight: bold !important;">{{ recent_item.item_name }}</td>
@@ -108,6 +117,7 @@
                                 <td class="text-center">{{ recent_item.quantity }}</td>
                             {% endif %}
                         </tr>
+                        {% endif %}
                     {% endfor %}
                 </tbody>
             </table>            
@@ -118,41 +128,50 @@
     <div class="recentOrders table-responsive">
             <div class="cardHeader">
                 <h2>Recent Sales</h2>
-                <a href="{% url 'export-sales' %}"><button class="btn btn-primary">Export Sales to CSV</button></a>
-                <!-- <a href=""><button class="btn btn-primary">View All</button></a> -->
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        Export Sales
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a class="dropdown-item" href="{% url 'export-sales' %}">Export to CSV</a></li>
+                      <li><a class="dropdown-item" href="{% url 'export-sales-xls' %}">Export to Excel</a></li>
+                    </ul>
+                </div>
             </div>
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <td class="text-center" scope="col">No.</th>
-                        <td class="text-center">Item Name</td>
-                        <td class="text-center">Item Price</td>
-                        <td class="text-center">Purchase Cost</td>
-                        <td class="text-center">Profit</td>
-                        <td class="text-center">Item Category</td>
-                        <td class="text-center">Date Ordered</td>
-                        <td class="text-center">Quantity</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for sale in all_sales %}
+            <div class="table-wrapper">
+                <table class="table table-striped table-hover">
+                    <thead>
                         <tr>
-                            <td class="text-center">{{ forloop.counter }}</td>
-                            <td class="text-start" style="font-weight: bold !important;">{{ sale.item.item_name }}</td>
-                            <td class="text-center">₱ {{ sale.item.item_price|floatformat:2|intcomma }}</td>
-                            <td class="text-center">₱ {{ sale.item.expense|floatformat:2|intcomma }}</td>
-                            <td class="text-center">₱ {{ sale.profit|floatformat:2|intcomma }}</td>
-                            <td class="text-center">{{ sale.item.category }}</td>
-                            <td class="text-center">{{ sale.item.date_ordered.date }}</td>
-                            {% if sale.quantity == 0 %}
-                                <td class="text-center">Sold Out</td>
-                            {% else %}
-                                <td class="text-center">{{ sale.amount }}</td>
-                            {% endif %}
+                            <td class="text-center" scope="col">No.</th>
+                            <td class="text-center">Item Name</td>
+                            <td class="text-center">Item Price</td>
+                            <td class="text-center">Purchase Cost</td>
+                            <td class="text-center">Profit</td>
+                            <td class="text-center">Item Category</td>
+                            <td class="text-center">Date Ordered</td>
+                            <td class="text-center">Quantity</td>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for sale in all_sales %}
+                            <tr>
+                                <td class="text-center">{{ forloop.counter }}</td>
+                                <td class="text-start" style="font-weight: bold !important;">{{ sale.item.item_name }}</td>
+                                <td class="text-center">₱ {{ sale.item.item_price|floatformat:2|intcomma }}</td>
+                                <td class="text-center">₱ {{ sale.item.expense|floatformat:2|intcomma }}</td>
+                                <td class="text-center">₱ {{ sale.profit|floatformat:2|intcomma }}</td>
+                                <td class="text-center">{{ sale.item.category }}</td>
+                                <td class="text-center">{{ sale.item.date_ordered.date }}</td>
+                                {% if sale.quantity == 0 %}
+                                    <td class="text-center">Sold Out</td>
+                                {% else %}
+                                    <td class="text-center">{{ sale.amount }}</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
     </div>
 </div>
 <div>
