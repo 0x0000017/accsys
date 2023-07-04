@@ -309,6 +309,12 @@ def terms_and_conditions(request):
         'user_profile': user_profile,
     })
 
+def data_privacy_policy(request):
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    return render(request, 'Main/Landing/dataprivacypolicy.html', {
+        'user_profile': user_profile,
+    })
+
 
 def upload_store_data(request):
     if request.method == 'POST':

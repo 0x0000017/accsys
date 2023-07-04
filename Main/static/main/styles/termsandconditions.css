@@ -13,3 +13,9 @@ h1{
 #last-updated-terms {
     font-weight: bold;
 }
+.container.contentContainer{
+    padding: 0 5%!important;
+}
+.contentContainer2{
+    padding-left: 3%;
+}

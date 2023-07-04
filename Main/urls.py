@@ -21,6 +21,8 @@ urlpatterns = [
     path('reduce_item_quantity/<int:item_id>', views.reduce_item_quantity, name='reduce_items'),
     path('profile', views.profile, name='profile'),
     path('terms_and_conditions', views.terms_and_conditions, name='terms'),
+    path('data_privacy_policy', views.data_privacy_policy, name='dpp'),
+
     path('delete', views.delete_data, name='delete'),
     path('export-items', views.export_items_to_csv, name='export-items'),
     path('export-items-xls/', views.export_items_to_excel, name='export-items-xls'),
