@@ -185,8 +185,8 @@
                         <tr>
                             <td class="text-center">{{ forloop.counter }}</td>
                             <td class="text-start" style="font-weight: bold !important;">{{ recent_item.item_name }}</td>
-                            <td class="text-center">₱ {{ recent_item.item_price|floatformat:2|intcomma }}</td>
-                            <td class="text-center">₱ {{ recent_item.expense|floatformat:2|intcomma }}</td>
+                            <td class="text-end">₱ {{ recent_item.item_price|floatformat:2|intcomma }}</td>
+                            <td class="text-end">₱ {{ recent_item.expense|floatformat:2|intcomma }}</td>
                             <td class="text-center">{{ recent_item.category }}</td>
                             <td class="text-center">{{ recent_item.date_ordered.date }}</td>
                             {% if recent_item.quantity == 0 %}
@@ -235,14 +235,14 @@
                             <tr>
                                 <td class="text-center">{{ forloop.counter }}</td>
                                 <td class="text-start" style="font-weight: bold !important;">{{ sale.item.item_name }}</td>
-                                <td class="text-center">₱ {{ sale.item.expense|floatformat:2|intcomma }}</td>
-                                <td class="text-center">₱ {{ sale.item.item_price|floatformat:2|intcomma }}</td>
+                                <td class="text-end">₱ {{ sale.item.expense|floatformat:2|intcomma }}</td>
+                                <td class="text-end">₱ {{ sale.item.item_price|floatformat:2|intcomma }}</td>
                                 {% if sale.quantity == 0 %}
                                     <td class="text-center">Sold Out</td>
                                 {% else %}
                                     <td class="text-center">{{ sale.amount }}</td>
                                 {% endif %}
-                                <td class="text-center">₱ {{ sale.profit|floatformat:2|intcomma }}</td>
+                                <td class="text-end">₱ {{ sale.profit|floatformat:2|intcomma }}</td>
                                 <td class="text-center">{{ sale.item.category }}</td>
                                 <td class="text-center">{{ sale.item.date_ordered.date }}</td>
                             </tr>

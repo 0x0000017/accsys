@@ -102,8 +102,8 @@
                             <tr class="text-center" >
                             <td>{{ items.start_index|add:forloop.counter0 }}</td>
                             <td class="text-start" style="font-weight: bold !important;">{{ item.item_name }}</td>
-                            <td>₱ {{ item.item_price|floatformat:2|intcomma }}</td>
-                            <td>₱ {{ item.expense|floatformat:2|intcomma }}</td>
+                            <td class="text-end">₱ {{ item.item_price|floatformat:2|intcomma }}</td>
+                            <td class="text-end">₱ {{ item.expense|floatformat:2|intcomma }}</td>
                             <td>{{ item.category }}</td>
                             <td>{{ item.date_ordered.date }}</td>
                             {% if item.quantity == 0 %}
