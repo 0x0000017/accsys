@@ -26,6 +26,7 @@ urlpatterns = [
     path('export-items-xls/', views.export_items_to_excel, name='export-items-xls'),
     path('export-sales', views.export_sales_to_csv, name='export-sales'),
     path('export-sales-xls/', views.export_sales_to_excel, name='export-sales-xls'),
+    path('generate_report/', views.generate_report, name='generate_report'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

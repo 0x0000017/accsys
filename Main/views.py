@@ -7,6 +7,7 @@ sys.path.append('..')
 
 from django.db import IntegrityError
 from django.template.defaultfilters import floatformat
+from django.template.loader import render_to_string
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.contrib.humanize.templatetags.humanize import intcomma
@@ -17,6 +18,10 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from .models import Store, Address, Item, Sale, UserProfile
 from datetime import date
+from calendar import month_name
+from django.utils import timezone
+from django.db.models.functions import Coalesce
+from django.db.models import Sum, DecimalField
 
 
 def home(request):
@@ -254,7 +259,6 @@ def reduce_item_quantity(request, item_id):
         new_sale.save()
 
         return HttpResponseRedirect(reverse('inventory', args=['all']))
-
 
 
 def profile(request):
@@ -523,3 +527,51 @@ def export_sales_to_excel(request):
     df.to_excel(response, index=False)
 
     return response
+
+
+def generate_report(request):
+
+    revenue = 0
+    total_sales = 0
+    total_expenses = 0
+    net_income = 0
+
+    user = request.user
+    store = Store.objects.get(storeOwner=user.id)
+    items = Item.objects.filter(store=store).all()
+    sales = Sale.objects.filter(store=store).all()
+
+    current_user = request.user
+    store = Store.objects.get(storeOwner=current_user)
+
+    for item in items:
+        total_expenses += item.expense * item.quantity
+
+    for sale in sales:
+        total_sales += sale.item.item_price * sale.amount
+        net_income += (sale.item.item_price - sale.item.expense) * sale.amount
+    
+    total_quantity = Item.objects.filter(store=store).aggregate(total_quantity=Sum('quantity'))
+    total_quantity = total_quantity['total_quantity'] if total_quantity['total_quantity'] else 0
+
+    total_sales_quantity = Sale.objects.filter(store=store).aggregate(total_sales_quantity=Sum('amount'))
+    total_sales_quantity = total_sales_quantity['total_sales_quantity'] if total_sales_quantity['total_sales_quantity'] else 0
+    
+    most_sold_item = Sale.objects.filter(store=store).values('item').annotate(total_money=Sum('profit', output_field=DecimalField())).order_by('-total_money').first()
+    
+    total_money = 0
+
+    if most_sold_item:
+        item = Item.objects.get(id=most_sold_item['item'])
+        item_name = item.item_name
+        total_money = most_sold_item['total_money']
+    
+    return render(request, 'Main/Landing/report.html', {
+        'total_quantity': total_quantity,
+        'total_sales_quantity': total_sales_quantity,
+        'total_money': intcomma(floatformat(total_money, 2)),
+        'sales': intcomma(floatformat(total_sales, 2)),
+        'revenue': intcomma(floatformat(revenue, 2)),
+        'expense': intcomma(floatformat(total_expenses, 2)),
+        'net_income': intcomma(floatformat(net_income, 2)),
+    })
