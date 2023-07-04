@@ -554,41 +554,46 @@ def generate_report(request):
         total_sales += sale.item.item_price * sale.amount
         net_income += (sale.item.item_price - sale.item.expense) * sale.amount
     
-    total_quantity = Item.objects.filter(store=store).aggregate(total_quantity=Sum('quantity'))
-    total_quantity = total_quantity['total_quantity'] if total_quantity['total_quantity'] else 0
+    try:
+        total_quantity = Item.objects.filter(store=store).aggregate(total_quantity=Sum('quantity'))
+        total_quantity = total_quantity['total_quantity'] if total_quantity['total_quantity'] else 0
 
-    total_sales_quantity = Sale.objects.filter(store=store).aggregate(total_sales_quantity=Sum('amount'))
-    total_sales_quantity = total_sales_quantity['total_sales_quantity'] if total_sales_quantity['total_sales_quantity'] else 0
-    
-    most_sold_item = Sale.objects.filter(store=store).values('item').annotate(total_money=Sum('profit', output_field=DecimalField())).order_by('-total_money').first()
-    
-    sales_aggregate = Sale.objects.filter(store=store).values('item__item_name').annotate(total_quantity=Sum('amount')).order_by('-total_quantity').first()
-    item_name = sales_aggregate['item__item_name'] if sales_aggregate else None
+        total_sales_quantity = Sale.objects.filter(store=store).aggregate(total_sales_quantity=Sum('amount'))
+        total_sales_quantity = total_sales_quantity['total_sales_quantity'] if total_sales_quantity['total_sales_quantity'] else 0
+        
+        most_sold_item = Sale.objects.filter(store=store).values('item').annotate(total_money=Sum('profit', output_field=DecimalField())).order_by('-total_money').first()
+        
+        sales_aggregate = Sale.objects.filter(store=store).values('item__item_name').annotate(total_quantity=Sum('amount')).order_by('-total_quantity').first()
+        item_name = sales_aggregate['item__item_name'] if sales_aggregate else None
 
-    most_item = Item.objects.filter(store=store).order_by('-quantity')
-    most_quantity = most_item.first().quantity if most_item else 0
-    most_item_name = [item.item_name for item in most_item if item.quantity == most_quantity]
+        most_item = Item.objects.filter(store=store).order_by('-quantity')
+        most_quantity = most_item.first().quantity if most_item else 0
+        most_item_name = [item.item_name for item in most_item if item.quantity == most_quantity]
 
 
-    total_money = 0
+        total_money = 0
 
-    if most_sold_item:
-        item = Item.objects.get(id=most_sold_item['item'])
-        total_money = most_sold_item['total_money']
-    
-    return render(request, 'Main/Landing/dashboard.html', {
-        'success': 1,
-        'user': request.user,
-        'store': store.storeName,
-        'current_date' : current_date,
-        'item_name': item_name,
-        'most_item_name': most_item_name,
-        'most_quantity' : most_quantity,
-        'total_quantity': total_quantity,
-        'total_sales_quantity': total_sales_quantity,
-        'total_money': intcomma(floatformat(total_money, 2)),
-        'sales': intcomma(floatformat(total_sales, 2)),
-        'revenue': intcomma(floatformat(revenue, 2)),
-        'expense': intcomma(floatformat(total_expenses, 2)),
-        'net_income': intcomma(floatformat(net_income, 2)),
-    })
+        if most_sold_item:
+            item = Item.objects.get(id=most_sold_item['item'])
+            total_money = most_sold_item['total_money']
+        
+        return render(request, 'Main/Landing/dashboard.html', {
+            'success': 1,
+            'user': request.user,
+            'store': store.storeName,
+            'current_date' : current_date,
+            'item_name': item_name,
+            'most_item_name': most_item_name,
+            'most_quantity' : most_quantity,
+            'total_quantity': total_quantity,
+            'total_sales_quantity': total_sales_quantity,
+            'total_money': intcomma(floatformat(total_money, 2)),
+            'sales': intcomma(floatformat(total_sales, 2)),
+            'revenue': intcomma(floatformat(revenue, 2)),
+            'expense': intcomma(floatformat(total_expenses, 2)),
+            'net_income': intcomma(floatformat(net_income, 2)),
+        })
+    except:
+        return render(request, 'Main/Landing/dashboard.html', {
+            'error': 'Not Enough Data to generate report.',
+        })
