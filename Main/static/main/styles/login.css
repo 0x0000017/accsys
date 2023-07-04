@@ -55,3 +55,9 @@ hr {
 #vbtn-radio1{
     width: 40px !;
 }
+.container.contentContainer{
+    padding: 0 5%!important;
+}
+.contentContainer2{
+    padding-left: 3%;
+}
