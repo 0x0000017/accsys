@@ -107,12 +107,17 @@ html {
     max-height: 500px !important;
     background: var(--white);
     padding: 20px;
-    overflow-y: scroll !important;
-
+    overflow-y: hidden !important;
     box-shadow: 0 7px 25px 0 rgba(0,0,0,0.08);
     border-radius: 20px;
 }
-
+thead{
+    background-color: white !important;
+}
+.tbody {
+    height: 400px !important;
+    overflow-y: scroll;
+}
 .details .cardHeader
 {
     display: flex;
@@ -229,7 +234,9 @@ html {
 {
     color: var(--white);
 }
-
+.reportHeader{
+    font-weight: bold !important;
+}
 /* responsive */
 /* @media (max-width: 1520px)
 {
