@@ -563,7 +563,6 @@ def generate_report(request):
 
     if most_sold_item:
         item = Item.objects.get(id=most_sold_item['item'])
-        item_name = item.item_name
         total_money = most_sold_item['total_money']
     
     return render(request, 'Main/Landing/report.html', {
