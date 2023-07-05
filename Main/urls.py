@@ -22,13 +22,14 @@ urlpatterns = [
     path('profile', views.profile, name='profile'),
     path('terms_and_conditions', views.terms_and_conditions, name='terms'),
     path('data_privacy_policy', views.data_privacy_policy, name='dpp'),
-
     path('delete', views.delete_data, name='delete'),
     path('export-items', views.export_items_to_csv, name='export-items'),
     path('export-items-xls/', views.export_items_to_excel, name='export-items-xls'),
     path('export-sales', views.export_sales_to_csv, name='export-sales'),
     path('export-sales-xls/', views.export_sales_to_excel, name='export-sales-xls'),
-    path('generate_report/', views.generate_report, name='generate_report'),
+    path('generate-report/', views.generate_report, name='generate_report'),
+    path('generate-item/', views.generate_item_report, name='generate_item_report'),
+    path('generate-sales/', views.generate_sales_report, name='generate_sales_report'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

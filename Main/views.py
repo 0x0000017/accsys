@@ -7,7 +7,7 @@ sys.path.append('..')
 
 from django.db import IntegrityError
 from django.template.defaultfilters import floatformat
-from django.template.loader import render_to_string
+from django.template.loader import render_to_string, get_template
 from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.contrib.humanize.templatetags.humanize import intcomma
@@ -23,6 +23,7 @@ from calendar import month_name
 from django.utils import timezone
 from django.db.models.functions import Coalesce
 from django.db.models import Sum, DecimalField
+from xhtml2pdf import pisa
 
 
 def home(request):
@@ -560,29 +561,28 @@ def generate_report(request):
         total_sales += sale.item.item_price * sale.amount
         net_income += (sale.item.item_price - sale.item.expense) * sale.amount
     
+    total_quantity = Item.objects.filter(store=store).aggregate(total_quantity=Sum('quantity'))
+    total_quantity = total_quantity['total_quantity'] if total_quantity['total_quantity'] else 0
+    total_sales_quantity = Sale.objects.filter(store=store).aggregate(total_sales_quantity=Sum('amount'))
+    total_sales_quantity = total_sales_quantity['total_sales_quantity'] if total_sales_quantity['total_sales_quantity'] else 0
+        
+    most_sold_item = Sale.objects.filter(store=store).values('item').annotate(total_money=Sum('profit', output_field=DecimalField())).order_by('-total_money').first()
+        
+    sales_aggregate = Sale.objects.filter(store=store).values('item__item_name').annotate(total_quantity=Sum('amount')).order_by('-total_quantity').first()
+    item_name = sales_aggregate['item__item_name'] if sales_aggregate else None
+
+    most_item = Item.objects.filter(store=store).order_by('-quantity')
+    most_quantity = most_item.first().quantity if most_item else 0
+    most_item_name = [item.item_name for item in most_item if item.quantity == most_quantity]
+
+
+    total_money = 0
+
+    if most_sold_item:
+        item = Item.objects.get(id=most_sold_item['item'])
+        total_money = most_sold_item['total_money']
+
     try:
-        total_quantity = Item.objects.filter(store=store).aggregate(total_quantity=Sum('quantity'))
-        total_quantity = total_quantity['total_quantity'] if total_quantity['total_quantity'] else 0
-
-        total_sales_quantity = Sale.objects.filter(store=store).aggregate(total_sales_quantity=Sum('amount'))
-        total_sales_quantity = total_sales_quantity['total_sales_quantity'] if total_sales_quantity['total_sales_quantity'] else 0
-        
-        most_sold_item = Sale.objects.filter(store=store).values('item').annotate(total_money=Sum('profit', output_field=DecimalField())).order_by('-total_money').first()
-        
-        sales_aggregate = Sale.objects.filter(store=store).values('item__item_name').annotate(total_quantity=Sum('amount')).order_by('-total_quantity').first()
-        item_name = sales_aggregate['item__item_name'] if sales_aggregate else None
-
-        most_item = Item.objects.filter(store=store).order_by('-quantity')
-        most_quantity = most_item.first().quantity if most_item else 0
-        most_item_name = [item.item_name for item in most_item if item.quantity == most_quantity]
-
-
-        total_money = 0
-
-        if most_sold_item:
-            item = Item.objects.get(id=most_sold_item['item'])
-            total_money = most_sold_item['total_money']
-        
         return render(request, 'Main/Landing/dashboard.html', {
             'success': 1,
             'user': request.user,
@@ -603,3 +603,194 @@ def generate_report(request):
         return render(request, 'Main/Landing/dashboard.html', {
             'error': 'Not Enough Data to generate report.',
         })
+
+
+def generate_item_report(request):
+
+    revenue = 0
+    total_sales = 0
+    total_expenses = 0
+    net_income = 0
+
+    current_date = datetime.now().date()
+
+    user = request.user
+    store = Store.objects.get(storeOwner=user.id)
+    items = Item.objects.filter(store=store).all()
+    sales = Sale.objects.filter(store=store).all()
+
+    current_user = request.user
+    store = Store.objects.get(storeOwner=current_user)
+
+    for item in items:
+        total_expenses += item.expense * item.quantity
+
+    for sale in sales:
+        total_sales += sale.item.item_price * sale.amount
+        net_income += (sale.item.item_price - sale.item.expense) * sale.amount
+    
+    total_quantity = Item.objects.filter(store=store).aggregate(total_quantity=Sum('quantity'))
+    total_quantity = total_quantity['total_quantity'] if total_quantity['total_quantity'] else 0
+      
+    most_item = Item.objects.filter(store=store).order_by('-quantity')
+    most_quantity = most_item.first().quantity if most_item else 0
+    most_item_name = [item.item_name for item in most_item if item.quantity == most_quantity]
+
+
+    total_money = 0
+
+    try:
+        return render(request, 'Main/Landing/dashboard.html', {
+            'gen_item': 1,
+            'user': request.user,
+            'store': store.storeName,
+            'current_date' : current_date,
+            'most_item_name': most_item_name,
+            'most_quantity' : most_quantity,
+            'total_quantity': total_quantity,
+            'total_money': intcomma(floatformat(total_money, 2)),
+            'sales': intcomma(floatformat(total_sales, 2)),
+            'revenue': intcomma(floatformat(revenue, 2)),
+            'expense': intcomma(floatformat(total_expenses, 2)),
+            'net_income': intcomma(floatformat(net_income, 2)),
+        })
+    except:
+        return render(request, 'Main/Landing/dashboard.html', {
+            'error': 'Not Enough Data to generate report.',
+        })
+    
+
+def generate_sales_report(request):
+
+    revenue = 0
+    total_sales = 0
+    total_expenses = 0
+    net_income = 0
+
+    current_date = datetime.now().date()
+
+    user = request.user
+    store = Store.objects.get(storeOwner=user.id)
+    items = Item.objects.filter(store=store).all()
+    sales = Sale.objects.filter(store=store).all()
+
+    current_user = request.user
+    store = Store.objects.get(storeOwner=current_user)
+
+    for item in items:
+        total_expenses += item.expense * item.quantity
+
+    for sale in sales:
+        total_sales += sale.item.item_price * sale.amount
+        net_income += (sale.item.item_price - sale.item.expense) * sale.amount
+    
+
+    total_sales_quantity = Sale.objects.filter(store=store).aggregate(total_sales_quantity=Sum('amount'))
+    total_sales_quantity = total_sales_quantity['total_sales_quantity'] if total_sales_quantity['total_sales_quantity'] else 0
+        
+    most_sold_item = Sale.objects.filter(store=store).values('item').annotate(total_money=Sum('profit', output_field=DecimalField())).order_by('-total_money').first()
+        
+    sales_aggregate = Sale.objects.filter(store=store).values('item__item_name').annotate(total_quantity=Sum('amount')).order_by('-total_quantity').first()
+    item_name = sales_aggregate['item__item_name'] if sales_aggregate else None
+
+
+    total_money = 0
+
+    if most_sold_item:
+        item = Item.objects.get(id=most_sold_item['item'])
+        total_money = most_sold_item['total_money']
+
+    try:
+        return render(request, 'Main/Landing/dashboard.html', {
+            'gen_sales': 1,
+            'user': request.user,
+            'store': store.storeName,
+            'current_date' : current_date,
+            'item_name': item_name,
+            'total_sales_quantity': total_sales_quantity,
+            'total_money': intcomma(floatformat(total_money, 2)),
+            'sales': intcomma(floatformat(total_sales, 2)),
+            'revenue': intcomma(floatformat(revenue, 2)),
+            'expense': intcomma(floatformat(total_expenses, 2)),
+            'net_income': intcomma(floatformat(net_income, 2)),
+        })
+    except:
+        return render(request, 'Main/Landing/dashboard.html', {
+            'error': 'Not Enough Data to generate report.',
+        })
+    
+
+# def export_pdf(request):
+
+    revenue = 0
+    total_sales = 0
+    total_expenses = 0
+    net_income = 0
+
+    current_date = datetime.now().date()
+
+    user = request.user
+    store = Store.objects.get(storeOwner=user.id)
+    items = Item.objects.filter(store=store).all()
+    sales = Sale.objects.filter(store=store).all()
+
+    current_user = request.user
+    store = Store.objects.get(storeOwner=current_user)
+
+    for item in items:
+        total_expenses += item.expense * item.quantity
+
+    for sale in sales:
+        total_sales += sale.item.item_price * sale.amount
+        net_income += (sale.item.item_price - sale.item.expense) * sale.amount
+    
+    total_quantity = Item.objects.filter(store=store).aggregate(total_quantity=Sum('quantity'))
+    total_quantity = total_quantity['total_quantity'] if total_quantity['total_quantity'] else 0
+    total_sales_quantity = Sale.objects.filter(store=store).aggregate(total_sales_quantity=Sum('amount'))
+    total_sales_quantity = total_sales_quantity['total_sales_quantity'] if total_sales_quantity['total_sales_quantity'] else 0
+        
+    most_sold_item = Sale.objects.filter(store=store).values('item').annotate(total_money=Sum('profit', output_field=DecimalField())).order_by('-total_money').first()
+        
+    sales_aggregate = Sale.objects.filter(store=store).values('item__item_name').annotate(total_quantity=Sum('amount')).order_by('-total_quantity').first()
+    item_name = sales_aggregate['item__item_name'] if sales_aggregate else None
+
+    most_item = Item.objects.filter(store=store).order_by('-quantity')
+    most_quantity = most_item.first().quantity if most_item else 0
+    most_item_name = [item.item_name for item in most_item if item.quantity == most_quantity]
+
+
+    total_money = 0
+
+    if most_sold_item:
+        item = Item.objects.get(id=most_sold_item['item'])
+        total_money = most_sold_item['total_money']
+
+    buffer = BytesIO()
+    pisa_status = pisa.CreatePDF(html, dest=buffer)
+
+    if pisa_status.err:
+        return HttpResponse('An error occurred while generating the PDF')
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="exported_pdf.pdf"'
+
+    response.write(buffer.getvalue())
+    buffer.close()
+
+    return render(request, 'Main/Landing/report.html', {
+            'success': 1,
+            'user': request.user,
+            'store': store.storeName,
+            'current_date' : current_date,
+            'item_name': item_name,
+            'most_item_name': most_item_name,
+            'most_quantity' : most_quantity,
+            'total_quantity': total_quantity,
+            'total_sales_quantity': total_sales_quantity,
+            'total_money': intcomma(floatformat(total_money, 2)),
+            'sales': intcomma(floatformat(total_sales, 2)),
+            'revenue': intcomma(floatformat(revenue, 2)),
+            'expense': intcomma(floatformat(total_expenses, 2)),
+            'net_income': intcomma(floatformat(net_income, 2)),
+        }
+    )
